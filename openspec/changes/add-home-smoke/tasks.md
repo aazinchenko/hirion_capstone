@@ -1,7 +1,7 @@
 ## 1. Scenario tests (RED)
 
-- [ ] 1.1 Create `src/test/java/ch/hirion/pub/SmokeTest.java` extending `BaseTest` with one `@Test` per scenario in `specs/home-page/spec.md` (12 tests: pub1_heroCtaOpensSignup, pub2_faqStartsCollapsed, pub2_faqClickExpands, pub2_faqShowsAnswer, pub3_pricingVisibleToGuest, pub3_yearlyIsDefault, pub3_monthlyPrice, pub3_quarterlyPrice, pub3_backToYearly, pub4_selectedPeriodIsAriaPressed, pub5_freePlanCta, pub5_paidPlanCta), guest context only (no storageState); verify by counting 12 `@Test` methods
-- [ ] 1.2 Run `mvn -q test -Dtest=SmokeTest` and quote the failing lines (test name + assertion/locator message) in the change log; verify the output lists all 12 tests
+- [x] 1.1 Create `src/test/java/ch/hirion/pub/SmokeTest.java` extending `BaseTest` with one `@Test` per scenario in `specs/home-page/spec.md` (12 tests: pub1_heroCtaOpensSignup, pub2_faqStartsCollapsed, pub2_faqClickExpands, pub2_faqShowsAnswer, pub3_pricingVisibleToGuest, pub3_yearlyIsDefault, pub3_monthlyPrice, pub3_quarterlyPrice, pub3_backToYearly, pub4_selectedPeriodIsAriaPressed, pub5_freePlanCta, pub5_paidPlanCta), guest context only (no storageState); verify by counting 12 `@Test` methods
+- [x] 1.2 Run `mvn -q test -Dtest=SmokeTest` and quote the failing lines (test name + assertion/locator message) in the change log; verify the output lists all 12 tests
 
 ## 2. Make scenarios GREEN
 
