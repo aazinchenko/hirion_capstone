@@ -1,18 +1,18 @@
 ---
 name: "OPSX: Update"
 description: "Update a change - revise existing planning artifacts and keep them coherent (Experimental)"
-allowed-tools: Bash(openspec:*)
+allowed-tools: Bash(pnpm exec openspec:*)
 category: "Workflow"
 tags: ["workflow", "artifacts", "experimental"]
 ---
 
 Revise a change's existing planning artifacts and keep them coherent. Never edit code.
 
-**Store selection:** If the user names a store (a store is a standalone OpenSpec repo registered on this machine) or the work lives in one, run `openspec store list --json` to discover registered store ids, then pass `--store <id>` on the commands that read or write specs and changes (`new change`, `status`, `instructions`, `list`, `show`, `validate`, `archive`, `doctor`, `context`, `schemas`, `view`). Once selected, treat `--store <id>` as sticky for the rest of the workflow. Every unscoped example of those commands below is shorthand: before running it, append the flag. For example, run `openspec status --change "<name>" --json --store "<id>"`, not the unscoped form shown below. Other commands do not take the flag. Hints printed by commands already carry the flag; keep it on follow-ups. Without a store, commands act on the nearest local `openspec/` root.
+**Store selection:** If the user names a store (a store is a standalone OpenSpec repo registered on this machine) or the work lives in one, run `pnpm exec openspec store list --json` to discover registered store ids, then pass `--store <id>` on the commands that read or write specs and changes (`new change`, `status`, `instructions`, `list`, `show`, `validate`, `archive`, `doctor`, `context`, `schemas`, `view`). Once selected, treat `--store <id>` as sticky for the rest of the workflow. Every unscoped example of those commands below is shorthand: before running it, append the flag. For example, run `pnpm exec openspec status --change "<name>" --json --store "<id>"`, not the unscoped form shown below. Other commands do not take the flag. Hints printed by commands already carry the flag; keep it on follow-ups. Without a store, commands act on the nearest local `openspec/` root.
 
 **Input**: Optionally specify a change name after `/opsx:update` (e.g., `/opsx:update add-auth`). If omitted, check if it can be inferred from conversation context. If vague or ambiguous you MUST prompt for available changes.
 
-`/opsx:continue` is an optional workflow and may not be installed. Before suggesting it anywhere below, verify that it is available. If it is unavailable, `openspec status --change "<name>" --json` shows the next artifact and `openspec instructions "<artifact-id>" --change "<name>" --json` explains how to create it.
+`/opsx:continue` is an optional workflow and may not be installed. Before suggesting it anywhere below, verify that it is available. If it is unavailable, `pnpm exec openspec status --change "<name>" --json` shows the next artifact and `pnpm exec openspec instructions "<artifact-id>" --change "<name>" --json` explains how to create it.
 
 **Steps**
 
@@ -21,7 +21,7 @@ Revise a change's existing planning artifacts and keep them coherent. Never edit
    If a name is provided, use it. Otherwise:
    - Infer from conversation context if the user mentioned a change
    - Auto-select if only one active change exists
-   - If ambiguous, run `openspec list --json` to get available changes sorted by most recently modified, and ask the user to select one
+   - If ambiguous, run `pnpm exec openspec list --json` to get available changes sorted by most recently modified, and ask the user to select one
 
    When prompting, present the top 3-4 most recently modified changes as options, showing:
    - Change name
@@ -35,7 +35,7 @@ Revise a change's existing planning artifacts and keep them coherent. Never edit
 
 2. **Get the change's artifacts**
    ```bash
-   openspec status --change "<name>" --json
+   pnpm exec openspec status --change "<name>" --json
    ```
    Parse the JSON to understand current state. The response includes:
    - `schemaName`: The workflow schema being used (e.g., "spec-driven")
@@ -63,7 +63,7 @@ Revise a change's existing planning artifacts and keep them coherent. Never edit
    - If the user rejects a revision, do not write it - leave that artifact unchanged.
    - When a substantial rewrite is needed, get that artifact's rules and template first:
      ```bash
-     openspec instructions "<artifact-id>" --change "<name>" --json
+     pnpm exec openspec instructions "<artifact-id>" --change "<name>" --json
      ```
 
 6. **Point to the next step (guidance only - NEVER act on it)**
@@ -80,8 +80,8 @@ After each invocation, show:
 
 **Guardrails**
 - Planning artifacts only - NEVER edit implementation code. If the revised plan implies code changes, stop and point to `/opsx:apply`.
-- Use the artifact ids and paths reported by `openspec status`; never branch on hardcoded artifact names.
+- Use the artifact ids and paths reported by `pnpm exec openspec status`; never branch on hardcoded artifact names.
 - Edit only the concrete files in `existingOutputPaths`; never write to a glob `resolvedOutputPath`.
 - Do not advance the build frontier: no new artifacts, no new files under glob artifacts - that is `/opsx:continue`'s job.
 - Confirm every edit with the user before writing.
-- If the request changes the change's *intent* rather than refining it, first verify whether the optional `/opsx:new` workflow is available. If it is, recommend starting fresh with `/opsx:new` (the "Update vs. Start Fresh" heuristic). If it is unavailable, ask for a distinct unused change name and recommend `openspec new change "<new-change-name>"` instead.
+- If the request changes the change's *intent* rather than refining it, first verify whether the optional `/opsx:new` workflow is available. If it is, recommend starting fresh with `/opsx:new` (the "Update vs. Start Fresh" heuristic). If it is unavailable, ask for a distinct unused change name and recommend `pnpm exec openspec new change "<new-change-name>"` instead.

@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "openspec:pin": "node scripts/openspec-pin.mjs",
+    "spec:check": "node scripts/spec-check.mjs",
+    "check:locators": "java scripts/CheckLocatorRules.java src/test/java",
+    "test:public": "mvn -q test",
+    "check": "pnpm check:locators && pnpm test:public && pnpm spec:check"
   },
   "keywords": [],
   "author": "",
