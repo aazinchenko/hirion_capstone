@@ -1,0 +1,6 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="public" parallel="classes" thread-count="4">
+    <test name="public">
+        <packages><package name="ch.hirion.pub"/></packages>
+    </test>
+</suite>
