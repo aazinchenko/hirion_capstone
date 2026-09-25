@@ -54,7 +54,8 @@ public class SmokeTest extends BaseTest {
 
   @Test(description = "PUB-2 Clicking a FAQ item expands it")
   public void pub2_faqClickExpands() {
-    Locator question = inSection(faq, AriaRole.BUTTON, "Is irion free to use?");
+    //Locator question = inSection(faq, AriaRole.BUTTON, "Is Hirion free to use?");
+    Locator question = page.locator(".faq-item-3 .faq-toggle"); // stale locator on purpose -> RED
     question.click();
     assertThat(question).hasAttribute("aria-expanded", "true");
   }
