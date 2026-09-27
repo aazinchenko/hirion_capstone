@@ -43,7 +43,7 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.5.2</version>
                 <configuration>
-                    <suiteXmlFiles><suiteXmlFile>${suite}</suiteXmlFile></suiteXmlFiles>
+                    <suiteXmlFiles><suiteXmlFile>src/test/resources/${suite}</suiteXmlFile></suiteXmlFiles>
                 </configuration>
             </plugin>
         </plugins>
