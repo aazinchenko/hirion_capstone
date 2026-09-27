@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Edit(./src/test/java/ch/hirion/pub/**)",
+      "Edit(./src/test/java/ch/hirion/journey/RegistrationTest.java)",
+      "Edit(./src/test/java/ch/hirion/journey/DashboardTest.java)",
+      "Edit(./src/test/java/ch/hirion/journey/SettingsTest.java)",
+      "Edit(./openspec/changes/**)",
+      "Edit(./openspec/specs/**)",
+      "Bash(pnpm exec openspec:*)",
+      "Bash(pnpm check)",
+      "Bash(pnpm spec:check)",
+      "Bash(mvn -q test:*)",
+      "Bash(java scripts/CheckLocatorRules.java:*)"
+    ],
+    "deny": [
+      "Edit(./src/test/java/ch/hirion/journey/JourneyCleanup.java)",
+      "Edit(./src/test/java/ch/hirion/support/**)",
+      "Edit(./src/test/resources/**)",
+      "Edit(./scripts/**)",
+      "Edit(./pom.xml)",
+      "Edit(./package.json)",
+      "Edit(./openspec/config.yaml)",
+      "Edit(./docs/intent.md)",
+      "Edit(./AGENTS.md)"
+    ]
+  }
+}
