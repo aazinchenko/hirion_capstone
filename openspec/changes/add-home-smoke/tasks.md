@@ -5,12 +5,12 @@
 
 ## 2. Make scenarios GREEN
 
-- [ ] 2.1 Verify every string in SmokeTest matches `specs/home-page/spec.md` verbatim (link/button names, billed lines, FAQ answer prefix, `plan=free` / `plan=trial`)
-- [ ] 2.2 Fix locators/assertions per AGENTS.md (role/label/text/testid only, `// locator-exception:` on `#faq` / `#pricing`) until PUB-1, PUB-2, PUB-3, PUB-5 tests pass; verify with `mvn -q test -Dtest=SmokeTest`
+- [x] 2.1 Verify every string in SmokeTest matches `specs/home-page/spec.md` verbatim (link/button names, billed lines, FAQ answer prefix, `plan=free` / `plan=trial`)
+- [x] 2.2 Fix locators/assertions per AGENTS.md (role/label/text/testid only, `// locator-exception:` on `#faq` / `#pricing`) until PUB-1, PUB-2, PUB-3, PUB-5 tests pass; verify with `mvn -q test -Dtest=SmokeTest`
 - [x] 2.3 Mark `pub4_selectedPeriodIsAriaPressed` as `@Test(expectedExceptions = AssertionFailedError.class, description = "PUB-4 KNOWN BUG D4 ...")` without weakening its assertion; verify it is reported as passed
-- [ ] 2.4 Run `java scripts/CheckLocatorRules.java src/test/java`; verify exit 0 (the script is added in step 7 of the capstone plan)
+- [x] 2.4 Run `java scripts/CheckLocatorRules.java src/test/java`; verify exit 0 (the script is added in step 7 of the capstone plan)
 
 ## 3. Verify
 
-- [ ] 3.1 Run `mvn test -Dsuite=testng-public.xml`; verify the suite is green with 12 SmokeTest tests
-- [ ] 3.2 Run pnpm check and quote its summary line
+- [x] 3.1 Run `mvn test -Dsuite=testng-public.xml`; verify the suite is green with 12 SmokeTest tests
+- [x] 3.2 Run pnpm check and quote its summary line

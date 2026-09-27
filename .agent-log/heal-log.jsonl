@@ -1,0 +1,5 @@
+{"ts":"2026-09-27T08:12:26Z","file":"src/test/java/ch/hirion/pub/SmokeTest.java","msg":"iteration 1: running tests"}
+{"ts":"2026-09-27T08:13:24Z","file":"src/test/java/ch/hirion/pub/SmokeTest.java","msg":"RED -- fetching live DOM"}
+{"ts":"2026-09-27T08:13:38Z","file":"src/test/java/ch/hirion/pub/SmokeTest.java","msg":"asking agent for ONE targeted fix"}
+{"ts":"2026-09-27T08:14:35Z","file":"src/test/java/ch/hirion/pub/SmokeTest.java","msg":"iteration 2: running tests"}
+{"ts":"2026-09-27T08:15:08Z","file":"src/test/java/ch/hirion/pub/SmokeTest.java","msg":"GREEN on iteration 2"}
