@@ -30,7 +30,8 @@ Do NOT touch tests with expectedExceptions (known bugs). Make ONE targeted fix."
 echo "### iteration $i" >> .agent-log/heal-diff.patch
 git diff -U0 -- "$FILE" >> .agent-log/heal-diff.patch
 if ! java scripts/CheckLocatorRules.java src/test/java >> "$RAW" 2>&1; then
-log "REJECTED by CheckLocatorRules -- retrying"
+log "REJECTED by CheckLocatorRules -- reverting and retrying"
+git checkout -- "$FILE"
 continue
 fi
 done
