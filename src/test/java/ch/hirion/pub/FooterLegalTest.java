@@ -4,8 +4,11 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.assertions.LocatorAssertions;
 import com.microsoft.playwright.options.AriaRole;
 import org.opentest4j.AssertionFailedError;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
+import java.time.Year;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -39,6 +42,15 @@ public class FooterLegalTest extends PublicPageTest {
     footerLink("Privacy").click();
     assertThat(page).hasURL(Pattern.compile("/privacy([?#].*)?$"));
     assertThat(h1("Privacy Policy")).isVisible();
+  }
+
+  @Test(description = "FOOT-1 Internal footer links respond")
+  public void foot1_internalLinksRespond() {
+    SoftAssert soft = new SoftAssert();
+    for (String path : List.of("/", "/contact", "/privacy", "/terms", "/imprint")) {
+      soft.assertEquals(page.request().get(BASE_URL + path).status(), 200, "status of " + path);
+    }
+    soft.assertAll(); // reports every broken link at once, not only the first
   }
 
   // FOOT-2
@@ -86,5 +98,55 @@ public class FooterLegalTest extends PublicPageTest {
     if (hrefs.stream().noneMatch(h -> VALID_MAILTO.matcher(h).matches())) {
       throw new AssertionFailedError("no valid mailto link on /imprint, found: " + hrefs);
     }
+  }
+
+  // FOOT-4
+
+  @DataProvider
+  public Object[][] anchors() {
+    return new Object[][] {{"How it works", "how"}, {"Pricing", "pricing"},
+          {"Sample matches", "examples"}, {"Manifesto", "manifesto"}, {"FAQ", "faq"}};
+  }
+
+  @Test(dataProvider = "anchors", description = "FOOT-4 Footer anchor scrolls to its section")
+  public void foot4_anchorScrolls(String name, String id) {
+    open("/");
+    footerLink(name).click();
+    assertThat(page).hasURL(Pattern.compile("#" + id + "$"));
+    assertThat(page.locator("#" + id)).isInViewport(); // locator-exception: section anchor #id
+  }
+
+  // FOOT-5
+
+  @Test(description = "FOOT-5 LinkedIn link attributes")
+  public void foot5_linkedInIsSafe() {
+    open("/");
+    Locator li = footerLink("Hirion on LinkedIn");
+    assertThat(li).hasAttribute("href", "https://www.linkedin.com/company/hirionch");
+    assertThat(li).hasAttribute("target", "_blank");
+    assertThat(li).hasAttribute("rel", Pattern.compile("noopener"));
+    assertThat(li).hasAttribute("rel", Pattern.compile("noreferrer"));
+  }
+
+  // FOOT-6
+
+  @Test(description = "FOOT-6 Privacy shows its update date")
+  public void foot6_privacyLastUpdated() {
+    open("/privacy");
+    assertThat(page.getByText(Pattern.compile("^Last updated:"))).isVisible();
+  }
+
+  @Test(description = "FOOT-6 Terms shows its update date")
+  public void foot6_termsLastUpdated() {
+    open("/terms");
+    assertThat(page.getByText(Pattern.compile("^Last updated:"))).isVisible();
+  }
+
+  // FOOT-7
+
+  @Test(description = "FOOT-7 Copyright year")
+  public void foot7_copyrightYear() {
+    open("/");
+    assertThat(page.getByRole(AriaRole.CONTENTINFO)).containsText("© " + Year.now().getValue());
   }
 }

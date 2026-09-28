@@ -31,3 +31,17 @@
   name, email, subject, message, website. Confirmation text still unknown.
 - Proposed for 2.x (needs a human decision, it narrows the CONT-2 / CONT-4 wording "non-GET request"):
   count only requests to `/api/public/contact`, keep the catch-all mock so nothing leaves the browser.
+
+## Plan step 14: footer coverage completed (2026-09-28)
+
+- Spec `footer-and-legal` extended in commit ba1a3e1 with the plan step 14 items that were missing:
+  HTTP 200 scenario in FOOT-1 (plan FOOT-01), FOOT-4 footer anchors (plan FOOT-02), FOOT-5 LinkedIn
+  link attributes (plan FOOT-03), FOOT-6 "Last updated:" on /privacy and /terms (plan FOOT-05),
+  FOOT-7 copyright year (plan FOOT-07). Plan FOOT-04 and FOOT-06 were already covered by FOOT-2 and FOOT-3.
+- `FooterLegalTest`: 6 new `@Test` methods (13 in total); foot4_anchorScrolls runs 5 times via
+  DataProvider, so the class has 17 runs.
+- `mvn -q test -Dtest=FooterLegalTest` (2026-09-28 20:42), from target/surefire-reports/testng-results.xml:
+  Tests run: 17, Failures: 0, Errors: 0, Skipped: 0 -- both KNOWN BUG D1 tests pass (expected exception).
+- `java scripts/CheckLocatorRules.java src/test/java` -> `PASS: no forbidden patterns`.
+- tasks.md updated: 1.1 now 38 tests (FooterLegalTest 13), 3.1 now 54 tests. 1.2 left as is: it records
+  the RED run with 32 tests.
