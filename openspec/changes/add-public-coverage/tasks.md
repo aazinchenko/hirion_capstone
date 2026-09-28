@@ -1,6 +1,6 @@
 ## 1. Scenario tests (RED)
 
-- [ ] 1.1 Write one `@Test` per spec scenario (32 tests) in `src/test/java/ch/hirion/pub/`, all extending `BaseTest`, guest context only; add `BaseTest.open(String path)` (navigate DOMCONTENTLOADED + hydration wait, returns `Response`) and switch `SmokeTest.openHome` to it. Known-bug tests carry `@Test(expectedExceptions = AssertionFailedError.class, description = "<ID> ... KNOWN BUG Dn ...")` from the start. Classes and methods:
+- [x] 1.1 Write one `@Test` per spec scenario (32 tests) in `src/test/java/ch/hirion/pub/`, all extending `BaseTest`, guest context only; add `BaseTest.open(String path)` (navigate DOMCONTENTLOADED + hydration wait, returns `Response`) and switch `SmokeTest.openHome` to it. Known-bug tests carry `@Test(expectedExceptions = AssertionFailedError.class, description = "<ID> ... KNOWN BUG Dn ...")` from the start. Classes and methods:
   - `FooterLegalTest` (7): foot1_footerLinkTargets, foot1_footerOpensPrivacy, foot2_privacyPage, foot2_termsPage, foot2_imprintPage, foot3_imprintHasNoFillTemplates (KNOWN BUG D1), foot3_imprintEmailIsValidMailto (KNOWN BUG D1)
   - `LocalizationTest` (7): i18n1_defaultIsEnglish, i18n1_menuListsFourLanguages, i18n2_switchToGerman, i18n3_germanSurvivesReload, i18n3_germanOnAnotherPage, i18n4_defaultHtmlLang, i18n4_htmlLangAfterGerman (KNOWN BUG D2)
   - `ContactFormTest` (5): cont1_formRendered, cont2_emptyFormBlocked, cont2_invalidEmailBlocked, cont3_honeypotAttributes, cont4_validSubmitMocked -- catch-all `page.route` installed before `open("/contact")` in every test of this class
@@ -8,7 +8,7 @@
   - `QualityTest` (3): qa3_noConsoleErrors, qa4_homeMetadata, qa4_robotsAndSitemap
   - `MobileLayoutTest` (2, viewport 375 x 812): qa1_noHorizontalScroll, qa2_signInReachableOnPhone (KNOWN BUG D3)
   Verify: `grep -c "@Test" src/test/java/ch/hirion/pub/*.java` gives 7/7/5/8/3/2 for the new classes.
-- [ ] 1.2 Run `mvn -q test -Dsuite=testng-public.xml` and quote the failing lines (test name + assertion / locator message) in the change log; verify the report lists all 32 new tests plus the 12 SmokeTest tests.
+- [x] 1.2 Run `mvn -q test -Dsuite=testng-public.xml` and quote the failing lines (test name + assertion / locator message) in the change log; verify the report lists all 32 new tests plus the 12 SmokeTest tests.
 
 ## 2. Make scenarios GREEN
 

@@ -30,6 +30,9 @@ change; motivation and open items: proposal.md.
 - **Page opening.** Move SmokeTest's navigate + hydration wait into a protected `BaseTest.open(String path)`
   that returns the `Response`; SmokeTest calls it unchanged in behavior. The 404 scenario reads
   `response.status()` from it. Alternative rejected: copying the wait into six classes.
+  **Changed in apply (1.1):** `.claude/settings.json` denies edits to `support/**`, so the helper is an
+  abstract `ch.hirion.pub.PublicPageTest extends BaseTest` (`open`, `h1`, `field`) that the six new
+  classes extend; `SmokeTest` stays unchanged with its own copy of the wait.
 - **Locators.** `role(...)` for links, buttons, headings (`AriaRole.HEADING` + `setLevel(1)` where the
   heading is asserted). Footer via `page.getByRole(AriaRole.CONTENTINFO)`. Form fields via
   `page.getByLabel("...", exact)` -- on `/login` "Password" must be exact because the "Show password"
