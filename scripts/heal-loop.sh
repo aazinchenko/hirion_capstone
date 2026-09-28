@@ -27,6 +27,8 @@ claude -p "Test file $FILE is failing (see target/surefire-reports).
 getByRole / getByLabel / getByText / getByTestId or the role(...) helper, setExact(true) for
 shared prefixes, no nth-child, no waitForTimeout, no Thread.sleep, no guessed classes.
 Do NOT touch tests with expectedExceptions (known bugs). Make ONE targeted fix." >> "$RAW" 2>&1
+echo "### iteration $i" >> .agent-log/heal-diff.patch
+git diff -U0 -- "$FILE" >> .agent-log/heal-diff.patch
 if ! java scripts/CheckLocatorRules.java src/test/java >> "$RAW" 2>&1; then
 log "REJECTED by CheckLocatorRules -- retrying"
 continue
