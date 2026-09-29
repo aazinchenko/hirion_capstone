@@ -46,12 +46,12 @@ On `/login` the field "Email" SHALL have `autocomplete="email"` and the field "P
 
 ### Requirement: AUTH-4 Forgot-password page
 The page `/forgot-password` SHALL show the heading level 1 "Reset your password", the field labelled
-"Email", the button "Send reset link" and a link "Sign in" to `/login`.
+"Email", the button "Send reset link" and, in its main content, a link "Sign in" to `/login`.
 
 #### Scenario: Forgot-password page is rendered
 - **WHEN** a guest opens `/forgot-password`
 - **THEN** the page shows the heading level 1 "Reset your password", the field "Email", the button
-  "Send reset link" and a link "Sign in" with `href="/login"`
+  "Send reset link" and, in the main content, a link "Sign in" with `href="/login"`
 
 ### Requirement: AUTH-5 Unknown pages show a 404 page
 Opening a path that does not exist SHALL answer with HTTP status 404 and show the heading level 1 "404",

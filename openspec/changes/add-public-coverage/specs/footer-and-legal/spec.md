@@ -43,8 +43,9 @@ Each legal page SHALL render its heading level 1 and its document title:
 
 ### Requirement: FOOT-3 Imprint is complete
 The imprint `/imprint` SHALL name the operator, address, contact email and register data without any
-unfilled template: no visible text SHALL contain "[FILL:", and the contact email link SHALL be a
-`mailto:` link to a syntactically valid email address. (Known defect D1.)
+unfilled template: no visible text SHALL contain "[FILL:", the main content SHALL contain at least one
+`mailto:` link, and every `mailto:` link in the main content SHALL point to a syntactically valid email
+address. (Known defect D1.)
 
 #### Scenario: Imprint has no unfilled templates
 - **WHEN** a guest opens `/imprint`
@@ -52,7 +53,8 @@ unfilled template: no visible text SHALL contain "[FILL:", and the contact email
 
 #### Scenario: Imprint email is a valid mailto link
 - **WHEN** a guest opens `/imprint`
-- **THEN** the page has a link whose `href` matches `^mailto:[^@\s\[\]]+@[^@\s\[\]]+\.[a-z]{2,}$`
+- **THEN** the main content has at least one `mailto:` link and every such `href` matches
+  `^mailto:[^@\s\[\]]+@[^@\s\[\]]+\.[a-z]{2,}$`
 
 ### Requirement: FOOT-4 Footer anchors lead to home page sections
 The footer SHALL contain the links "How it works" to `/#how`, "Pricing" to `/#pricing`,
