@@ -102,6 +102,10 @@ D12  /signup step 4: the Premium Trial / Free cards do not expose which one is s
      aria-pressed / aria-checked / role=radio); the selection is only visual.
                                                    (candidate, from the site code 2026-09-29, confirm live)
 
+D13  /signup step 3: the role picker is <button role="combobox"> with the visible text "Add" but no
+     accessible name (a combobox does not take its name from content, no aria-label); a screen reader
+     announces only "combobox".                        (candidate, seen in the live run 2026-09-29)
+
 ## Done means
 - `pnpm check` exits 0 and ends with non-zero counters: specs: 9 · active changes: 0 · archived: 4.
 - Every change has commits in the order: spec -> RED -> GREEN -> archive.
