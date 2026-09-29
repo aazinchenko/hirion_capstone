@@ -110,3 +110,32 @@
   `mvn -q test -Dsuite=testng-public.xml`: Tests run: 58, Failures: 0, Errors: 0, Skipped: 0 (exit 0).
 - `java scripts/CheckLocatorRules.java src/test/java` -> `PASS: no forbidden patterns`.
 - tasks.md: 1.1 now 42 tests (+ SignupValidationTest 2), 3.1 now 58 tests.
+
+## Plan step 18: tasks 2.1-3.2 with evidence (2026-09-29)
+
+- 2.1 strings: every string literal of the 7 new classes checked against the four specs by a script
+  (comments stripped): 206 found verbatim; the other 83 are not site texts (test descriptions, JavaScript
+  snippets, URL regexes such as `/privacy([?#].*)?$`, `^Last updated:` = "starting with", assertion
+  messages, made-up input such as "QA Contact" / "Secret-123!", mock settings). Second script: 42 spec
+  scenarios <-> 42 `@Test` descriptions "<ID> <scenario title>", none missing, none extra, no duplicates.
+- 2.2 locators: nothing to heal -- the whole suite is green, heal-loop.sh was not needed in this change.
+  The RED run of 1.2 failed on the contact-form check (Stripe beacon), not on locators; a human narrowed
+  CONT-2 / CONT-4 in step 16. Task text updated: AGENTS.md also allows section anchors as
+  `// locator-exception:` (SmokeTest `#faq` / `#pricing`, FooterLegalTest `#` + id).
+- 2.3 network: ContactFormTest installs `page.route("**/*")` (line 36) before `open("/contact")`; GET is
+  resumed (l.39), every other request is fulfilled locally (l.45); only `/api/public/contact` is counted
+  (l.29, l.42); cont2 asserts 0 (l.96, l.106), cont4 exactly 1 POST with the email (l.132).
+- 2.4 KNOWN BUG: D1 x2 (FooterLegalTest), D2 (LocalizationTest), D3 (MobileLayoutTest), D5 (AuthPagesTest)
+  all keep `expectedExceptions = AssertionFailedError.class` and the full SHALL check; waiting assertions use
+  3 s (`QUICK_ATTR`, `setTimeout(3000)`); the D1 mailto test waits for nothing (reads hrefs with
+  `evaluate` and throws at once), so a timeout does not apply. `grep -rn D4 src/test/java/ch/hirion/pub`
+  hits only SmokeTest.
+- 2.5 `java scripts/CheckLocatorRules.java src/test/java` -> `PASS: no forbidden patterns` (exit 0).
+- 3.1 `mvn test -Dsuite=testng-public.xml` -> `Tests run: 58, Failures: 0, Errors: 0, Skipped: 0`,
+  BUILD SUCCESS.
+- 3.2 `pnpm check` (exit 0):
+  ```
+  PASS: no forbidden patterns
+  $ mvn -q test
+  spec:check ok — specs: 1 · active changes: 1 · archived: 1
+  ```

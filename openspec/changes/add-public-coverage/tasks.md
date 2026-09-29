@@ -13,13 +13,13 @@
 
 ## 2. Make scenarios GREEN
 
-- [ ] 2.1 Compare every string in the new tests with the four specs verbatim (link / button / label / heading names, titles, URLs, meta description, `hirion.lang`); verify no mismatch remains.
-- [ ] 2.2 Fix locators and assertions per AGENTS.md (role / label / text / testid; `// locator-exception:` only on `html` and `input[name='website']`; exact "Password" on `/login`) until all non-KNOWN-BUG tests pass; verify with `mvn -q test -Dsuite=testng-public.xml`. A failure caused by a wrong spec string (proposal "Sources" / "Open questions") is reported to a human, not fixed by editing the assertion.
-- [ ] 2.3 Verify the contact form never reaches the network: in `ContactFormTest` every non-GET request is fulfilled locally (`route.fulfill`); only requests to `/api/public/contact` are counted (Stripe.js sends its own beacon); cont2 tests record 0 form requests and cont4 exactly 1 `POST` containing "qa-contact@example.com" and shows the toast "Thanks! Your message is ready to send."; verify by reading the class and the test output.
-- [ ] 2.4 Verify the five KNOWN BUG tests (D1 x2, D2, D3, D5) keep the full SHALL assertion with `setTimeout(3000)` and are reported as passed (expected exception); D4 is not repeated in any new class (`grep -rn "D4" src/test/java/ch/hirion/pub` hits only SmokeTest).
-- [ ] 2.5 Run `java scripts/CheckLocatorRules.java src/test/java`; verify it prints "PASS: no forbidden patterns".
+- [x] 2.1 Compare every string in the new tests with the four specs verbatim (link / button / label / heading names, titles, URLs, meta description, `hirion.lang`); verify no mismatch remains.
+- [x] 2.2 Fix locators and assertions per AGENTS.md (role / label / text / testid; `// locator-exception:` only where AGENTS.md allows it: section anchors (`#faq`, `#pricing`, the footer targets `#how` ...), `html` and `input[name='website']`; exact "Password" on `/login`) until all non-KNOWN-BUG tests pass; verify with `mvn -q test -Dsuite=testng-public.xml`. A failure caused by a wrong spec string (proposal "Sources" / "Open questions") is reported to a human, not fixed by editing the assertion.
+- [x] 2.3 Verify the contact form never reaches the network: in `ContactFormTest` every non-GET request is fulfilled locally (`route.fulfill`); only requests to `/api/public/contact` are counted (Stripe.js sends its own beacon); cont2 tests record 0 form requests and cont4 exactly 1 `POST` containing "qa-contact@example.com" and shows the toast "Thanks! Your message is ready to send."; verify by reading the class and the test output.
+- [x] 2.4 Verify the five KNOWN BUG tests (D1 x2, D2, D3, D5) keep the full SHALL assertion with `setTimeout(3000)` and are reported as passed (expected exception); D4 is not repeated in any new class (`grep -rn "D4" src/test/java/ch/hirion/pub` hits only SmokeTest).
+- [x] 2.5 Run `java scripts/CheckLocatorRules.java src/test/java`; verify it prints "PASS: no forbidden patterns".
 
 ## 3. Verify
 
-- [ ] 3.1 Run `mvn test -Dsuite=testng-public.xml`; verify the suite is green with 58 tests (12 SmokeTest + 46 new: 42 `@Test` methods, foot4_anchorScrolls runs 5 times), none skipped.
-- [ ] 3.2 Run pnpm check and quote its summary line
+- [x] 3.1 Run `mvn test -Dsuite=testng-public.xml`; verify the suite is green with 58 tests (12 SmokeTest + 46 new: 42 `@Test` methods, foot4_anchorScrolls runs 5 times), none skipped.
+- [x] 3.2 Run pnpm check and quote its summary line
