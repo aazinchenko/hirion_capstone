@@ -71,16 +71,17 @@ defects D6, D8, D9 and D10. None of the strings listed below is used in a requir
    default (trial) signup: "You're on the Pro plan.", "Renews on <date + 7 days>", Cancel subscription,
    Monthly / Quarterly / Yearly, "Manage subscription". A Free account may look different. No
    requirement for `/settings?section=plan` until a human records the Free view.
-2. **Account deletion flow.** Button "Delete account" opens the dialog "Delete your account?" with
-   "Cancel" / "Delete". Success shows the toast "Your account has been deleted.", signs the user out and
-   redirects to `/`. Failure shows "Could not delete your account.". These strings come from the live
-   site code. The dialog was never submitted. The first live `JourneyCleanup` run confirms them. Only
-   after that can DEL requirements with these strings be added (a later change or `/opsx:update`).
+2. **Account deletion flow** -- CONFIRMED live 2026-09-29 by the first JourneyCleanup run: "Delete account"
+   opens the dialog "Delete your account?" ("This permanently removes your profile, CV, preferences and
+   saved matches. It cannot be undone.") with "Cancel" / "Delete"; after "Delete" the URL path is `/`,
+   the toast "Your account has been deleted." is shown and the user is signed out; signing in again with
+   the same email and password fails. Ready for DEL requirements (change 4 or `/opsx:update`).
 3. **D7: Phone accepts letters** ("00000000000000jj"). Seen on a screenshot only, marked "to re-check".
    There is no requirement and no test until a human re-checks it. If it is confirmed: add a
    requirement "Phone SHALL reject letters" and a KNOWN BUG D7 test that, like D10, never saves the
    value (see design.md).
-4. **Wrong password error text** (AUTH-6). The exact message on `/login` after a wrong password is not
+4. **Wrong password error text** (AUTH-6) -- still open: the live run 2026-09-29 showed the error toast
+   (auth6 passed) but did not record its text. The exact message on `/login` after a wrong password is not
    recorded in `docs/intent.md`. AUTH-6 asserts only what is known: the user stays on `/login` with the
    heading "Welcome back". The text is added once a human confirms it.
 5. **How step 4 marks the selected plan** -- answered from the site code (signup bundle, read 2026-09-29):

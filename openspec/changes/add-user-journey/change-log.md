@@ -124,3 +124,22 @@ no account was created. A human starts the first live run (task 2.5).
 - Last run: 12 tests, 9 passed, 3 skipped (reg9, reg4, auth6 -- they need `-Dqa.mailbox`). Confirmed live on the
   way: step 4 shows Premium Trial selected by default and Free can be selected (visual state, open question 5
   for the guard), steps 2-3 send nothing to the backend (REG-8).
+
+## First live run with an account: RegistrationTest GREEN, account created and deleted (2026-09-29 18:35-18:36)
+
+- Human "go" in chat. `mvn -q test -Dsuite=testng-journey.xml -Dqa.mailbox=<mailbox>` -> exit 0,
+  Tests run: 12, passed 12, failed 0, skipped 0 (68 s).
+- reg9 created one Free account (`<mailbox>+hirion-qa-<millis>@gmail.com`) after the Free guard passed and
+  landed on /dashboard; reg4 got "An account with this email already exists. Sign in instead." for it;
+  auth6 made one wrong-password attempt: stayed on /login with an error toast (text not recorded).
+- JourneyCleanup (@AfterSuite) output:
+  ```
+  deleting this run's user: <qa-user> (accountCreated=true)
+  dialog: Delete your account?  This permanently removes your profile, CV, preferences and saved matches. It cannot be undone.  Cancel Delete
+  redirected to https://hirion.ch/; page text after delete: ... Your account has been deleted.
+  sign-in did not reach /dashboard; page says: ... Welcome back ... Sign in ...
+  deleted: <qa-user> no longer signs in
+  ```
+  `.auth/test-user.json` and `.auth/user.json` removed; `.auth/manual-user.json` kept.
+- Open question 2 (deletion) CONFIRMED live and recorded in proposal.md; open question 5 answered (visual
+  selection works as the guard); open question 4 (wrong-password text) still open.
