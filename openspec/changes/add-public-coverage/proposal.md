@@ -30,10 +30,22 @@ from `docs/intent.md` and pins known defects D1, D2, D3 and D5.
   `hirion.lang`, and `<html lang>` following the chosen language (D2).
 - `contact-form`: `/contact` form fields, required / email validation, honeypot, mocked submit.
 - `access-and-quality`: guest redirects to `/login`, login and forgot-password pages (D5), 404 page,
-  mobile layout and navigation at 375 px (D3), no console errors, SEO basics on `/`.
+  mobile layout and navigation at 375 px (D3), no console errors, SEO basics on `/` including robots.txt
+  rules, and signup step 1 client checks (REG-1 empty step, REG-2 "Show password"; plan step 17). They
+  create no account, so they belong to the public suite; the separate `signup` spec comes in change 3.
 
 ### Modified Capabilities
 - (none -- `home-page` is unchanged; D4 stays there)
+
+## Not in this change (human decision, 2026-09-29)
+
+- Plan AUTH-03 "wrong password shows an error": needs the disposable test user, which exists only from
+  change 3 (plan step 20, `TestUser`); repeated failed logins on the live site could also lock an
+  account. Moved to change 3 `add-user-journey`.
+- Plan QA-06 automatic accessibility audit (axe-core): optional in the plan and needs a new dependency in
+  `pom.xml`, which only a human edits. Not done; can be added later as its own change.
+- Plan QA-05 (`aria-pressed` on the pricing toggle, D4) is not repeated: it is covered by
+  `specs/home-page` PUB-4 and `SmokeTest` from change 1.
 
 ## Impact
 

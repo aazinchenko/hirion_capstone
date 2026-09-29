@@ -2,7 +2,8 @@
 
 Guest access and baseline quality of hirion.ch (test groups AUTH and QA): guests are sent to sign in
 before private pages, the sign-in, password-reset and 404 pages work, and the public site is usable on
-a phone, free of console errors and has basic SEO metadata.
+a phone, is free of console errors and has basic SEO metadata; step 1 of the signup wizard checks the
+input in the browser before it lets the visitor continue.
 
 ## ADDED Requirements
 
@@ -89,7 +90,8 @@ console message of type `error` and without an uncaught page error.
 The home page `/` SHALL have the document title "Hirion, Swiss jobs matched to your CV, sent by email",
 a meta description "Stop scrolling job boards. Hirion scans every Swiss source and delivers only the
 roles that match your profile.", a canonical link `https://hirion.ch/`, exactly one heading level 1,
-and the site SHALL serve `/robots.txt` and `/sitemap.xml` with HTTP status 200.
+and the site SHALL serve `/robots.txt` and `/sitemap.xml` with HTTP status 200; `/robots.txt` SHALL
+disallow the private areas `/dashboard` and `/settings`.
 
 #### Scenario: Home page metadata
 - **WHEN** a guest opens `/`
@@ -100,4 +102,23 @@ and the site SHALL serve `/robots.txt` and `/sitemap.xml` with HTTP status 200.
 
 #### Scenario: robots.txt and sitemap.xml
 - **WHEN** a client requests `/robots.txt` and `/sitemap.xml`
-- **THEN** both responses have HTTP status 200
+- **THEN** both responses have HTTP status 200 and `/robots.txt` contains the lines
+  "Disallow: /dashboard" and "Disallow: /settings"
+
+### Requirement: REG-1 Signup step 1 validates before continuing
+On `/signup`, clicking "Continue" while the first and last name are empty SHALL NOT advance the wizard:
+the page SHALL show the notification "Please enter your first and last name." and stay on "Step 1 of 4".
+
+#### Scenario: Empty step 1 is blocked
+- **WHEN** a guest opens `/signup` and clicks "Continue" without filling any field
+- **THEN** the page shows the text "Please enter your first and last name.", still shows "Step 1 of 4"
+  and the URL path stays `/signup`
+
+### Requirement: REG-2 Show password reveals the typed password
+On `/signup` the button "Show password" SHALL switch the field "Password" from `type="password"` to
+`type="text"`, so the visitor can check what they typed.
+
+#### Scenario: Show password
+- **WHEN** a guest opens `/signup`, types a password into the field labelled exactly "Password" and clicks
+  the button "Show password"
+- **THEN** the field "Password" has `type="text"`
