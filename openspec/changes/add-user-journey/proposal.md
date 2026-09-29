@@ -83,8 +83,13 @@ defects D6, D8, D9 and D10. None of the strings listed below is used in a requir
 4. **Wrong password error text** (AUTH-6). The exact message on `/login` after a wrong password is not
    recorded in `docs/intent.md`. AUTH-6 asserts only what is known: the user stays on `/login` with the
    heading "Welcome back". The text is added once a human confirms it.
-5. **How step 4 marks the selected plan** (checked radio, `aria-checked`, `aria-pressed` ...). REG-7
-   says "selected". The test needs the attribute, so a human confirms it before GREEN.
+5. **How step 4 marks the selected plan** -- answered from the site code (signup bundle, read 2026-09-29):
+   the Premium Trial and Free cards are plain `<button>` elements without `aria-pressed`, `aria-checked`
+   or `role="radio"`; the selection is only visual (the selected card gets the border classes
+   `border-primary` and a check icon). Candidate defect D12 in docs/intent.md. The "Free is selected"
+   guard before "See my matches" therefore checks the visual state of the Free card, and REG-7 "selected"
+   means that visual state until D12 is fixed. The code also shows why Free matters: with `trial`
+   selected, account creation immediately starts the Premium trial.
 6. **Analytics on a Free account.** The Analytics tab has a PRO badge. The Analytics facts were
    recorded on the signed-in test account, whose plan is not stated. If a Free user sees a paywall
    instead of the three sections, DASH-7 / DASH-8 need a human decision: test on the trial plan is not
@@ -94,3 +99,12 @@ defects D6, D8, D9 and D10. None of the strings listed below is used in a requir
 8. **Healing journey tests.** `scripts/heal-loop.sh` fetches the live DOM with `.auth/user.json`. After a
    normal run that session belongs to a deleted user. The human decides how heal sessions get a live
    user (design.md "Healing").
+9. **Wizard Back and the `plan` parameter** (plan REG-09, REG-11) -- confirmed from the site code only
+   (2026-09-29), not yet seen live: all wizard data (names, email, password, CV, roles, plan) lives in
+   one component state, "Back" only lowers the step number, so the data of steps 1-3 is kept; "Back" on
+   step 1 goes to `/`. The initial plan is the `plan` URL parameter, else `trial`: `?plan=trial` equals no
+   parameter, `?plan=free` preselects Free, any other value selects no card. Candidates for change 4.
+10. **Invalid email on step 1** (plan REG-03 "qa@ -> error, stay on step 1") -- the site code checks only
+   "email not empty" and "password at least 8 characters"; the input has `type="email"` but there is no
+   `<form>` submit, so the browser never checks the format and "qa@" reaches step 2. Candidate defect D11
+   in docs/intent.md, to be confirmed live by a human (no account is created unless step 4 is finished).

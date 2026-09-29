@@ -95,6 +95,13 @@ D9   Settings > Profile shows "You have unsaved changes" right after load, with 
 D10  Settings > Profile > Email* has no effective validation: an error is shown, but any string
      is saved as the email.                                               (CONFIRMED live 2026-09-25)
 
+D11  /signup step 1 accepts an invalid email such as "qa@": only "not empty" and "password >= 8" are
+     checked, the input is type=email but not inside a form, so the error comes only on step 4.
+                                                   (candidate, from the site code 2026-09-29, confirm live)
+D12  /signup step 4: the Premium Trial / Free cards do not expose which one is selected (no
+     aria-pressed / aria-checked / role=radio); the selection is only visual.
+                                                   (candidate, from the site code 2026-09-29, confirm live)
+
 ## Done means
 - `pnpm check` exits 0 and ends with non-zero counters: specs: 9 · active changes: 0 · archived: 4.
 - Every change has commits in the order: spec -> RED -> GREEN -> archive.
