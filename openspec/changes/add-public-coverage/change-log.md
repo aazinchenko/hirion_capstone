@@ -67,3 +67,24 @@
   CONT-2 / CONT-4 are decided (plan step 16).
 - `java scripts/CheckLocatorRules.java src/test/java` -> `PASS: no forbidden patterns`.
 - tasks.md: 1.1 now 40 tests (LocalizationTest 9), 3.1 now 56 tests.
+
+## Plan step 16: contact form completed (2026-09-29)
+
+- Human decision (2026-09-29): CONT-2 / CONT-4 count only requests to `/api/public/contact`. Stripe.js on the
+  page posts `https://m.stripe.com/6` at a random moment, which made the "no non-GET request" checks flaky
+  (RED run: 3 failures; 2026-09-29 full run: 1). The catch-all `page.route` stays, so the beacon and every
+  other non-GET request are still answered locally and nothing leaves the browser.
+- Confirmation text found without a real submit: one run of cont4 with a temporary debug print (removed
+  before commit) and the mocked 200 response `{"ok":true}`: the page shows the toast
+  "Thanks! Your message is ready to send." and clears the fields. Proposal open question 3 is closed.
+- Honeypot checked in the server HTML: the `website` input sits in a `div aria-hidden="true"` with
+  `position:absolute; left:-9999px`.
+- Spec `contact-form` (commit 404b0c2): CONT-2 names the endpoint and adds "stays on /contact" (plan CONT-03);
+  CONT-3 adds aria-hidden and "not in the viewport" (plan CONT-04); CONT-4 requires `POST` and the toast
+  (plan CONT-05, ASSUMED -> CONFIRMED). Plan CONT-02 uses "qa@", the spec keeps "not-an-email": same check
+  (`validity.typeMismatch`).
+- `ContactFormTest`: still 5 `@Test`; runs of `mvn -q test -Dtest=ContactFormTest`: 3 in a row,
+  each Tests run: 5, Failures: 0, Errors: 0, Skipped: 0.
+- `mvn -q test -Dsuite=testng-public.xml`: Tests run: 56, Failures: 0, Errors: 0, Skipped: 0 (exit 0).
+- `java scripts/CheckLocatorRules.java src/test/java` -> `PASS: no forbidden patterns`.
+- tasks.md: task 2.3 reworded for the form endpoint; counts unchanged (40 tests, 56 runs).

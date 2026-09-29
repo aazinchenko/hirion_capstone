@@ -21,41 +21,51 @@ import static org.testng.Assert.fail;
 /**
  * Group CONT: contact form, openspec/changes/add-public-coverage/specs/contact-form.
  * NEVER a real submit: every non-GET request is answered locally before it leaves the browser.
+ * Only requests to the form endpoint are counted: Stripe.js posts its own beacon at random moments.
  */
 public class ContactFormTest extends PublicPageTest {
 
   private static final String EMAIL = "qa-contact@example.com";
-  private final List<String> nonGet = new CopyOnWriteArrayList<>();
+  private static final String FORM_API = "/api/public/contact";
+  private static final String CONFIRMATION = "Thanks! Your message is ready to send.";
+  private final List<String> formRequests = new CopyOnWriteArrayList<>();
 
   @BeforeMethod(alwaysRun = true) // runs after BaseTest.openContext (superclass first)
   public void mockNetworkAndOpenContact() {
-    nonGet.clear();
+    formRequests.clear();
     page.route("**/*", route -> {
       Request request = route.request();
       if ("GET".equals(request.method())) {
         route.resume();
         return;
       }
-      nonGet.add(request.method() + " " + request.url() + " " + request.postData());
-      route.fulfill(new Route.FulfillOptions().setStatus(200).setContentType("application/json").setBody("{}"));
+      if (isFormRequest(request)) {
+        formRequests.add(request.method() + " " + request.url() + " " + request.postData());
+      }
+      route.fulfill(new Route.FulfillOptions().setStatus(200).setContentType("application/json")
+            .setBody("{\"ok\":true}"));
     });
     open("/contact");
+  }
+
+  private static boolean isFormRequest(Request request) {
+    return !"GET".equals(request.method()) && request.url().contains(FORM_API);
   }
 
   private Locator send() {
     return role(AriaRole.BUTTON, "Send message");
   }
 
-  /** Waits 2 s for a non-GET request and fails if one shows up or was already recorded. */
-  private void assertNoNonGetRequest(int expectedRecorded) {
+  /** Waits 2 s for a request to the form endpoint and fails if one shows up; then checks the count. */
+  private void assertNoMoreFormRequests(int expectedRecorded) {
     try {
-      page.waitForRequest(r -> !"GET".equals(r.method()),
+      page.waitForRequest(ContactFormTest::isFormRequest,
             new Page.WaitForRequestOptions().setTimeout(2000), () -> { });
-      fail("unexpected non-GET request, recorded: " + nonGet);
+      fail("unexpected request to " + FORM_API + ", recorded: " + formRequests);
     } catch (TimeoutError expected) {
-      // no further request within 2 s
+      // no further form request within 2 s
     }
-    assertEquals(nonGet.size(), expectedRecorded, "non-GET requests: " + nonGet);
+    assertEquals(formRequests.size(), expectedRecorded, "requests to " + FORM_API + ": " + formRequests);
   }
 
   private void fillValidExceptEmail() {
@@ -79,22 +89,21 @@ public class ContactFormTest extends PublicPageTest {
 
   @Test(description = "CONT-2 Empty form is blocked")
   public void cont2_emptyFormBlocked() {
-    nonGet.clear();
     send().click();
     assertTrue((Boolean) field("Name").evaluate("el => el.validity.valueMissing"),
           "Name should report validity.valueMissing");
-    assertNoNonGetRequest(0);
+    assertThat(page).hasURL(Pattern.compile("/contact([?#].*)?$"));
+    assertNoMoreFormRequests(0);
   }
 
   @Test(description = "CONT-2 Invalid email is blocked")
   public void cont2_invalidEmailBlocked() {
     fillValidExceptEmail();
     field("Email").fill("not-an-email");
-    nonGet.clear();
     send().click();
     assertTrue((Boolean) field("Email").evaluate("el => el.validity.typeMismatch"),
           "Email should report validity.typeMismatch");
-    assertNoNonGetRequest(0);
+    assertNoMoreFormRequests(0);
   }
 
   // CONT-3
@@ -104,6 +113,9 @@ public class ContactFormTest extends PublicPageTest {
     Locator honeypot = page.locator("input[name='website']"); // locator-exception: contact-form honeypot
     assertThat(honeypot).hasAttribute("tabindex", "-1");
     assertThat(honeypot).hasAttribute("autocomplete", "off");
+    assertTrue((Boolean) honeypot.evaluate("el => el.closest('[aria-hidden=\"true\"]') !== null"),
+          "honeypot should be inside an element with aria-hidden=\"true\"");
+    assertThat(honeypot).not().isInViewport();
   }
 
   // CONT-4
@@ -112,10 +124,11 @@ public class ContactFormTest extends PublicPageTest {
   public void cont4_validSubmitMocked() {
     fillValidExceptEmail();
     field("Email").fill(EMAIL);
-    nonGet.clear();
-    Request request = page.waitForRequest(r -> !"GET".equals(r.method()), () -> send().click());
+    Request request = page.waitForRequest(ContactFormTest::isFormRequest, () -> send().click());
+    assertEquals(request.method(), "POST");
     String body = request.postData();
     assertTrue(body != null && body.contains(EMAIL), "request body should contain " + EMAIL + ": " + body);
-    assertNoNonGetRequest(1);
+    assertThat(page.getByText(CONFIRMATION, new Page.GetByTextOptions().setExact(true))).isVisible();
+    assertNoMoreFormRequests(1);
   }
 }
