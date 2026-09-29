@@ -32,6 +32,8 @@ public class TestUser {
   public String currentPassword;
   /** Set before "Update password" (SET-5); promoted to currentPassword once it signs in. */
   public String pendingPassword;
+  /** true from the moment "See my matches" is clicked: an account may exist even if the run dies next. */
+  public boolean submitted;
   /** false until /dashboard is reached after "See my matches". */
   public boolean accountCreated;
 

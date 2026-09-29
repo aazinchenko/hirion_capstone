@@ -61,8 +61,8 @@ public class JourneyCleanup {
         page = signIn(browser, user.email, user.pendingPassword);
       }
       if (page == null) {
-        if (!user.accountCreated) {
-          log("sign-in failed and the account was never created: removing the state file only");
+        if (!user.accountCreated && !user.submitted) {
+          log("sign-in failed and the account was never submitted: removing the state file only");
           TestUser.deleteState();
           return;
         }
