@@ -1,13 +1,13 @@
 ## 1. Scenario tests (RED)
 
-- [x] 1.1 Write one `@Test` per spec scenario (38 tests) in `src/test/java/ch/hirion/pub/`, all extending `BaseTest`, guest context only; add `BaseTest.open(String path)` (navigate DOMCONTENTLOADED + hydration wait, returns `Response`) and switch `SmokeTest.openHome` to it. Known-bug tests carry `@Test(expectedExceptions = AssertionFailedError.class, description = "<ID> ... KNOWN BUG Dn ...")` from the start. Classes and methods:
+- [x] 1.1 Write one `@Test` per spec scenario (40 tests) in `src/test/java/ch/hirion/pub/`, all extending `BaseTest`, guest context only; add `BaseTest.open(String path)` (navigate DOMCONTENTLOADED + hydration wait, returns `Response`) and switch `SmokeTest.openHome` to it. Known-bug tests carry `@Test(expectedExceptions = AssertionFailedError.class, description = "<ID> ... KNOWN BUG Dn ...")` from the start. Classes and methods:
   - `FooterLegalTest` (13): foot1_footerLinkTargets, foot1_footerOpensPrivacy, foot1_internalLinksRespond, foot2_privacyPage, foot2_termsPage, foot2_imprintPage, foot3_imprintHasNoFillTemplates (KNOWN BUG D1), foot3_imprintEmailIsValidMailto (KNOWN BUG D1), foot4_anchorScrolls (DataProvider, 5 runs), foot5_linkedInIsSafe, foot6_privacyLastUpdated, foot6_termsLastUpdated, foot7_copyrightYear
-  - `LocalizationTest` (7): i18n1_defaultIsEnglish, i18n1_menuListsFourLanguages, i18n2_switchToGerman, i18n3_germanSurvivesReload, i18n3_germanOnAnotherPage, i18n4_defaultHtmlLang, i18n4_htmlLangAfterGerman (KNOWN BUG D2)
+  - `LocalizationTest` (9): i18n1_defaultIsEnglish, i18n1_menuListsFourLanguages, i18n2_switchToGerman, i18n3_germanSurvivesReload, i18n3_germanOnAnotherPage, i18n4_defaultHtmlLang, i18n4_htmlLangAfterGerman (KNOWN BUG D2), i18n5_switchToFrench, i18n5_switchToItalian
   - `ContactFormTest` (5): cont1_formRendered, cont2_emptyFormBlocked, cont2_invalidEmailBlocked, cont3_honeypotAttributes, cont4_validSubmitMocked -- catch-all `page.route` installed before `open("/contact")` in every test of this class
   - `AuthPagesTest` (8): auth1_guestDashboardRedirects, auth1_guestSettingsRedirects, auth2_loginPageRendered, auth2_forgotPasswordLink, auth2_createAccountLink, auth3_loginAutocomplete (KNOWN BUG D5), auth4_forgotPasswordPage, auth5_unknownPathIs404
   - `QualityTest` (3): qa3_noConsoleErrors, qa4_homeMetadata, qa4_robotsAndSitemap
   - `MobileLayoutTest` (2, viewport 375 x 812): qa1_noHorizontalScroll, qa2_signInReachableOnPhone (KNOWN BUG D3)
-  Verify: `grep -c "@Test" src/test/java/ch/hirion/pub/*.java` gives 13/7/5/8/3/2 for the new classes.
+  Verify: `grep -c "@Test" src/test/java/ch/hirion/pub/*.java` gives 13/9/5/8/3/2 for the new classes.
 - [x] 1.2 Run `mvn -q test -Dsuite=testng-public.xml` and quote the failing lines (test name + assertion / locator message) in the change log; verify the report lists all 32 new tests plus the 12 SmokeTest tests.
 
 ## 2. Make scenarios GREEN
@@ -20,5 +20,5 @@
 
 ## 3. Verify
 
-- [ ] 3.1 Run `mvn test -Dsuite=testng-public.xml`; verify the suite is green with 54 tests (12 SmokeTest + 42 new: 38 `@Test` methods, foot4_anchorScrolls runs 5 times), none skipped.
+- [ ] 3.1 Run `mvn test -Dsuite=testng-public.xml`; verify the suite is green with 56 tests (12 SmokeTest + 44 new: 40 `@Test` methods, foot4_anchorScrolls runs 5 times), none skipped.
 - [ ] 3.2 Run pnpm check and quote its summary line

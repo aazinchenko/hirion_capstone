@@ -45,3 +45,25 @@
 - `java scripts/CheckLocatorRules.java src/test/java` -> `PASS: no forbidden patterns`.
 - tasks.md updated: 1.1 now 38 tests (FooterLegalTest 13), 3.1 now 54 tests. 1.2 left as is: it records
   the RED run with 32 tests.
+
+## Plan step 15: localization coverage completed (2026-09-29)
+
+- Checked in a browser as a guest (no login, nothing submitted):
+  - after DE the header has the link "Loslegen" -> `/signup` (the plan calls it a button; it is `<a>`).
+    A second "Loslegen" link sits in a page section, so the test scopes it to the header (`banner`).
+  - `/contact` in DE: h1 "Sprich mit dem Team.".
+  - FR h1 "Votre agent IA d'emploi pour la Suisse." (plain apostrophe U+0027); IT h1
+    "Il tuo agente IA per il lavoro in Svizzera."; `hirion.lang` is "fr" / "it".
+  - Observation for D2: `<html lang>` stays "en" after FR and IT as well, not only after DE.
+    No extra KNOWN BUG tests: I18N-4 keeps the single DE scenario from the plan.
+- Spec `localization` (commit 653a9d8): I18N-2 adds the header link "Loslegen", I18N-3 adds the German
+  /contact heading, new I18N-5 (FR and IT headings; plan I18N-05, ASSUMED -> CONFIRMED).
+- `LocalizationTest`: 9 `@Test` (+2: i18n5_switchToFrench, i18n5_switchToItalian); the reload scenario now
+  uses a real `page.reload()` (new `PublicPageTest.reload()` with the same hydration wait as `open()`).
+- `mvn -q test -Dtest=LocalizationTest`: Tests run: 9, Failures: 0, Errors: 0, Skipped: 0.
+- `mvn -q test -Dsuite=testng-public.xml`: Tests run: 56, Failures: 1, Errors: 0, Skipped: 0. The one
+  failure is ContactFormTest.cont4_validSubmitMocked (Stripe beacon, see 1.2). In the RED run all 3
+  ContactFormTest checks failed, now only cont4: the failure depends on timing, the test is flaky until
+  CONT-2 / CONT-4 are decided (plan step 16).
+- `java scripts/CheckLocatorRules.java src/test/java` -> `PASS: no forbidden patterns`.
+- tasks.md: 1.1 now 40 tests (LocalizationTest 9), 3.1 now 56 tests.

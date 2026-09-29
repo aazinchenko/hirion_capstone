@@ -1,5 +1,6 @@
 package ch.hirion.pub;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.options.AriaRole;
 import org.opentest4j.AssertionFailedError;
 import org.testng.annotations.Test;
@@ -12,12 +13,21 @@ public class LocalizationTest extends PublicPageTest {
 
   private static final String H1_EN = "Your AI job agent for Switzerland.";
   private static final String H1_DE = "Dein KI-Job-Agent für die Schweiz.";
+  private static final String H1_FR = "Votre agent IA d'emploi pour la Suisse.";
+  private static final String H1_IT = "Il tuo agente IA per il lavoro in Svizzera.";
+  private static final String H1_CONTACT_DE = "Sprich mit dem Team.";
 
   /** Opens the language menu from "EN" and picks the given language; waits until the button shows it. */
   private void switchTo(String code) {
     role(AriaRole.BUTTON, "EN").click();
     role(AriaRole.MENUITEM, code).click();
     assertThat(role(AriaRole.BUTTON, code)).isVisible();
+  }
+
+  /** A link in the header; "Loslegen" also appears in a page section, so the scope matters. */
+  private Locator headerLink(String name) {
+    return page.getByRole(AriaRole.BANNER)
+          .getByRole(AriaRole.LINK, new Locator.GetByRoleOptions().setName(name).setExact(true));
   }
 
   // I18N-1
@@ -46,6 +56,7 @@ public class LocalizationTest extends PublicPageTest {
     open("/");
     switchTo("DE");
     assertThat(h1(H1_DE)).isVisible();
+    assertThat(headerLink("Loslegen")).hasAttribute("href", "/signup");
     assertEquals(page.evaluate("() => localStorage.getItem('hirion.lang')"), "de");
   }
 
@@ -55,7 +66,7 @@ public class LocalizationTest extends PublicPageTest {
   public void i18n3_germanSurvivesReload() {
     open("/");
     switchTo("DE");
-    open("/");
+    reload();
     assertThat(role(AriaRole.BUTTON, "DE")).isVisible();
     assertThat(h1(H1_DE)).isVisible();
   }
@@ -66,6 +77,7 @@ public class LocalizationTest extends PublicPageTest {
     switchTo("DE");
     open("/contact");
     assertThat(role(AriaRole.BUTTON, "DE")).isVisible();
+    assertThat(h1(H1_CONTACT_DE)).isVisible();
   }
 
   // I18N-4 (known defect D2)
@@ -82,5 +94,21 @@ public class LocalizationTest extends PublicPageTest {
     open("/");
     switchTo("DE");
     assertThat(page.locator("html")).hasAttribute("lang", "de", QUICK_ATTR); // locator-exception: <html> lang attribute
+  }
+
+  // I18N-5
+
+  @Test(description = "I18N-5 Switch to French")
+  public void i18n5_switchToFrench() {
+    open("/");
+    switchTo("FR");
+    assertThat(h1(H1_FR)).isVisible();
+  }
+
+  @Test(description = "I18N-5 Switch to Italian")
+  public void i18n5_switchToItalian() {
+    open("/");
+    switchTo("IT");
+    assertThat(h1(H1_IT)).isVisible();
   }
 }

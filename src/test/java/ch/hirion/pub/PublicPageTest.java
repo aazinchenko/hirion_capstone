@@ -23,9 +23,21 @@ public abstract class PublicPageTest extends BaseTest {
     page.setDefaultNavigationTimeout(30_000);
     Response response = page.navigate(path,
           new Page.NavigateOptions().setWaitUntil(WaitUntilState.DOMCONTENTLOADED));
+    waitForHydration();
+    return response;
+  }
+
+  /** Reloads the current page and waits for hydration again, like open(). */
+  protected Response reload() {
+    Response response = page.reload(
+          new Page.ReloadOptions().setWaitUntil(WaitUntilState.DOMCONTENTLOADED));
+    waitForHydration();
+    return response;
+  }
+
+  private void waitForHydration() {
     page.waitForFunction("() => !('$_TSR' in window)", null,
           new Page.WaitForFunctionOptions().setTimeout(30_000));
-    return response;
   }
 
   protected Locator h1(String name) {
