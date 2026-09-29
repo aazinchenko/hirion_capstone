@@ -68,10 +68,11 @@ from `docs/intent.md` and pins known defects D1, D2, D3 and D5.
 1. Value stored in `hirion.lang` after choosing DE: `"de"`. CONFIRMED in a browser 2026-09-28.
 2. German hero h1 after switching to DE: "Dein KI-Job-Agent für die Schweiz." (line break between
    "Agent" and "für"). CONFIRMED in a browser 2026-09-28; I18N-2 and I18N-3 now assert it exactly.
-3. What the contact form sends on submit (URL / method) and which confirmation text it shows after a
-   successful response. The spec only requires one outgoing non-GET request carrying the entered
-   email; the confirmation text is left out until confirmed. STILL OPEN: not checked on purpose,
-   it would need a real submit.
+3. What the contact form sends on submit and which confirmation it shows: `POST /api/public/contact`
+   with a JSON body (name, email, subject, message, website), seen in the mocked RED run 2026-09-28;
+   after a mocked 200 response the page shows the toast "Thanks! Your message is ready to send." and
+   clears the fields (mocked run 2026-09-29). CONFIRMED without a real submit; CONT-2 / CONT-4 now name
+   this endpoint.
 4. The desktop header has a "Sign in" link: CONFIRMED in a browser 2026-09-28 (`<a>`, text
    "Sign in"). At 375 px "Sign in" is not visible and there is no menu button (D3 still present).
 5. QA-1 (no horizontal scroll at 375 px) and QA-3 (no console errors on `/`, `/contact`, `/login`,

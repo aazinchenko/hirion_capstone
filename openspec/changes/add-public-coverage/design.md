@@ -52,12 +52,14 @@ change; motivation and open items: proposal.md.
   browser 2026-09-28; the `<br>` between "Agent" and "für" is whitespace in the accessible name, as in
   the English h1). Every test starts from a fresh context, so the stored language never leaks.
 - **Contact form network (CONT).** Before `open("/contact")` the test installs
-  `page.route("**/*", ...)`: GET requests `route.resume()`, every other method is recorded and answered
-  `route.fulfill(status 200, body "{}")` -- nothing non-GET can leave the browser, whatever endpoint
-  the form uses (open question 3). CONT-2 asserts the recorded list is empty after the click (checked
-  after `assertThat(field)` has settled the validity state); CONT-4 waits with
-  `page.waitForRequest(r -> !"GET".equals(r.method()), click)` and then asserts exactly one recorded
-  request whose `postData()` contains the email. Test data are fixed fake values
+  `page.route("**/*", ...)`: GET requests `route.resume()`, every other method is answered locally with
+  `route.fulfill(status 200, body {"ok":true})` -- nothing non-GET can leave the browser. Only requests to
+  the form endpoint `/api/public/contact` are recorded and counted: Stripe.js on the page sends its own
+  `POST https://m.stripe.com/6` beacon at a random moment, which made a "no non-GET request" check flaky
+  (plan step 16, 2026-09-29). The beacon is still answered locally, it is just not part of the contract.
+  CONT-2 waits 2 s for a form request and asserts none came; CONT-4 waits for the form request around the
+  click, asserts `POST` and the email in `postData()`, the toast text, and that no second form request
+  follows. Test data are fixed fake values
   (`qa-contact@example.com`), not the TestUser -- no account is involved and nothing is delivered.
   Alternative rejected: routing only a guessed endpoint -- a wrong guess would send a real message.
 - **Console errors (QA-3).** One test, a loop over the six paths; listeners `page.onConsoleMessage`
