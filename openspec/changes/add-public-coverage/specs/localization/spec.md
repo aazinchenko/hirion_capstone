@@ -25,7 +25,8 @@ code on the language button and SHALL store the choice in `localStorage` under t
 #### Scenario: Switch to German
 - **WHEN** a guest opens `/`, clicks the button "EN" and clicks the menu item "DE"
 - **THEN** the header shows the button "DE", the heading level 1 is
-  "Dein KI-Job-Agent für die Schweiz." and `localStorage["hirion.lang"]` is `"de"`
+  "Dein KI-Job-Agent für die Schweiz.", the header link "Loslegen" has `href="/signup"` and
+  `localStorage["hirion.lang"]` is `"de"`
 
 ### Requirement: I18N-3 Language choice persists
 A language stored in `hirion.lang` SHALL be applied again when the visitor reloads the page or opens
@@ -37,7 +38,7 @@ another public page.
 
 #### Scenario: German applies on another page
 - **WHEN** a guest opens `/`, switches to "DE" and then opens `/contact`
-- **THEN** the header shows the button "DE"
+- **THEN** the header shows the button "DE" and the heading level 1 is "Sprich mit dem Team."
 
 ### Requirement: I18N-4 Document language follows the chosen language
 The `lang` attribute of the `<html>` element SHALL equal the chosen language code in lower case:
@@ -50,3 +51,15 @@ The `lang` attribute of the `<html>` element SHALL equal the chosen language cod
 #### Scenario: Document language after switching to German
 - **WHEN** a guest opens `/`, clicks the button "EN" and clicks the menu item "DE"
 - **THEN** `<html>` has `lang="de"`
+
+### Requirement: I18N-5 French and Italian translate the home page
+Choosing "FR" or "IT" SHALL show that code on the language button and SHALL translate the heading
+level 1 of `/`: FR "Votre agent IA d'emploi pour la Suisse.", IT "Il tuo agente IA per il lavoro in Svizzera.".
+
+#### Scenario: Switch to French
+- **WHEN** a guest opens `/`, clicks the button "EN" and clicks the menu item "FR"
+- **THEN** the header shows the button "FR" and the heading level 1 is "Votre agent IA d'emploi pour la Suisse."
+
+#### Scenario: Switch to Italian
+- **WHEN** a guest opens `/`, clicks the button "EN" and clicks the menu item "IT"
+- **THEN** the header shows the button "IT" and the heading level 1 is "Il tuo agente IA per il lavoro in Svizzera."
