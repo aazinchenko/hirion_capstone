@@ -1,0 +1,80 @@
+## Purpose
+
+Account settings `/settings` of a signed-in user (test group SET): section buttons and deep links, the
+Profile form with its required fields, and the Security form that changes the password.
+
+## ADDED Requirements
+
+### Requirement: SET-1 Settings sections and deep link
+`/settings` SHALL show the sections Profile, Security and Plan & Billing as elements with role `button`
+(not role `tab`). The deep link `/settings?section=security` SHALL open the Security section.
+
+#### Scenario: Section buttons
+- **WHEN** the signed-in test user opens `/settings`
+- **THEN** the page shows the buttons "Profile", "Security" and "Plan & Billing"
+
+#### Scenario: Security deep link
+- **WHEN** the signed-in test user opens `/settings?section=security`
+- **THEN** the page shows the field labelled exactly "Current password" and the button "Update password"
+
+### Requirement: SET-2 Profile form
+The Profile section SHALL show the button "Upload photo"; the required fields "First name", "Last name"
+and "Email"; the fields "Phone", "Country" (combobox), "LinkedIn URL", "Headline" and "Short bio"; a CV
+block with the buttons "View", "Re-analyse" and "Replace" and no button to remove the CV; "Skills"; and
+the button "Save changes".
+
+#### Scenario: Profile is rendered
+- **WHEN** the signed-in test user opens `/settings` with the Profile section shown
+- **THEN** the page shows the button "Upload photo", the fields "First name", "Last name", "Email",
+  "Phone", "LinkedIn URL", "Headline" and "Short bio", the combobox "Country", the buttons "View",
+  "Re-analyse", "Replace" and "Save changes", and the text "Skills"
+
+#### Scenario: Required profile fields
+- **WHEN** the signed-in test user opens `/settings` with the Profile section shown
+- **THEN** the fields "First name", "Last name" and "Email" are marked required (`required` or
+  `aria-required="true"`)
+
+#### Scenario: CV cannot be removed
+- **WHEN** the signed-in test user opens `/settings` with the Profile section shown
+- **THEN** the CV block shows no button named "Remove" or "Delete"
+
+### Requirement: SET-3 Profile shows no unsaved changes before an edit
+Right after the Profile section loads, with no edit by the user, the page SHALL NOT show
+"You have unsaved changes". Switching to another section without edits SHALL NOT open the prompt
+"Unsaved changes -- Leave without saving?".
+
+#### Scenario: Fresh profile has no unsaved-changes notice
+- **WHEN** the signed-in test user opens `/settings` with the Profile section shown and makes no edit
+- **THEN** the text "You have unsaved changes" is not visible
+
+#### Scenario: Switching section without edits
+- **WHEN** the signed-in test user opens `/settings` with the Profile section shown, makes no edit and
+  clicks the button "Security"
+- **THEN** no dialog with the text "Leave without saving?" is shown and the field labelled exactly
+  "Current password" is visible
+
+### Requirement: SET-4 Invalid profile email is rejected and not saved
+The field "Email" in Profile SHALL reject a value that is not an email address: after "Save changes"
+the page SHALL show an error for the field and SHALL NOT send or save the invalid value.
+
+#### Scenario: Invalid email is not sent
+- **WHEN** the signed-in test user opens `/settings` with the Profile section shown, replaces "Email" with
+  "not-an-email" and clicks "Save changes"
+- **THEN** no non-GET request whose body contains "not-an-email" leaves the browser, and the field
+  "Email" shows an error
+
+### Requirement: SET-5 Security form changes the password
+The Security section SHALL show the fields "Current password", "New password" and "Confirm new password",
+each with a button "Show password", and the button "Update password". After a successful update the new
+password SHALL sign the user in on `/login`.
+
+#### Scenario: Security form is rendered
+- **WHEN** the signed-in test user opens `/settings?section=security`
+- **THEN** the page shows the fields labelled exactly "Current password", "New password" and
+  "Confirm new password", three buttons "Show password" and the button "Update password"
+
+#### Scenario: New password signs in
+- **WHEN** the signed-in test user fills "Current password" with the current password, "New password" and
+  "Confirm new password" with a new password, clicks "Update password", and then a fresh guest signs in on
+  `/login` with the test user's email and the new password
+- **THEN** the browser URL path after "Sign in" is `/dashboard`

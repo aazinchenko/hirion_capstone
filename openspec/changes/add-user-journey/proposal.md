@@ -1,0 +1,96 @@
+## Why
+
+Changes 1 and 2 cover only what a guest sees. The part of hirion.ch that users depend on is still untested:
+the signup wizard, the dashboard, the account settings and deleting the account. This change covers
+groups REG, DASH, SET and DEL from `docs/intent.md` with one disposable test user per run. It pins known
+defects D6, D8, D9 and D10, and it adds the plan item AUTH-03 (wrong password), which change 2 moved here.
+
+## What Changes
+
+- Four new capability specs, one per theme:
+  - `signup` (REG + AUTH-03): wizard steps 1-4 after the step 1 checks that already exist, the plan
+    choice on step 4, landing on `/dashboard` without email confirmation, and a wrong password on `/login`.
+  - `dashboard` (DASH): heading, tab buttons, job card, empty states, Save, "Already applied" and
+    "Not relevant" through the Hide menu, Analytics with Save rate, Preferences.
+  - `account-settings` (SET): section buttons and deep link, Profile fields, Security fields, password
+    change, D9 and D10.
+  - `account-deletion` (DEL): the "Delete account" entry point in Settings > Security. The deletion
+    dialog and its result stay in Open questions until the first live deletion.
+- Test implementation: suite `src/test/resources/testng-journey.xml` (it already exists and lists the
+  classes) with `RegistrationTest`, `DashboardTest`, `SettingsTest` and `JourneyCleanup` in
+  `src/test/java/ch/hirion/journey/`. The suite runs with one disposable user from `support/TestUser`
+  (`<mailbox>+hirion-qa-<digits>@gmail.com`), which `JourneyCleanup` deletes at the end of every run.
+- Safety comes first. The cleanup and its email guard `\+hirion-qa-\d+@` are written before any test
+  registers. A user left over from an interrupted run is deleted before the next registration.
+  `JourneyCleanup.java`, `support/**` and `src/test/resources/**` are closed to the agent in
+  `.claude/settings.json`, so a human writes them.
+- On step 4 the test always selects Free, because Premium Trial is selected by default. No test starts
+  a trial or a payment, no test clicks "Tailor my CV" or "Write Cover Letter", and no test asserts on
+  AI text.
+- Known defects keep the correct SHALL in the spec. Their tests are KNOWN BUG: D6 ("Show password" not
+  reachable by keyboard), D8 ("?" in job titles), D9 (false "unsaved changes"), D10 (any string saved
+  as email). The D10 test must never really save an invalid email (see design.md).
+
+## Capabilities
+
+### New Capabilities
+- `signup`: wizard steps 2-4 and the step 1 errors that REG-1 / REG-2 do not cover (short password,
+  taken email, keyboard access to "Show password" D6). Also plan choice, account creation only on
+  step 4, landing on `/dashboard` signed in, and the wrong-password error on `/login` (plan AUTH-03).
+- `dashboard`: `/dashboard` for a signed-in user: heading, tab buttons, job card, empty states, Save,
+  Hide menu, Analytics and Save rate, Preferences, correct job title characters (D8).
+- `account-settings`: `/settings` sections Profile and Security, deep links, required profile fields,
+  password change, no false "unsaved changes" (D9), invalid email not saved (D10).
+- `account-deletion`: the "Delete account" button in Settings > Security.
+
+### Modified Capabilities
+- (none). REG-1 and REG-2 stay in `access-and-quality` and are not repeated. `signup` starts at REG-3.
+  AUTH-3 in `access-and-quality` is the login autofill requirement. The wrong-password requirement
+  therefore gets the new ID AUTH-6 and lives in `signup`, because it needs the registered test user.
+
+## Impact
+
+- New test classes in `src/test/java/ch/hirion/journey/`. The agent may edit `RegistrationTest`,
+  `DashboardTest` and `SettingsTest`. A human writes `JourneyCleanup.java`,
+  `support/TestUser.java` and the CV fixture in `src/test/resources/fixtures/`.
+- Each journey run creates one real account on hirion.ch (Free plan) and deletes it. The mailbox
+  receives one welcome email per run. Run with
+  `mvn -q test -Dsuite=testng-journey.xml -Dqa.mailbox=<mailbox>`.
+- `pnpm check` still runs only the public suite (`mvn -q test`). The journey suite is started on
+  purpose by a human, never by the gate.
+- Session files `.auth/user.json` and `.auth/test-user.json` are git-ignored (`.auth/`).
+
+## Sources of the strings in the specs
+
+All strings in the four specs come from `docs/intent.md` "CONFIRMED live 2026-09-25" and from the known
+defects D6, D8, D9 and D10. None of the strings listed below is used in a requirement.
+
+## Open questions (ASSUMED -- drafts until a human confirms on the live site)
+
+1. **Plan & Billing after a Free signup.** `docs/intent.md` describes only the Pro view after the
+   default (trial) signup: "You're on the Pro plan.", "Renews on <date + 7 days>", Cancel subscription,
+   Monthly / Quarterly / Yearly, "Manage subscription". A Free account may look different. No
+   requirement for `/settings?section=plan` until a human records the Free view.
+2. **Account deletion flow.** Button "Delete account" opens the dialog "Delete your account?" with
+   "Cancel" / "Delete". Success shows the toast "Your account has been deleted.", signs the user out and
+   redirects to `/`. Failure shows "Could not delete your account.". These strings come from the live
+   site code. The dialog was never submitted. The first live `JourneyCleanup` run confirms them. Only
+   after that can DEL requirements with these strings be added (a later change or `/opsx:update`).
+3. **D7: Phone accepts letters** ("00000000000000jj"). Seen on a screenshot only, marked "to re-check".
+   There is no requirement and no test until a human re-checks it. If it is confirmed: add a
+   requirement "Phone SHALL reject letters" and a KNOWN BUG D7 test that, like D10, never saves the
+   value (see design.md).
+4. **Wrong password error text** (AUTH-6). The exact message on `/login` after a wrong password is not
+   recorded in `docs/intent.md`. AUTH-6 asserts only what is known: the user stays on `/login` with the
+   heading "Welcome back". The text is added once a human confirms it.
+5. **How step 4 marks the selected plan** (checked radio, `aria-checked`, `aria-pressed` ...). REG-7
+   says "selected". The test needs the attribute, so a human confirms it before GREEN.
+6. **Analytics on a Free account.** The Analytics tab has a PRO badge. The Analytics facts were
+   recorded on the signed-in test account, whose plan is not stated. If a Free user sees a paywall
+   instead of the three sections, DASH-7 / DASH-8 need a human decision: test on the trial plan is not
+   allowed, so the requirements would move to a later change.
+7. **Password change confirmation.** The toast or message after "Update password" is not recorded.
+   SET-5 asserts the observable result instead: the new password signs in.
+8. **Healing journey tests.** `scripts/heal-loop.sh` fetches the live DOM with `.auth/user.json`. After a
+   normal run that session belongs to a deleted user. The human decides how heal sessions get a live
+   user (design.md "Healing").
