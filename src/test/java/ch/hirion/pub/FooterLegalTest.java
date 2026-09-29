@@ -82,7 +82,7 @@ public class FooterLegalTest extends PublicPageTest {
         description = "FOOT-3 Imprint has no unfilled templates -- KNOWN BUG D1: /imprint shows [FILL: ...] templates")
   public void foot3_imprintHasNoFillTemplates() {
     open("/imprint");
-    assertThat(h1("Imprint")).isVisible();
+    h1("Imprint").waitFor(); // precondition: a TimeoutError here is a real failure, not the known bug
     assertThat(page.getByText("[FILL:"))
           .hasCount(0, new LocatorAssertions.HasCountOptions().setTimeout(3000));
   }
@@ -91,12 +91,12 @@ public class FooterLegalTest extends PublicPageTest {
         description = "FOOT-3 Imprint email is a valid mailto link -- KNOWN BUG D1: mailto:[FILL: ...]")
   public void foot3_imprintEmailIsValidMailto() {
     open("/imprint");
-    assertThat(h1("Imprint")).isVisible();
+    h1("Imprint").waitFor(); // precondition: a TimeoutError here is a real failure, not the known bug
     @SuppressWarnings("unchecked")
-    List<String> hrefs = (List<String>) page.evaluate(
-          "() => [...document.querySelectorAll('a[href^=\"mailto:\"]')].map(a => a.getAttribute('href'))");
-    if (hrefs.stream().noneMatch(h -> VALID_MAILTO.matcher(h).matches())) {
-      throw new AssertionFailedError("no valid mailto link on /imprint, found: " + hrefs);
+    List<String> hrefs = (List<String>) page.getByRole(AriaRole.MAIN).evaluate(
+          "main => [...main.querySelectorAll('a[href^=\"mailto:\"]')].map(a => a.getAttribute('href'))");
+    if (hrefs.isEmpty() || !hrefs.stream().allMatch(h -> VALID_MAILTO.matcher(h).matches())) {
+      throw new AssertionFailedError("every mailto link in main must be valid, found: " + hrefs);
     }
   }
 

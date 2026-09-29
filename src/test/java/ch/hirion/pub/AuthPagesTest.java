@@ -1,5 +1,6 @@
 package ch.hirion.pub;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.AriaRole;
@@ -65,6 +66,8 @@ public class AuthPagesTest extends PublicPageTest {
         description = "AUTH-3 Login autocomplete attributes -- KNOWN BUG D5: /login inputs have no autocomplete")
   public void auth3_loginAutocomplete() {
     open("/login");
+    field("Email").waitFor(); // preconditions: a missing field is a real failure, not the known bug
+    field("Password").waitFor();
     assertThat(field("Email")).hasAttribute("autocomplete", "email", QUICK_ATTR);
     assertThat(field("Password")).hasAttribute("autocomplete", "current-password", QUICK_ATTR);
   }
@@ -77,7 +80,8 @@ public class AuthPagesTest extends PublicPageTest {
     assertThat(h1("Reset your password")).isVisible();
     assertThat(field("Email")).isVisible();
     assertThat(role(AriaRole.BUTTON, "Send reset link")).isVisible();
-    assertThat(role(AriaRole.LINK, "Sign in")).hasAttribute("href", "/login");
+    assertThat(page.getByRole(AriaRole.MAIN).getByRole(AriaRole.LINK,
+          new Locator.GetByRoleOptions().setName("Sign in").setExact(true))).hasAttribute("href", "/login");
   }
 
   // AUTH-5

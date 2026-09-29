@@ -17,11 +17,14 @@ public class LocalizationTest extends PublicPageTest {
   private static final String H1_IT = "Il tuo agente IA per il lavoro in Svizzera.";
   private static final String H1_CONTACT_DE = "Sprich mit dem Team.";
 
-  /** Opens the language menu from "EN" and picks the given language; waits until the button shows it. */
+  /**
+   * Opens the language menu from "EN" and picks the given language; waits until the button shows it.
+   * waitFor() throws TimeoutError, not AssertionFailedError, so a broken switch is never taken for bug D2.
+   */
   private void switchTo(String code) {
     role(AriaRole.BUTTON, "EN").click();
     role(AriaRole.MENUITEM, code).click();
-    assertThat(role(AriaRole.BUTTON, code)).isVisible();
+    role(AriaRole.BUTTON, code).waitFor(); // precondition, not an assertion: keeps KNOWN BUG D2 honest
   }
 
   /** A link in the header; "Loslegen" also appears in a page section, so the scope matters. */

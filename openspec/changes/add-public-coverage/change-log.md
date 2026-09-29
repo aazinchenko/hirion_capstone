@@ -139,3 +139,34 @@
   $ mvn -q test
   spec:check ok — specs: 1 · active changes: 1 · archived: 1
   ```
+
+## Plan step 18: independent review and fixes (2026-09-29)
+
+- `@agent-locator-reviewer` ran in the human's own Claude Code session on `d65811a^..HEAD`
+  (output: `.agent-log/review-2026-09-29.md`): APPROVE, no AGENTS.md rule broken, KNOWN BUG checks not
+  weakened; 3 medium and 5 minor remarks. The reviewer said it did not open the test files itself, so
+  every remark was checked against the code before acting.
+- Medium 1 (D3, MobileLayoutTest): `setHasNotText("EN")` is a case-insensitive substring, so a burger
+  labelled "Menu" / "Open" would have been filtered out and D3 would stay "known" after a fix; also
+  `setExpanded(false)` misses a button without `aria-expanded`. Fixed: any visible header button except
+  the language switcher, matched exactly by `^\s*(EN|FR|DE|IT)\s*$`. Debug run at 375 px: header buttons
+  [EN], menu candidates [] -> D3 still caught.
+- Medium 2 (D1, FooterLegalTest): one valid mailto anywhere would have passed. Spec FOOT-3 changed
+  (commit eddc3c8): at least one mailto in the main content and every one valid; test uses `allMatch`
+  inside `main`.
+- Medium 3 (all KNOWN BUG tests): preconditions used `assertThat(...)`, which throws the same
+  `AssertionFailedError` as the bug check, so a broken page would look like the expected failure.
+  Fixed: preconditions use `waitFor()` (throws `TimeoutError`) -- FooterLegalTest D1 x2, LocalizationTest
+  switchTo (D2), AuthPagesTest D5, MobileLayoutTest D3 (header present). Negative control: preconditions
+  broken on purpose in foot3_imprintHasNoFillTemplates, auth3_loginAutocomplete, i18n4_htmlLangAfterGerman
+  -> all 3 FAILED ("Expected exception ... AssertionFailedError but got ... TimeoutError"); code restored.
+  SmokeTest D4 already had no such precondition (it starts with a click).
+- Minor, done: AUTH-4 "Sign in" link looked up inside `main` (spec updated in eddc3c8); the header may
+  also carry a "Sign in" link.
+- Minor, not done (reasons): splitting D5 into two tests -- the spec has one scenario, the failure
+  message shows which field; marking `page.evaluate` CSS with `locator-exception` -- it reads data, it is
+  not a locator; footer links from a fixed list -- that is what FOOT-1 specifies; `Year.now()` in the
+  first days of January -- rare, accepted as a known limitation.
+- After the fixes: `CheckLocatorRules` PASS; `mvn test -Dsuite=testng-public.xml` -> Tests run: 58,
+  Failures: 0, Errors: 0, Skipped: 0; `pnpm check` exit 0 (spec:check ok -- specs: 1 · active changes: 1
+  · archived: 1).
