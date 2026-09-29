@@ -88,3 +88,25 @@
 - `mvn -q test -Dsuite=testng-public.xml`: Tests run: 56, Failures: 0, Errors: 0, Skipped: 0 (exit 0).
 - `java scripts/CheckLocatorRules.java src/test/java` -> `PASS: no forbidden patterns`.
 - tasks.md: task 2.3 reworded for the form endpoint; counts unchanged (40 tests, 56 runs).
+
+## Plan step 17: auth, signup step 1, 404, quality (2026-09-29)
+
+- Plan table compared with `specs/access-and-quality` and AuthPagesTest / QualityTest / MobileLayoutTest:
+  AUTH-01, 02, 04, 05, 06 (D5), QA-01, 02 (D3), 03 were covered; QA-04 only partly (status codes, no
+  robots rules); plan class `SignupValidationTest` (REG-01, REG-02) was missing.
+- Facts: `/robots.txt` has `Disallow: /dashboard` and `Disallow: /settings` (curl); on `/signup` a click
+  on "Continue" with an empty form shows "Please enter your first and last name.", stays on
+  "Step 1 of 4" and `/signup` (browser as a guest, nothing typed); the "Show password" button has
+  `aria-label="Show password"`.
+- Human decisions: AUTH-03 (wrong password) moved to change 3 -- needs the test user, and failed logins
+  on the live site could lock an account; QA-06 (axe-core) not done -- optional, needs a pom.xml
+  dependency; QA-05 (D4) stays in home-page / SmokeTest. Recorded in proposal.md "Not in this change".
+- Spec `access-and-quality` (commit b2b0844): QA-4 adds the robots rules; new REG-1 (empty step 1) and
+  REG-2 (Show password), kept in this capability so the change still ends with 5 specs.
+- Tests: QualityTest checks the two Disallow lines; MobileLayoutTest now emulates a phone
+  (`setIsMobile(true).setHasTouch(true)`, as in the plan) -- 2 runs, 2/2 each, D3 still fails as
+  expected; new SignupValidationTest (2): types a made-up password, never submits.
+- Runs: QualityTest 3/3, SignupValidationTest 2/2, MobileLayoutTest 2/2 twice, AuthPagesTest 8/8;
+  `mvn -q test -Dsuite=testng-public.xml`: Tests run: 58, Failures: 0, Errors: 0, Skipped: 0 (exit 0).
+- `java scripts/CheckLocatorRules.java src/test/java` -> `PASS: no forbidden patterns`.
+- tasks.md: 1.1 now 42 tests (+ SignupValidationTest 2), 3.1 now 58 tests.

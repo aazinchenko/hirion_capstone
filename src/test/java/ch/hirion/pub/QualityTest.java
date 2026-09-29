@@ -1,5 +1,6 @@
 package ch.hirion.pub;
 
+import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import org.testng.annotations.Test;
@@ -46,7 +47,11 @@ public class QualityTest extends PublicPageTest {
 
   @Test(description = "QA-4 robots.txt and sitemap.xml")
   public void qa4_robotsAndSitemap() {
-    assertEquals(page.request().get(BASE_URL + "/robots.txt").status(), 200, "/robots.txt");
+    APIResponse robots = page.request().get(BASE_URL + "/robots.txt");
+    assertEquals(robots.status(), 200, "/robots.txt");
+    List<String> lines = robots.text().lines().map(String::trim).toList();
+    assertTrue(lines.contains("Disallow: /dashboard"), "robots.txt should hide /dashboard:\n" + robots.text());
+    assertTrue(lines.contains("Disallow: /settings"), "robots.txt should hide /settings:\n" + robots.text());
     assertEquals(page.request().get(BASE_URL + "/sitemap.xml").status(), 200, "/sitemap.xml");
   }
 }

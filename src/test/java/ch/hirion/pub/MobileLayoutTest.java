@@ -15,7 +15,7 @@ public class MobileLayoutTest extends PublicPageTest {
 
   @Override
   protected Browser.NewContextOptions contextOptions() {
-    return super.contextOptions().setViewportSize(375, 812);
+    return super.contextOptions().setViewportSize(375, 812).setIsMobile(true).setHasTouch(true);
   }
 
   // QA-1
