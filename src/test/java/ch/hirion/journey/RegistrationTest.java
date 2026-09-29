@@ -252,12 +252,18 @@ public class RegistrationTest extends BaseTest {
     assertThat(exactText(CV)).isVisible(); // the drop zone shows the chosen file name
   }
 
-  /** Step 3: the roles picker is a combobox "Add" with a list of options; one role is enough. */
+  /**
+   * Step 3: the roles picker is a combobox with the visible text "Add" and a list of options; one role is enough.
+   * The combobox has no accessible name (candidate defect D13), so it is matched by role + exact text.
+   */
   private void addRole() {
-    role(AriaRole.COMBOBOX, "Add").click();
+    page.getByRole(AriaRole.COMBOBOX)
+          .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^\\s*Add\\s*$"))).click();
     role(AriaRole.OPTION, ROLE).click();
     page.keyboard().press("Escape"); // close the picker, the chip stays
-    assertThat(exactText(ROLE)).isVisible();
+    // the chip lives in <main>; the option list is portaled outside it and may still be open
+    assertThat(page.getByRole(AriaRole.MAIN)
+          .getByText(ROLE, new Locator.GetByTextOptions().setExact(true))).isVisible();
   }
 
   /** "Continue" exactly: not "Continue with Google" / "Continue with Apple". */

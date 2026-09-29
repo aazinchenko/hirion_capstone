@@ -117,3 +117,712 @@ PASS: no forbidden patterns
 SLF4J(W): No SLF4J providers were found.
 SLF4J(W): Defaulting to no-operation (NOP) logger implementation
 SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+[ERROR] Tests run: 12, Failures: 3, Errors: 0, Skipped: 3, Time elapsed: 72.13 s <<< FAILURE! -- in TestSuite
+[ERROR] ch.hirion.journey.RegistrationTest.reg7_stepFourPremiumTrialSelected -- Time elapsed: 11.39 s <<< FAILURE!
+com.microsoft.playwright.TimeoutError: 
+Error {
+  message='Timeout 10000ms exceeded.
+  name='TimeoutError
+  stack='TimeoutError: Timeout 10000ms exceeded.
+    at ProgressController.run (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\progress.js:68:28)
+    at FrameDispatcher._runCommand (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\dispatchers\dispatcher.js:95:31)
+    at DispatcherConnection.dispatch (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\dispatchers\dispatcher.js:329:39)
+}
+Call log:
+-   - waiting for getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Add").setExact(true))
+
+	at com.microsoft.playwright.impl.WaitableResult.get(WaitableResult.java:52)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:138)
+	at com.microsoft.playwright.impl.Connection.sendMessage(Connection.java:131)
+	at com.microsoft.playwright.impl.ChannelOwner.sendMessage(ChannelOwner.java:124)
+	at com.microsoft.playwright.impl.FrameImpl.clickImpl(FrameImpl.java:241)
+	at com.microsoft.playwright.impl.FrameImpl.click(FrameImpl.java:232)
+	at com.microsoft.playwright.impl.LocatorImpl.click(LocatorImpl.java:164)
+	at com.microsoft.playwright.Locator.click(Locator.java:2500)
+	at ch.hirion.journey.RegistrationTest.addRole(RegistrationTest.java:257)
+	at ch.hirion.journey.RegistrationTest.walkToStep(RegistrationTest.java:235)
+	at ch.hirion.journey.RegistrationTest.walkToStep(RegistrationTest.java:221)
+	at ch.hirion.journey.RegistrationTest.reg7_stepFourPremiumTrialSelected(RegistrationTest.java:111)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+	at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:687)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+	at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+	at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:995)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+	at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+	at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.testng.TestRunner.privateRun(TestRunner.java:741)
+	at org.testng.TestRunner.run(TestRunner.java:616)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:312)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
+	at org.testng.TestNG.runSuites(TestNG.java:1112)
+	at org.testng.TestNG.run(TestNG.java:1079)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+Caused by: com.microsoft.playwright.TimeoutError: Error {
+  message='Timeout 10000ms exceeded.
+  name='TimeoutError
+  stack='TimeoutError: Timeout 10000ms exceeded.
+    at ProgressController.run (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\progress.js:68:28)
+    at FrameDispatcher._runCommand (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\dispatchers\dispatcher.js:95:31)
+    at DispatcherConnection.dispatch (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\dispatchers\dispatcher.js:329:39)
+}
+Call log:
+-   - waiting for getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Add").setExact(true))
+
+	at com.microsoft.playwright.impl.Connection.dispatch(Connection.java:257)
+	at com.microsoft.playwright.impl.Connection.processOneMessage(Connection.java:214)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:136)
+	... 40 more
+
+[ERROR] ch.hirion.journey.RegistrationTest.reg7_freeCanBeSelected -- Time elapsed: 11.40 s <<< FAILURE!
+com.microsoft.playwright.TimeoutError: 
+Error {
+  message='Timeout 10000ms exceeded.
+  name='TimeoutError
+  stack='TimeoutError: Timeout 10000ms exceeded.
+    at ProgressController.run (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\progress.js:68:28)
+    at FrameDispatcher._runCommand (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\dispatchers\dispatcher.js:95:31)
+    at DispatcherConnection.dispatch (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\dispatchers\dispatcher.js:329:39)
+}
+Call log:
+-   - waiting for getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Add").setExact(true))
+
+	at com.microsoft.playwright.impl.WaitableResult.get(WaitableResult.java:52)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:138)
+	at com.microsoft.playwright.impl.Connection.sendMessage(Connection.java:131)
+	at com.microsoft.playwright.impl.ChannelOwner.sendMessage(ChannelOwner.java:124)
+	at com.microsoft.playwright.impl.FrameImpl.clickImpl(FrameImpl.java:241)
+	at com.microsoft.playwright.impl.FrameImpl.click(FrameImpl.java:232)
+	at com.microsoft.playwright.impl.LocatorImpl.click(LocatorImpl.java:164)
+	at com.microsoft.playwright.Locator.click(Locator.java:2500)
+	at ch.hirion.journey.RegistrationTest.addRole(RegistrationTest.java:257)
+	at ch.hirion.journey.RegistrationTest.walkToStep(RegistrationTest.java:235)
+	at ch.hirion.journey.RegistrationTest.walkToStep(RegistrationTest.java:221)
+	at ch.hirion.journey.RegistrationTest.reg7_freeCanBeSelected(RegistrationTest.java:123)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+	at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:687)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+	at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+	at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:995)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+	at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+	at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.testng.TestRunner.privateRun(TestRunner.java:741)
+	at org.testng.TestRunner.run(TestRunner.java:616)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:312)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
+	at org.testng.TestNG.runSuites(TestNG.java:1112)
+	at org.testng.TestNG.run(TestNG.java:1079)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+Caused by: com.microsoft.playwright.TimeoutError: Error {
+  message='Timeout 10000ms exceeded.
+  name='TimeoutError
+  stack='TimeoutError: Timeout 10000ms exceeded.
+    at ProgressController.run (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\progress.js:68:28)
+    at FrameDispatcher._runCommand (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\dispatchers\dispatcher.js:95:31)
+    at DispatcherConnection.dispatch (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\dispatchers\dispatcher.js:329:39)
+}
+Call log:
+-   - waiting for getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Add").setExact(true))
+
+	at com.microsoft.playwright.impl.Connection.dispatch(Connection.java:257)
+	at com.microsoft.playwright.impl.Connection.processOneMessage(Connection.java:214)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:136)
+	... 40 more
+
+[ERROR] ch.hirion.journey.RegistrationTest.reg8_stepsOneToThreeSendNothing -- Time elapsed: 11.44 s <<< FAILURE!
+com.microsoft.playwright.TimeoutError: 
+Error {
+  message='Timeout 10000ms exceeded.
+  name='TimeoutError
+  stack='TimeoutError: Timeout 10000ms exceeded.
+    at ProgressController.run (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\progress.js:68:28)
+    at FrameDispatcher._runCommand (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\dispatchers\dispatcher.js:95:31)
+    at DispatcherConnection.dispatch (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\dispatchers\dispatcher.js:329:39)
+}
+Call log:
+-   - waiting for getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Add").setExact(true))
+
+	at com.microsoft.playwright.impl.WaitableResult.get(WaitableResult.java:52)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:138)
+	at com.microsoft.playwright.impl.Connection.sendMessage(Connection.java:131)
+	at com.microsoft.playwright.impl.ChannelOwner.sendMessage(ChannelOwner.java:124)
+	at com.microsoft.playwright.impl.FrameImpl.clickImpl(FrameImpl.java:241)
+	at com.microsoft.playwright.impl.FrameImpl.click(FrameImpl.java:232)
+	at com.microsoft.playwright.impl.LocatorImpl.click(LocatorImpl.java:164)
+	at com.microsoft.playwright.Locator.click(Locator.java:2500)
+	at ch.hirion.journey.RegistrationTest.addRole(RegistrationTest.java:257)
+	at ch.hirion.journey.RegistrationTest.reg8_stepsOneToThreeSendNothing(RegistrationTest.java:148)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+	at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:687)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+	at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+	at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:995)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+	at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+	at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.testng.TestRunner.privateRun(TestRunner.java:741)
+	at org.testng.TestRunner.run(TestRunner.java:616)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:312)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
+	at org.testng.TestNG.runSuites(TestNG.java:1112)
+	at org.testng.TestNG.run(TestNG.java:1079)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+Caused by: com.microsoft.playwright.TimeoutError: Error {
+  message='Timeout 10000ms exceeded.
+  name='TimeoutError
+  stack='TimeoutError: Timeout 10000ms exceeded.
+    at ProgressController.run (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\progress.js:68:28)
+    at FrameDispatcher._runCommand (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\dispatchers\dispatcher.js:95:31)
+    at DispatcherConnection.dispatch (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\dispatchers\dispatcher.js:329:39)
+}
+Call log:
+-   - waiting for getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Add").setExact(true))
+
+	at com.microsoft.playwright.impl.Connection.dispatch(Connection.java:257)
+	at com.microsoft.playwright.impl.Connection.processOneMessage(Connection.java:214)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:136)
+	... 38 more
+
+[ERROR] Failures: 
+[ERROR]   RegistrationTest.reg7_freeCanBeSelected:123->walkToStep:221->walkToStep:235->addRole:257 » Timeout Error {
+  message='Timeout 10000ms exceeded.
+  name='TimeoutError
+  stack='TimeoutError: Timeout 10000ms exceeded.
+    at ProgressController.run (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\progress.js:68:28)
+    at FrameDispatcher._runCommand (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\dispatchers\dispatcher.js:95:31)
+    at DispatcherConnection.dispatch (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\dispatchers\dispatcher.js:329:39)
+}
+Call log:
+-   - waiting for getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Add").setExact(true))
+
+[ERROR]   RegistrationTest.reg7_stepFourPremiumTrialSelected:111->walkToStep:221->walkToStep:235->addRole:257 » Timeout Error {
+  message='Timeout 10000ms exceeded.
+  name='TimeoutError
+  stack='TimeoutError: Timeout 10000ms exceeded.
+    at ProgressController.run (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\progress.js:68:28)
+    at FrameDispatcher._runCommand (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\dispatchers\dispatcher.js:95:31)
+    at DispatcherConnection.dispatch (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\dispatchers\dispatcher.js:329:39)
+}
+Call log:
+-   - waiting for getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Add").setExact(true))
+
+[ERROR]   RegistrationTest.reg8_stepsOneToThreeSendNothing:148->addRole:257 » Timeout Error {
+  message='Timeout 10000ms exceeded.
+  name='TimeoutError
+  stack='TimeoutError: Timeout 10000ms exceeded.
+    at ProgressController.run (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\progress.js:68:28)
+    at FrameDispatcher._runCommand (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\dispatchers\dispatcher.js:95:31)
+    at DispatcherConnection.dispatch (C:\Users\pc\AppData\Local\Temp\playwright-java-5053918893276218788\package\lib\server\dispatchers\dispatcher.js:329:39)
+}
+Call log:
+-   - waiting for getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Add").setExact(true))
+
+[ERROR] Tests run: 12, Failures: 3, Errors: 0, Skipped: 3
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.2:test (default-test) on project hirion-smoke-agent: There are test failures.
+[ERROR] 
+[ERROR] See D:\Demo\Hirion_Capstone\hirion_capstone\target\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+Saved 6000 chars from https://hirion.ch/signup -> .agent-log/dom-snippet.html
+I fixed the locator that was making `RegistrationTest` fail. The locator-rules check and the test compile both pass, but I haven't re-run the tests against the live site, so whether it actually goes green is still unconfirmed.
+
+**What was failing:** the step 3 role picker locator in `addRole()` (`RegistrationTest.java:246`). The test looked for a combobox named "Add", but the live combobox has no accessible name. That's candidate defect D13 in `docs/intent.md`. So the lookup timed out after 10s. Three tests failed on it: `reg7_stepFourPremiumTrialSelected`, `reg7_freeCanBeSelected` and `reg8_stepsOneToThreeSendNothing`. `reg9`, `reg4` and `auth6` didn't run because they depend on the account-creating `reg9`.
+
+**The change:** it now finds the combobox by its role and its exact visible text "Add":
+```java
+page.getByRole(AriaRole.COMBOBOX)
+      .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^\\s*Add\\s*$"))).click();
+```
+The comment above `addRole()` now mentions D13. Nothing else changed, and I didn't touch the known-bug test `reg10`.
+
+**Checks:**
+- `java scripts/CheckLocatorRules.java src/test/java`: PASS, no forbidden patterns.
+- `mvn test-compile`: OK.
+
+**What the fix rests on:** `.agent-log/dom-snippet.html` only contains **step 1** of signup (the capture stops at 6000 bytes), so it doesn't show the step 3 element. I based the fix on the test report's error log and the D13 note from the earlier live run. Keep that in mind when you review it and the heal log before merging.
+
+**Consequence of the workaround:** this locator only works because the site has the D13 bug. If the site later gives the combobox a proper name, the text match should still work. Then it can go back to `role(AriaRole.COMBOBOX, "<name>")`.
+PASS: no forbidden patterns
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+[ERROR] Tests run: 12, Failures: 3, Errors: 0, Skipped: 3, Time elapsed: 33.57 s <<< FAILURE! -- in TestSuite
+[ERROR] ch.hirion.journey.RegistrationTest.reg7_stepFourPremiumTrialSelected -- Time elapsed: 2.066 s <<< FAILURE!
+com.microsoft.playwright.PlaywrightException: 
+Error {
+  message='Error: strict mode violation: getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true)) resolved to 2 elements:
+    1) <span class="inline-flex items-center gap-1 rounded-full border border-primary bg-primary-soft px-2.5 py-1 text-xs font-medium text-primary">…</span> aka getByRole(AriaRole.MAIN).getByText("QA / Test Engineer")
+    2) <div cmdk-item="" role="option" id="radix-_r_h_" aria-selected="true" data-selected="true" aria-disabled="false" data-disabled="false" data-value="Engineering & Tech  QA / Test Engineer QA / Test Engineer" class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:si…>…</div> aka getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("QA / Test Engineer"))
+
+  name='Error
+  stack='Error: Error: strict mode violation: getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true)) resolved to 2 elements:
+    1) <span class="inline-flex items-center gap-1 rounded-full border border-primary bg-primary-soft px-2.5 py-1 text-xs font-medium text-primary">…</span> aka getByRole(AriaRole.MAIN).getByText("QA / Test Engineer")
+    2) <div cmdk-item="" role="option" id="radix-_r_h_" aria-selected="true" data-selected="true" aria-disabled="false" data-disabled="false" data-value="Engineering & Tech  QA / Test Engineer QA / Test Engineer" class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:si…>…</div> aka getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("QA / Test Engineer"))
+
+    at CRExecutionContext.evaluateWithArguments (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\chromium\crExecutionContext.js:80:13)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:453:9)
+    at async LongStandingScope._race (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\utils\isomorphic\manualPromise.js:94:14)
+    at async evaluateExpression (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\javascript.js:217:12)
+    at async Frame._expectInternal (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\frames.js:1181:57)
+    at async Frame.expect (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\frames.js:1145:31)
+    at async FrameDispatcher.expect (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\frameDispatcher.js:215:20)
+    at async ProgressController.run (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\progress.js:78:22)
+    at async FrameDispatcher._runCommand (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\dispatcher.js:95:14)
+}
+Call log:
+-   - Assert "isVisible" with timeout 5000ms
+-   - waiting for getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true))
+
+	at com.microsoft.playwright.impl.WaitableResult.get(WaitableResult.java:56)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:138)
+	at com.microsoft.playwright.impl.Connection.sendMessage(Connection.java:131)
+	at com.microsoft.playwright.impl.ChannelOwner.sendMessage(ChannelOwner.java:124)
+	at com.microsoft.playwright.impl.FrameImpl.expect(FrameImpl.java:1097)
+	at com.microsoft.playwright.impl.FrameImpl.lambda$expect$5(FrameImpl.java:1091)
+	at com.microsoft.playwright.impl.ChannelOwner.withTitle(ChannelOwner.java:98)
+	at com.microsoft.playwright.impl.FrameImpl.expect(FrameImpl.java:1091)
+	at com.microsoft.playwright.impl.LocatorImpl.expect(LocatorImpl.java:649)
+	at com.microsoft.playwright.impl.LocatorAssertionsImpl.doExpect(LocatorAssertionsImpl.java:46)
+	at com.microsoft.playwright.impl.AssertionsBase.expectImpl(AssertionsBase.java:58)
+	at com.microsoft.playwright.impl.AssertionsBase.expectImpl(AssertionsBase.java:47)
+	at com.microsoft.playwright.impl.LocatorAssertionsImpl.expectTrue(LocatorAssertionsImpl.java:471)
+	at com.microsoft.playwright.impl.LocatorAssertionsImpl.isVisible(LocatorAssertionsImpl.java:466)
+	at com.microsoft.playwright.assertions.LocatorAssertions.isVisible(LocatorAssertions.java:845)
+	at ch.hirion.journey.RegistrationTest.addRole(RegistrationTest.java:264)
+	at ch.hirion.journey.RegistrationTest.walkToStep(RegistrationTest.java:235)
+	at ch.hirion.journey.RegistrationTest.walkToStep(RegistrationTest.java:221)
+	at ch.hirion.journey.RegistrationTest.reg7_stepFourPremiumTrialSelected(RegistrationTest.java:111)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+	at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:687)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+	at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+	at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:995)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+	at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+	at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.testng.TestRunner.privateRun(TestRunner.java:741)
+	at org.testng.TestRunner.run(TestRunner.java:616)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:312)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
+	at org.testng.TestNG.runSuites(TestNG.java:1112)
+	at org.testng.TestNG.run(TestNG.java:1079)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+Caused by: com.microsoft.playwright.impl.DriverException: Error {
+  message='Error: strict mode violation: getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true)) resolved to 2 elements:
+    1) <span class="inline-flex items-center gap-1 rounded-full border border-primary bg-primary-soft px-2.5 py-1 text-xs font-medium text-primary">…</span> aka getByRole(AriaRole.MAIN).getByText("QA / Test Engineer")
+    2) <div cmdk-item="" role="option" id="radix-_r_h_" aria-selected="true" data-selected="true" aria-disabled="false" data-disabled="false" data-value="Engineering & Tech  QA / Test Engineer QA / Test Engineer" class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:si…>…</div> aka getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("QA / Test Engineer"))
+
+  name='Error
+  stack='Error: Error: strict mode violation: getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true)) resolved to 2 elements:
+    1) <span class="inline-flex items-center gap-1 rounded-full border border-primary bg-primary-soft px-2.5 py-1 text-xs font-medium text-primary">…</span> aka getByRole(AriaRole.MAIN).getByText("QA / Test Engineer")
+    2) <div cmdk-item="" role="option" id="radix-_r_h_" aria-selected="true" data-selected="true" aria-disabled="false" data-disabled="false" data-value="Engineering & Tech  QA / Test Engineer QA / Test Engineer" class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:si…>…</div> aka getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("QA / Test Engineer"))
+
+    at CRExecutionContext.evaluateWithArguments (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\chromium\crExecutionContext.js:80:13)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:453:9)
+    at async LongStandingScope._race (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\utils\isomorphic\manualPromise.js:94:14)
+    at async evaluateExpression (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\javascript.js:217:12)
+    at async Frame._expectInternal (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\frames.js:1181:57)
+    at async Frame.expect (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\frames.js:1145:31)
+    at async FrameDispatcher.expect (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\frameDispatcher.js:215:20)
+    at async ProgressController.run (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\progress.js:78:22)
+    at async FrameDispatcher._runCommand (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\dispatcher.js:95:14)
+}
+Call log:
+-   - Assert "isVisible" with timeout 5000ms
+-   - waiting for getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true))
+
+	at com.microsoft.playwright.impl.Connection.dispatch(Connection.java:262)
+	at com.microsoft.playwright.impl.Connection.processOneMessage(Connection.java:214)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:136)
+	... 47 more
+
+[ERROR] ch.hirion.journey.RegistrationTest.reg7_freeCanBeSelected -- Time elapsed: 2.072 s <<< FAILURE!
+com.microsoft.playwright.PlaywrightException: 
+Error {
+  message='Error: strict mode violation: getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true)) resolved to 2 elements:
+    1) <span class="inline-flex items-center gap-1 rounded-full border border-primary bg-primary-soft px-2.5 py-1 text-xs font-medium text-primary">…</span> aka getByRole(AriaRole.MAIN).getByText("QA / Test Engineer")
+    2) <div cmdk-item="" role="option" id="radix-_r_h_" aria-selected="true" data-selected="true" aria-disabled="false" data-disabled="false" data-value="Engineering & Tech  QA / Test Engineer QA / Test Engineer" class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:si…>…</div> aka getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("QA / Test Engineer"))
+
+  name='Error
+  stack='Error: Error: strict mode violation: getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true)) resolved to 2 elements:
+    1) <span class="inline-flex items-center gap-1 rounded-full border border-primary bg-primary-soft px-2.5 py-1 text-xs font-medium text-primary">…</span> aka getByRole(AriaRole.MAIN).getByText("QA / Test Engineer")
+    2) <div cmdk-item="" role="option" id="radix-_r_h_" aria-selected="true" data-selected="true" aria-disabled="false" data-disabled="false" data-value="Engineering & Tech  QA / Test Engineer QA / Test Engineer" class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:si…>…</div> aka getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("QA / Test Engineer"))
+
+    at CRExecutionContext.evaluateWithArguments (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\chromium\crExecutionContext.js:80:13)
+    at async LongStandingScope._race (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\utils\isomorphic\manualPromise.js:94:14)
+    at async evaluateExpression (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\javascript.js:217:12)
+    at async Frame._expectInternal (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\frames.js:1181:57)
+    at async Frame.expect (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\frames.js:1145:31)
+    at async FrameDispatcher.expect (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\frameDispatcher.js:215:20)
+    at async ProgressController.run (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\progress.js:78:22)
+    at async FrameDispatcher._runCommand (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\dispatcher.js:95:14)
+    at async DispatcherConnection.dispatch (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\dispatcher.js:329:22)
+}
+Call log:
+-   - Assert "isVisible" with timeout 5000ms
+-   - waiting for getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true))
+
+	at com.microsoft.playwright.impl.WaitableResult.get(WaitableResult.java:56)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:138)
+	at com.microsoft.playwright.impl.Connection.sendMessage(Connection.java:131)
+	at com.microsoft.playwright.impl.ChannelOwner.sendMessage(ChannelOwner.java:124)
+	at com.microsoft.playwright.impl.FrameImpl.expect(FrameImpl.java:1097)
+	at com.microsoft.playwright.impl.FrameImpl.lambda$expect$5(FrameImpl.java:1091)
+	at com.microsoft.playwright.impl.ChannelOwner.withTitle(ChannelOwner.java:98)
+	at com.microsoft.playwright.impl.FrameImpl.expect(FrameImpl.java:1091)
+	at com.microsoft.playwright.impl.LocatorImpl.expect(LocatorImpl.java:649)
+	at com.microsoft.playwright.impl.LocatorAssertionsImpl.doExpect(LocatorAssertionsImpl.java:46)
+	at com.microsoft.playwright.impl.AssertionsBase.expectImpl(AssertionsBase.java:58)
+	at com.microsoft.playwright.impl.AssertionsBase.expectImpl(AssertionsBase.java:47)
+	at com.microsoft.playwright.impl.LocatorAssertionsImpl.expectTrue(LocatorAssertionsImpl.java:471)
+	at com.microsoft.playwright.impl.LocatorAssertionsImpl.isVisible(LocatorAssertionsImpl.java:466)
+	at com.microsoft.playwright.assertions.LocatorAssertions.isVisible(LocatorAssertions.java:845)
+	at ch.hirion.journey.RegistrationTest.addRole(RegistrationTest.java:264)
+	at ch.hirion.journey.RegistrationTest.walkToStep(RegistrationTest.java:235)
+	at ch.hirion.journey.RegistrationTest.walkToStep(RegistrationTest.java:221)
+	at ch.hirion.journey.RegistrationTest.reg7_freeCanBeSelected(RegistrationTest.java:123)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+	at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:687)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+	at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+	at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:995)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+	at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+	at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.testng.TestRunner.privateRun(TestRunner.java:741)
+	at org.testng.TestRunner.run(TestRunner.java:616)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:312)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
+	at org.testng.TestNG.runSuites(TestNG.java:1112)
+	at org.testng.TestNG.run(TestNG.java:1079)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+Caused by: com.microsoft.playwright.impl.DriverException: Error {
+  message='Error: strict mode violation: getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true)) resolved to 2 elements:
+    1) <span class="inline-flex items-center gap-1 rounded-full border border-primary bg-primary-soft px-2.5 py-1 text-xs font-medium text-primary">…</span> aka getByRole(AriaRole.MAIN).getByText("QA / Test Engineer")
+    2) <div cmdk-item="" role="option" id="radix-_r_h_" aria-selected="true" data-selected="true" aria-disabled="false" data-disabled="false" data-value="Engineering & Tech  QA / Test Engineer QA / Test Engineer" class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:si…>…</div> aka getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("QA / Test Engineer"))
+
+  name='Error
+  stack='Error: Error: strict mode violation: getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true)) resolved to 2 elements:
+    1) <span class="inline-flex items-center gap-1 rounded-full border border-primary bg-primary-soft px-2.5 py-1 text-xs font-medium text-primary">…</span> aka getByRole(AriaRole.MAIN).getByText("QA / Test Engineer")
+    2) <div cmdk-item="" role="option" id="radix-_r_h_" aria-selected="true" data-selected="true" aria-disabled="false" data-disabled="false" data-value="Engineering & Tech  QA / Test Engineer QA / Test Engineer" class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:si…>…</div> aka getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("QA / Test Engineer"))
+
+    at CRExecutionContext.evaluateWithArguments (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\chromium\crExecutionContext.js:80:13)
+    at async LongStandingScope._race (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\utils\isomorphic\manualPromise.js:94:14)
+    at async evaluateExpression (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\javascript.js:217:12)
+    at async Frame._expectInternal (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\frames.js:1181:57)
+    at async Frame.expect (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\frames.js:1145:31)
+    at async FrameDispatcher.expect (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\frameDispatcher.js:215:20)
+    at async ProgressController.run (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\progress.js:78:22)
+    at async FrameDispatcher._runCommand (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\dispatcher.js:95:14)
+    at async DispatcherConnection.dispatch (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\dispatcher.js:329:22)
+}
+Call log:
+-   - Assert "isVisible" with timeout 5000ms
+-   - waiting for getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true))
+
+	at com.microsoft.playwright.impl.Connection.dispatch(Connection.java:262)
+	at com.microsoft.playwright.impl.Connection.processOneMessage(Connection.java:214)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:136)
+	... 47 more
+
+[ERROR] ch.hirion.journey.RegistrationTest.reg8_stepsOneToThreeSendNothing -- Time elapsed: 1.921 s <<< FAILURE!
+com.microsoft.playwright.PlaywrightException: 
+Error {
+  message='Error: strict mode violation: getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true)) resolved to 2 elements:
+    1) <span class="inline-flex items-center gap-1 rounded-full border border-primary bg-primary-soft px-2.5 py-1 text-xs font-medium text-primary">…</span> aka getByRole(AriaRole.MAIN).getByText("QA / Test Engineer")
+    2) <div cmdk-item="" role="option" id="radix-_r_h_" aria-selected="true" data-selected="true" aria-disabled="false" data-disabled="false" data-value="Engineering & Tech  QA / Test Engineer QA / Test Engineer" class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:si…>…</div> aka getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("QA / Test Engineer"))
+
+  name='Error
+  stack='Error: Error: strict mode violation: getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true)) resolved to 2 elements:
+    1) <span class="inline-flex items-center gap-1 rounded-full border border-primary bg-primary-soft px-2.5 py-1 text-xs font-medium text-primary">…</span> aka getByRole(AriaRole.MAIN).getByText("QA / Test Engineer")
+    2) <div cmdk-item="" role="option" id="radix-_r_h_" aria-selected="true" data-selected="true" aria-disabled="false" data-disabled="false" data-value="Engineering & Tech  QA / Test Engineer QA / Test Engineer" class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:si…>…</div> aka getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("QA / Test Engineer"))
+
+    at CRExecutionContext.evaluateWithArguments (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\chromium\crExecutionContext.js:80:13)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:453:9)
+    at async LongStandingScope._race (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\utils\isomorphic\manualPromise.js:94:14)
+    at async evaluateExpression (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\javascript.js:217:12)
+    at async Frame._expectInternal (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\frames.js:1181:57)
+    at async Frame.expect (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\frames.js:1145:31)
+    at async FrameDispatcher.expect (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\frameDispatcher.js:215:20)
+    at async ProgressController.run (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\progress.js:78:22)
+    at async FrameDispatcher._runCommand (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\dispatcher.js:95:14)
+}
+Call log:
+-   - Assert "isVisible" with timeout 5000ms
+-   - waiting for getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true))
+
+	at com.microsoft.playwright.impl.WaitableResult.get(WaitableResult.java:56)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:138)
+	at com.microsoft.playwright.impl.Connection.sendMessage(Connection.java:131)
+	at com.microsoft.playwright.impl.ChannelOwner.sendMessage(ChannelOwner.java:124)
+	at com.microsoft.playwright.impl.FrameImpl.expect(FrameImpl.java:1097)
+	at com.microsoft.playwright.impl.FrameImpl.lambda$expect$5(FrameImpl.java:1091)
+	at com.microsoft.playwright.impl.ChannelOwner.withTitle(ChannelOwner.java:98)
+	at com.microsoft.playwright.impl.FrameImpl.expect(FrameImpl.java:1091)
+	at com.microsoft.playwright.impl.LocatorImpl.expect(LocatorImpl.java:649)
+	at com.microsoft.playwright.impl.LocatorAssertionsImpl.doExpect(LocatorAssertionsImpl.java:46)
+	at com.microsoft.playwright.impl.AssertionsBase.expectImpl(AssertionsBase.java:58)
+	at com.microsoft.playwright.impl.AssertionsBase.expectImpl(AssertionsBase.java:47)
+	at com.microsoft.playwright.impl.LocatorAssertionsImpl.expectTrue(LocatorAssertionsImpl.java:471)
+	at com.microsoft.playwright.impl.LocatorAssertionsImpl.isVisible(LocatorAssertionsImpl.java:466)
+	at com.microsoft.playwright.assertions.LocatorAssertions.isVisible(LocatorAssertions.java:845)
+	at ch.hirion.journey.RegistrationTest.addRole(RegistrationTest.java:264)
+	at ch.hirion.journey.RegistrationTest.reg8_stepsOneToThreeSendNothing(RegistrationTest.java:148)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+	at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:687)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+	at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+	at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:995)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+	at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+	at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.testng.TestRunner.privateRun(TestRunner.java:741)
+	at org.testng.TestRunner.run(TestRunner.java:616)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:312)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
+	at org.testng.TestNG.runSuites(TestNG.java:1112)
+	at org.testng.TestNG.run(TestNG.java:1079)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+Caused by: com.microsoft.playwright.impl.DriverException: Error {
+  message='Error: strict mode violation: getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true)) resolved to 2 elements:
+    1) <span class="inline-flex items-center gap-1 rounded-full border border-primary bg-primary-soft px-2.5 py-1 text-xs font-medium text-primary">…</span> aka getByRole(AriaRole.MAIN).getByText("QA / Test Engineer")
+    2) <div cmdk-item="" role="option" id="radix-_r_h_" aria-selected="true" data-selected="true" aria-disabled="false" data-disabled="false" data-value="Engineering & Tech  QA / Test Engineer QA / Test Engineer" class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:si…>…</div> aka getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("QA / Test Engineer"))
+
+  name='Error
+  stack='Error: Error: strict mode violation: getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true)) resolved to 2 elements:
+    1) <span class="inline-flex items-center gap-1 rounded-full border border-primary bg-primary-soft px-2.5 py-1 text-xs font-medium text-primary">…</span> aka getByRole(AriaRole.MAIN).getByText("QA / Test Engineer")
+    2) <div cmdk-item="" role="option" id="radix-_r_h_" aria-selected="true" data-selected="true" aria-disabled="false" data-disabled="false" data-value="Engineering & Tech  QA / Test Engineer QA / Test Engineer" class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:si…>…</div> aka getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("QA / Test Engineer"))
+
+    at CRExecutionContext.evaluateWithArguments (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\chromium\crExecutionContext.js:80:13)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:453:9)
+    at async LongStandingScope._race (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\utils\isomorphic\manualPromise.js:94:14)
+    at async evaluateExpression (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\javascript.js:217:12)
+    at async Frame._expectInternal (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\frames.js:1181:57)
+    at async Frame.expect (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\frames.js:1145:31)
+    at async FrameDispatcher.expect (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\frameDispatcher.js:215:20)
+    at async ProgressController.run (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\progress.js:78:22)
+    at async FrameDispatcher._runCommand (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\dispatcher.js:95:14)
+}
+Call log:
+-   - Assert "isVisible" with timeout 5000ms
+-   - waiting for getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true))
+
+	at com.microsoft.playwright.impl.Connection.dispatch(Connection.java:262)
+	at com.microsoft.playwright.impl.Connection.processOneMessage(Connection.java:214)
+	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:136)
+	... 45 more
+
+[ERROR] Failures: 
+[ERROR]   RegistrationTest.reg7_freeCanBeSelected:123->walkToStep:221->walkToStep:235->addRole:264 » Playwright Error {
+  message='Error: strict mode violation: getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true)) resolved to 2 elements:
+    1) <span class="inline-flex items-center gap-1 rounded-full border border-primary bg-primary-soft px-2.5 py-1 text-xs font-medium text-primary">…</span> aka getByRole(AriaRole.MAIN).getByText("QA / Test Engineer")
+    2) <div cmdk-item="" role="option" id="radix-_r_h_" aria-selected="true" data-selected="true" aria-disabled="false" data-disabled="false" data-value="Engineering & Tech  QA / Test Engineer QA / Test Engineer" class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:si…>…</div> aka getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("QA / Test Engineer"))
+
+  name='Error
+  stack='Error: Error: strict mode violation: getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true)) resolved to 2 elements:
+    1) <span class="inline-flex items-center gap-1 rounded-full border border-primary bg-primary-soft px-2.5 py-1 text-xs font-medium text-primary">…</span> aka getByRole(AriaRole.MAIN).getByText("QA / Test Engineer")
+    2) <div cmdk-item="" role="option" id="radix-_r_h_" aria-selected="true" data-selected="true" aria-disabled="false" data-disabled="false" data-value="Engineering & Tech  QA / Test Engineer QA / Test Engineer" class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:si…>…</div> aka getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("QA / Test Engineer"))
+
+    at CRExecutionContext.evaluateWithArguments (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\chromium\crExecutionContext.js:80:13)
+    at async LongStandingScope._race (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\utils\isomorphic\manualPromise.js:94:14)
+    at async evaluateExpression (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\javascript.js:217:12)
+    at async Frame._expectInternal (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\frames.js:1181:57)
+    at async Frame.expect (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\frames.js:1145:31)
+    at async FrameDispatcher.expect (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\frameDispatcher.js:215:20)
+    at async ProgressController.run (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\progress.js:78:22)
+    at async FrameDispatcher._runCommand (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\dispatcher.js:95:14)
+    at async DispatcherConnection.dispatch (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\dispatcher.js:329:22)
+}
+Call log:
+-   - Assert "isVisible" with timeout 5000ms
+-   - waiting for getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true))
+
+[ERROR]   RegistrationTest.reg7_stepFourPremiumTrialSelected:111->walkToStep:221->walkToStep:235->addRole:264 » Playwright Error {
+  message='Error: strict mode violation: getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true)) resolved to 2 elements:
+    1) <span class="inline-flex items-center gap-1 rounded-full border border-primary bg-primary-soft px-2.5 py-1 text-xs font-medium text-primary">…</span> aka getByRole(AriaRole.MAIN).getByText("QA / Test Engineer")
+    2) <div cmdk-item="" role="option" id="radix-_r_h_" aria-selected="true" data-selected="true" aria-disabled="false" data-disabled="false" data-value="Engineering & Tech  QA / Test Engineer QA / Test Engineer" class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:si…>…</div> aka getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("QA / Test Engineer"))
+
+  name='Error
+  stack='Error: Error: strict mode violation: getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true)) resolved to 2 elements:
+    1) <span class="inline-flex items-center gap-1 rounded-full border border-primary bg-primary-soft px-2.5 py-1 text-xs font-medium text-primary">…</span> aka getByRole(AriaRole.MAIN).getByText("QA / Test Engineer")
+    2) <div cmdk-item="" role="option" id="radix-_r_h_" aria-selected="true" data-selected="true" aria-disabled="false" data-disabled="false" data-value="Engineering & Tech  QA / Test Engineer QA / Test Engineer" class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:si…>…</div> aka getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("QA / Test Engineer"))
+
+    at CRExecutionContext.evaluateWithArguments (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\chromium\crExecutionContext.js:80:13)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:453:9)
+    at async LongStandingScope._race (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\utils\isomorphic\manualPromise.js:94:14)
+    at async evaluateExpression (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\javascript.js:217:12)
+    at async Frame._expectInternal (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\frames.js:1181:57)
+    at async Frame.expect (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\frames.js:1145:31)
+    at async FrameDispatcher.expect (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\frameDispatcher.js:215:20)
+    at async ProgressController.run (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\progress.js:78:22)
+    at async FrameDispatcher._runCommand (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\dispatcher.js:95:14)
+}
+Call log:
+-   - Assert "isVisible" with timeout 5000ms
+-   - waiting for getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true))
+
+[ERROR]   RegistrationTest.reg8_stepsOneToThreeSendNothing:148->addRole:264 » Playwright Error {
+  message='Error: strict mode violation: getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true)) resolved to 2 elements:
+    1) <span class="inline-flex items-center gap-1 rounded-full border border-primary bg-primary-soft px-2.5 py-1 text-xs font-medium text-primary">…</span> aka getByRole(AriaRole.MAIN).getByText("QA / Test Engineer")
+    2) <div cmdk-item="" role="option" id="radix-_r_h_" aria-selected="true" data-selected="true" aria-disabled="false" data-disabled="false" data-value="Engineering & Tech  QA / Test Engineer QA / Test Engineer" class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:si…>…</div> aka getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("QA / Test Engineer"))
+
+  name='Error
+  stack='Error: Error: strict mode violation: getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true)) resolved to 2 elements:
+    1) <span class="inline-flex items-center gap-1 rounded-full border border-primary bg-primary-soft px-2.5 py-1 text-xs font-medium text-primary">…</span> aka getByRole(AriaRole.MAIN).getByText("QA / Test Engineer")
+    2) <div cmdk-item="" role="option" id="radix-_r_h_" aria-selected="true" data-selected="true" aria-disabled="false" data-disabled="false" data-value="Engineering & Tech  QA / Test Engineer QA / Test Engineer" class="relative flex cursor-default gap-2 select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:si…>…</div> aka getByRole(AriaRole.OPTION, new Page.GetByRoleOptions().setName("QA / Test Engineer"))
+
+    at CRExecutionContext.evaluateWithArguments (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\chromium\crExecutionContext.js:80:13)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:453:9)
+    at async LongStandingScope._race (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\utils\isomorphic\manualPromise.js:94:14)
+    at async evaluateExpression (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\javascript.js:217:12)
+    at async Frame._expectInternal (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\frames.js:1181:57)
+    at async Frame.expect (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\frames.js:1145:31)
+    at async FrameDispatcher.expect (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\frameDispatcher.js:215:20)
+    at async ProgressController.run (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\progress.js:78:22)
+    at async FrameDispatcher._runCommand (C:\Users\pc\AppData\Local\Temp\playwright-java-15085329126242662439\package\lib\server\dispatchers\dispatcher.js:95:14)
+}
+Call log:
+-   - Assert "isVisible" with timeout 5000ms
+-   - waiting for getByText("QA / Test Engineer", new Page.GetByTextOptions().setExact(true))
+
+[ERROR] Tests run: 12, Failures: 3, Errors: 0, Skipped: 3
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.2:test (default-test) on project hirion-smoke-agent: There are test failures.
+[ERROR] 
+[ERROR] See D:\Demo\Hirion_Capstone\hirion_capstone\target\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+Saved 6000 chars from https://hirion.ch/signup -> .agent-log/dom-snippet.html
+I made one locator fix and it passes `CheckLocatorRules.java` (`PASS: no forbidden patterns`). I haven't rerun the Playwright tests yet, so I don't know if `RegistrationTest` is green now. The next heal-loop iteration will run them.
+
+**What was failing:** the previous iteration's combobox fix worked, and the failure moved one line down to `RegistrationTest.java:264` in `addRole()`. There, `getByText("QA / Test Engineer", exact)` found two elements:
+1. the selected-role chip, a `<span>` inside `<main>`
+2. the cmdk option (`role="option"`), which is still open after pressing Escape and sits outside `<main>`
+
+**Fix:** I limited the chip check to `<main>` (`src/test/java/ch/hirion/journey/RegistrationTest.java:264`):
+```java
+assertThat(page.getByRole(AriaRole.MAIN)
+      .getByText(ROLE, new Locator.GetByTextOptions().setExact(true))).isVisible();
+```
+It only uses `getByRole` and `getByText` with exact matching. Playwright's own error output suggested this same scoping. There's no CSS, no nth-child and no waits.
+
+**Notes:**
+- I didn't touch any `expectedExceptions` tests.
+- `.agent-log/dom-snippet.html` only shows signup step 1, so it wasn't useful for this step-3 failure. I worked from the element details in the Playwright error in `heal-raw.log` instead.
+- The picker staying open after Escape may be a real UX issue. I didn't hide it in the test, but it may be worth checking when you review this.
+- Per AGENTS.md, a person should review this together with the iteration-1 change (the combobox without an accessible name, candidate D13) in `heal-log.jsonl` and with the locator-reviewer before merging.
+PASS: no forbidden patterns
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.

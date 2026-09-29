@@ -108,3 +108,19 @@ no account was created. A human starts the first live run (task 2.5).
   and "See my matches"; `.auth/test-user.json` never existed, JourneyCleanup had nothing to delete
   (no log lines), `.auth/user.json` and `.auth/manual-user.json` untouched. Open questions 2, 4, 5 remain
   open (step 4, login error and deletion were not reached).
+
+## Plan step 25 (early, registration only): healed with heal-loop.sh (2026-09-29 16:28-16:33 UTC)
+
+- Run by a human: `./scripts/heal-loop.sh "-Dsuite=testng-journey.xml" src/test/java/ch/hirion/journey/RegistrationTest.java
+  https://hirion.ch/signup main` -- on purpose WITHOUT `-Dqa.mailbox`, so reg9 is skipped and no iteration can
+  create an account (with `-Dtest=RegistrationTest` a green iteration would create one and JourneyCleanup
+  would not run).
+- `.agent-log/heal-log.jsonl`: RED on iteration 1 -> fix -> RED on iteration 2 -> fix -> GREEN on iteration 3;
+  no REJECTED. `.agent-log/heal-diff.patch`: only `addRole()` changed --
+  iteration 1: the unnamed combobox (D13) is found by role + exact visible text "Add";
+  iteration 2: the chosen-role chip is checked inside `main`, because the option list is portaled outside it.
+- Human review of the diff: the Free guard (lines 166-167), `submitted = true` and the single
+  "See my matches" click (line 172) are unchanged; `CheckLocatorRules` PASS.
+- Last run: 12 tests, 9 passed, 3 skipped (reg9, reg4, auth6 -- they need `-Dqa.mailbox`). Confirmed live on the
+  way: step 4 shows Premium Trial selected by default and Free can be selected (visual state, open question 5
+  for the guard), steps 2-3 send nothing to the backend (REG-8).

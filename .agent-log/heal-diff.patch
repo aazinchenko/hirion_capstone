@@ -1,0 +1,35 @@
+### iteration 1
+diff --git a/src/test/java/ch/hirion/journey/RegistrationTest.java b/src/test/java/ch/hirion/journey/RegistrationTest.java
+index ee60f4c..57ecf75 100644
+--- a/src/test/java/ch/hirion/journey/RegistrationTest.java
++++ b/src/test/java/ch/hirion/journey/RegistrationTest.java
+@@ -255 +255,4 @@ public class RegistrationTest extends BaseTest {
+-  /** Step 3: the roles picker is a combobox "Add" with a list of options; one role is enough. */
++  /**
++   * Step 3: the roles picker is a combobox with the visible text "Add" and a list of options; one role is enough.
++   * The combobox has no accessible name (candidate defect D13), so it is matched by role + exact text.
++   */
+@@ -257 +260,2 @@ public class RegistrationTest extends BaseTest {
+-    role(AriaRole.COMBOBOX, "Add").click();
++    page.getByRole(AriaRole.COMBOBOX)
++          .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^\\s*Add\\s*$"))).click();
+### iteration 2
+diff --git a/src/test/java/ch/hirion/journey/RegistrationTest.java b/src/test/java/ch/hirion/journey/RegistrationTest.java
+index ee60f4c..46ac834 100644
+--- a/src/test/java/ch/hirion/journey/RegistrationTest.java
++++ b/src/test/java/ch/hirion/journey/RegistrationTest.java
+@@ -255 +255,4 @@ public class RegistrationTest extends BaseTest {
+-  /** Step 3: the roles picker is a combobox "Add" with a list of options; one role is enough. */
++  /**
++   * Step 3: the roles picker is a combobox with the visible text "Add" and a list of options; one role is enough.
++   * The combobox has no accessible name (candidate defect D13), so it is matched by role + exact text.
++   */
+@@ -257 +260,2 @@ public class RegistrationTest extends BaseTest {
+-    role(AriaRole.COMBOBOX, "Add").click();
++    page.getByRole(AriaRole.COMBOBOX)
++          .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^\\s*Add\\s*$"))).click();
+@@ -260 +264,3 @@ public class RegistrationTest extends BaseTest {
+-    assertThat(exactText(ROLE)).isVisible();
++    // the chip lives in <main>; the option list is portaled outside it and may still be open
++    assertThat(page.getByRole(AriaRole.MAIN)
++          .getByText(ROLE, new Locator.GetByTextOptions().setExact(true))).isVisible();
