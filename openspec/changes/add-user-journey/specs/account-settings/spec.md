@@ -68,8 +68,8 @@ the page SHALL show an error for the field and SHALL NOT send or save the invali
 
 ### Requirement: SET-5 Security form changes the password
 The Security section SHALL show the fields "Current password", "New password" and "Confirm new password",
-each with a button "Show password", and the button "Update password". After a successful update the new
-password SHALL sign the user in on `/login`.
+each with a button "Show password", and the button "Update password". After a successful update the
+notification "Password updated" SHALL be shown and the new password SHALL sign the user in on `/login`.
 
 #### Scenario: Security form is rendered
 - **WHEN** the signed-in test user opens `/settings?section=security`
@@ -80,7 +80,8 @@ password SHALL sign the user in on `/login`.
 - **WHEN** the signed-in test user fills "Current password" with the current password, "New password" and
   "Confirm new password" with a new password, clicks "Update password", and then a fresh guest signs in on
   `/login` with the test user's email and the new password
-- **THEN** the browser URL path after "Sign in" is `/dashboard`
+- **THEN** the notification "Password updated" was shown and the browser URL path after "Sign in" is
+  `/dashboard`
 
 ### Requirement: SET-6 Profile fields are saved
 Filling profile fields and clicking "Save changes" SHALL show the notification "Profile updated", and the

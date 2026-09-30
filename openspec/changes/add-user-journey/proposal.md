@@ -28,8 +28,10 @@ defects D6, D8, D9, D10 and D14 (added 2026-09-30), and it adds the plan item AU
   a trial or a payment, no test clicks "Tailor my CV" or "Write Cover Letter", and no test asserts on
   AI text.
 - Known defects keep the correct SHALL in the spec. Their tests are KNOWN BUG: D6 ("Show password" not
-  reachable by keyboard), D8 ("?" in job titles), D9 (false "unsaved changes"), D10 (any string saved
-  as email). The D10 test must never really save an invalid email (see design.md).
+  reachable by keyboard), D10 (any string saved as email) and D14 (required fields only a visual "*").
+  The D10 test must never really save an invalid email (see design.md). D8 ("?" in job titles) and D9
+  (false "unsaved changes") did not show on a new Free user on 2026-09-30, so their scenarios are regular
+  checks that turn red when the defect appears (human decisions 2026-09-30, see design.md).
 
 ## Capabilities
 
@@ -90,27 +92,35 @@ defects D6, D8, D9 and D10. None of the strings listed below is used in a requir
 ## Open questions (ASSUMED -- drafts until a human confirms on the live site)
 
 1. **Plan & Billing after a Free signup** -- answered from the site code (settings bundle, read 2026-09-30);
-   SET-8 checks it in the next live run: a Free account shows "You're currently on the Free plan." (Pro: "You're on the Pro
-   plan."), the card "Free plan" with the button "Current plan", and the note "Billing handled securely.
-   Cancel anytime.". The next live journey run can confirm it; then a SET requirement can be added.
+   a Free account shows "You're currently on the Free plan." (Pro: "You're on the Pro plan."), the card
+   "Free plan" with the button "Current plan", and the note "Billing handled securely. Cancel anytime.".
+   CONFIRMED live 2026-09-30 by set8_freePlanShown (GREEN in the 6th live run: "You're currently on the
+   Free plan." and the button "Current plan"); requirement SET-8 covers it. The note text was not asserted.
 2. **Account deletion flow** -- CONFIRMED live 2026-09-29 by the first JourneyCleanup run: "Delete account"
    opens the dialog "Delete your account?" ("This permanently removes your profile, CV, preferences and
    saved matches. It cannot be undone.") with "Cancel" / "Delete"; after "Delete" the URL path is `/`,
    the toast "Your account has been deleted." is shown and the user is signed out; signing in again with
-   the same email and password fails. Ready for DEL requirements (change 4 or `/opsx:update`).
+   the same email and password fails. Seen in every live run since (6 deletions on 2026-09-29/30).
+   Human decision 2026-09-30: no DEL-2 requirement for the dialog and the toast -- only JourneyCleanup
+   clicks "Delete", and its output is the evidence; DEL-1 stays the only DEL scenario.
 3. **D7: Phone accepts letters** -- closed 2026-09-30 by a human decision: "Phone" is free-form text by
    design, so letters are not a defect. The site code has no phone validation. No KNOWN BUG test.
+   Seen live 2026-09-30 (5th run): on save the site stores Phone with the country code and without spaces
+   ("79 000 00 00" -> "+41790000000", shown as "790000000"); SET-6 records this.
 4. **Wrong password error text** (AUTH-6) -- from the site code (login bundle, 2026-09-30): the toast shows
    the auth backend's error message as it is (`signInWithPassword` -> `toast.error(error.message)`), not a
    site text; for this backend that is normally "Invalid login credentials", in English also when the site
-   language is DE/FR/IT. Still to be read from the page in the next live run (auth6 saw the toast).
+   language is DE/FR/IT. Still to be read from the page: auth6 only checks that a toast appears, and no
+   trace is kept for a passing test. HUMAN (2026-09-30): reads the toast on /login by hand with a wrong
+   password (no account needed) and reports the text; then decide whether AUTH-6 asserts it.
 5. **How step 4 marks the selected plan** -- answered from the site code (signup bundle, read 2026-09-29):
    the Premium Trial and Free cards are plain `<button>` elements without `aria-pressed`, `aria-checked`
    or `role="radio"`; the selection is only visual (the selected card gets the border classes
    `border-primary` and a check icon). Candidate defect D12 in docs/intent.md. The "Free is selected"
    guard before "See my matches" therefore checks the visual state of the Free card, and REG-7 "selected"
    means that visual state until D12 is fixed. The code also shows why Free matters: with `trial`
-   selected, account creation immediately starts the Premium trial.
+   selected, account creation immediately starts the Premium trial. CONFIRMED live 2026-09-29/30: REG-7
+   passed on this visual state in every live run and no run started a trial (Plan & Billing shows Free).
 6. **Analytics on a Free account** -- answered from the site code (dashboard bundle, 2026-09-30): Analytics
    is Pro-only. For a Free user the three sections are still rendered but hidden behind an overlay
    (`aria-hidden="true"` on the content) with the heading "Unlock Hirion Pro", the text "See your match
@@ -118,19 +128,28 @@ defects D6, D8, D9 and D10. None of the strings listed below is used in a requir
    "Upgrade to Pro" to `/settings?section=plan`. The Analytics facts in docs/intent.md were recorded on the
    trial (Pro) account. Consequence: DASH-7 / DASH-8 as written cannot be checked on the Free test user --
    decided 2026-09-30: DASH-7 checks the Pro gate (no click on "Upgrade to Pro"), DASH-8 is out of this
-   change (see "Not in this change").
-7. **Password change confirmation.** The toast or message after "Update password" is not recorded.
-   SET-5 asserts the observable result instead: the new password signs in.
+   change (see "Not in this change"). CONFIRMED live 2026-09-30: dash7_analyticsProGate GREEN (tab name
+   "Analytics Pro", heading "Unlock Hirion Pro").
+7. **Password change confirmation** -- CONFIRMED live 2026-09-30: after "Update password" the toast
+   "Password updated" is shown in the Notifications region (asserted by set5_newPasswordSignsIn, GREEN),
+   and the new password signs in. SET-5 names the toast.
 8. **Healing journey tests.** `scripts/heal-loop.sh` fetches the live DOM with `.auth/user.json`. After a
-   normal run that session belongs to a deleted user. The human decides how heal sessions get a live
-   user (design.md "Healing").
+   normal run that session belongs to a deleted user. Human decision 2026-09-29/30: RegistrationTest is
+   healed with heal-loop WITHOUT `-Dqa.mailbox` (no account is created; GREEN on iteration 3, commit
+   9e5fc59); Dashboard and Settings tests are fixed by targeted human-reviewed edits when the cause is
+   known from the trace, because every heal iteration would create and delete a real account.
 9. **Wizard Back and the `plan` parameter** (plan REG-09, REG-11) -- confirmed from the site code only
    (2026-09-29), not yet seen live: all wizard data (names, email, password, CV, roles, plan) lives in
    one component state, "Back" only lowers the step number, so the data of steps 1-3 is kept; "Back" on
    step 1 goes to `/`. The initial plan is the `plan` URL parameter, else `trial`: `?plan=trial` equals no
-   parameter, `?plan=free` preselects Free, any other value selects no card. Candidates for change 4.
+   parameter, `?plan=free` preselects Free, any other value selects no card. Candidates for change 4
+   (`update-signup-steps`, plan step 26); stays open here.
 10. **Invalid email on step 1** (plan REG-03 "qa@ -> error, stay on step 1") -- the site code checks only
    "email not empty" and "password at least 8 characters"; the input has `type="email"` but there is no
    `<form>` submit, so the browser never checks the format and "qa@" reaches step 2. Candidate defect D11
    in docs/intent.md. CONFIRMED live 2026-09-30 by a temporary guest probe: "qa@" plus an 8+ character
    password -> "Step 2 of 4", no error message (no account created; the probe was not committed).
+11. **D9 depends on the profile data?** (ASSUMED, added 2026-09-30) -- D9 was seen on 2026-09-25 on a
+   manual account with an odd stored Phone, but not on a new Free user in four live runs. Hypothesis: the
+   notice appears when a stored value differs from what the form shows (Phone is normalised on save).
+   Not checked; it does not block this change (SET-3 is a regular check, design.md).

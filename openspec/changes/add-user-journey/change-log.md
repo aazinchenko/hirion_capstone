@@ -379,3 +379,22 @@ no account was created. A human starts the first live run (task 2.5).
 - set6_profileSurvivesReload GREEN (Phone "790000000"); set3 x2 GREEN as regular checks (D9 absent again);
   KNOWN BUG D6, D10 and D14 passed as expected exceptions.
 - JourneyCleanup: "deleting this run's user ... (accountCreated=true)" -> "deleted: ... no longer signs in".
+
+## Plan step 25 (part 1): evidence for tasks 2.4, 2.5, 3.2; open questions answered (2026-09-30)
+
+- 2.4 [x]: `grep -rn "KNOWN BUG D" src/test/java/ch/hirion/journey` -> RegistrationTest.java:185 D6,
+  SettingsTest.java:107 D14, SettingsTest.java:168 D10; `java scripts/CheckLocatorRules.java src/test/java`
+  -> "PASS: no forbidden patterns". D8 and D9 are regular checks (human decisions 2026-09-30).
+- 2.5 [x]: live runs 1-6 are quoted above (failing lines and JourneyCleanup output); the 6th run lists all
+  37 tests plus the cleanup; `.auth/test-user.json` is gone (`ls` -> "No such file or directory"); cleanup
+  printed "deleted: ... no longer signs in" (the fresh sign-in with the run's email and password failed).
+- 3.2 [x]: heal-loop ran only for RegistrationTest, without `-Dqa.mailbox` (question 8), GREEN on iteration 3
+  (9e5fc59; `.agent-log/heal-log.jsonl`, 13 lines). All later journey fixes were targeted, human-approved
+  commits with the cause taken from the trace (3511779, b90a2e1, 67109db, f92bf6e, 53d8df0, 462cbc0); no
+  KNOWN BUG assertion was weakened. The human reviews heal-log.jsonl with the locator-reviewer output.
+- 3.1 (open): proposal questions 1, 5, 6, 7 marked CONFIRMED live, 2 (no DEL-2) and 8 recorded as human
+  decisions, 3 extended with the Phone normalisation, 9 moved to change 4, 11 added (D9 hypothesis,
+  ASSUMED). SET-5 now names the toast "Password updated". Question 4 (wrong-password text) waits for the
+  human to read the toast on /login.
+- Human decision: task 3.3's manual sign-in check is covered by the JourneyCleanup output (the run's
+  password is never printed, and a wrong password gives the same error as a deleted account).
