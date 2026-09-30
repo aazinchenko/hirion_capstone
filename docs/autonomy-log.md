@@ -45,3 +45,8 @@ reviews against the live site code, runs the live suites after a human "да" an
 - **Evidence rules that came out of the downgrades:** every `[x]` needs a quoted run (#3); preconditions never
   count as a known bug (#5); read the underlying error before fixing (#10); a fact from site code stays
   ASSUMED until seen live (#9, #12); reviewer output is verified in the code (#14).
+- **Where the rules live (2026-09-30):** this log is the record; the rules themselves are in `AGENTS.md`
+  "Rules learned", which every agent session reads. #7 is also enforced: a PreToolUse hook
+  (`scripts/guard-live-run.mjs`, registered in `.claude/settings.json`) turns any Bash / PowerShell command with
+  `-Dqa.mailbox` into a human prompt, because the allow rules `Bash(mvn -q test:*)` and `PowerShell(mvn *)`
+  would otherwise let a live run through silently. The agent may not edit `.claude/settings.json`.

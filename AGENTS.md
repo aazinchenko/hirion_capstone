@@ -28,3 +28,11 @@ description = "... KNOWN BUG Dn ..."). Do not "heal" them by weakening the asser
 - A human reviews .agent-log/heal-log.jsonl and the locator-reviewer output before merging.
 - ASSUMED items (docs/intent.md, "Open questions" in proposal.md) are drafts until
 a human confirms them against the live site.
+## Rules learned (details and evidence: docs/autonomy-log.md)
+- A live run with -Dqa.mailbox creates a REAL hirion.ch account: only after an explicit human "да",
+one account per run. A PreToolUse hook (scripts/guard-live-run.mjs) turns such a command into a prompt.
+- heal-loop for journey tests runs WITHOUT -Dqa.mailbox; other journey fixes are targeted and use the trace.
+- A KNOWN BUG test checks its preconditions with org.testng.Assert, never with the expected exception.
+- Before fixing a failure, read the underlying error (trace, swallowed exception), not only the summary.
+- A fact read from the site's code stays ASSUMED until it is seen on the live site.
+- Every [x] in tasks.md needs a quoted run or command output in the change's change-log.md.
