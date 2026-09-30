@@ -97,7 +97,7 @@ D10  Settings > Profile > Email* has no effective validation: an error is shown,
 
 D11  /signup step 1 accepts an invalid email such as "qa@": only "not empty" and "password >= 8" are
      checked, the input is type=email but not inside a form, so the error comes only on step 4.
-                                                   (candidate, from the site code 2026-09-29, confirm live)
+                                                   (CONFIRMED live 2026-09-30: "qa@" -> "Step 2 of 4", no error)
 D12  /signup step 4: the Premium Trial / Free cards do not expose which one is selected (no
      aria-pressed / aria-checked / role=radio); the selection is only visual.
                                                    (candidate, from the site code 2026-09-29, confirm live)

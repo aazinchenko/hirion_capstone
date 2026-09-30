@@ -67,10 +67,10 @@ defects D6, D8, D9 and D10. None of the strings listed below is used in a requir
 
 ## Open questions (ASSUMED -- drafts until a human confirms on the live site)
 
-1. **Plan & Billing after a Free signup.** `docs/intent.md` describes only the Pro view after the
-   default (trial) signup: "You're on the Pro plan.", "Renews on <date + 7 days>", Cancel subscription,
-   Monthly / Quarterly / Yearly, "Manage subscription". A Free account may look different. No
-   requirement for `/settings?section=plan` until a human records the Free view.
+1. **Plan & Billing after a Free signup** -- answered from the site code (settings bundle, read 2026-09-30),
+   not yet seen live: a Free account shows "You're currently on the Free plan." (Pro: "You're on the Pro
+   plan."), the card "Free plan" with the button "Current plan", and the note "Billing handled securely.
+   Cancel anytime.". The next live journey run can confirm it; then a SET requirement can be added.
 2. **Account deletion flow** -- CONFIRMED live 2026-09-29 by the first JourneyCleanup run: "Delete account"
    opens the dialog "Delete your account?" ("This permanently removes your profile, CV, preferences and
    saved matches. It cannot be undone.") with "Cancel" / "Delete"; after "Delete" the URL path is `/`,
@@ -80,10 +80,10 @@ defects D6, D8, D9 and D10. None of the strings listed below is used in a requir
    There is no requirement and no test until a human re-checks it. If it is confirmed: add a
    requirement "Phone SHALL reject letters" and a KNOWN BUG D7 test that, like D10, never saves the
    value (see design.md).
-4. **Wrong password error text** (AUTH-6) -- still open: the live run 2026-09-29 showed the error toast
-   (auth6 passed) but did not record its text. The exact message on `/login` after a wrong password is not
-   recorded in `docs/intent.md`. AUTH-6 asserts only what is known: the user stays on `/login` with the
-   heading "Welcome back". The text is added once a human confirms it.
+4. **Wrong password error text** (AUTH-6) -- from the site code (login bundle, 2026-09-30): the toast shows
+   the auth backend's error message as it is (`signInWithPassword` -> `toast.error(error.message)`), not a
+   site text; for this backend that is normally "Invalid login credentials", in English also when the site
+   language is DE/FR/IT. Still to be read from the page in the next live run (auth6 saw the toast).
 5. **How step 4 marks the selected plan** -- answered from the site code (signup bundle, read 2026-09-29):
    the Premium Trial and Free cards are plain `<button>` elements without `aria-pressed`, `aria-checked`
    or `role="radio"`; the selection is only visual (the selected card gets the border classes
@@ -91,10 +91,13 @@ defects D6, D8, D9 and D10. None of the strings listed below is used in a requir
    guard before "See my matches" therefore checks the visual state of the Free card, and REG-7 "selected"
    means that visual state until D12 is fixed. The code also shows why Free matters: with `trial`
    selected, account creation immediately starts the Premium trial.
-6. **Analytics on a Free account.** The Analytics tab has a PRO badge. The Analytics facts were
-   recorded on the signed-in test account, whose plan is not stated. If a Free user sees a paywall
-   instead of the three sections, DASH-7 / DASH-8 need a human decision: test on the trial plan is not
-   allowed, so the requirements would move to a later change.
+6. **Analytics on a Free account** -- answered from the site code (dashboard bundle, 2026-09-30): Analytics
+   is Pro-only. For a Free user the three sections are still rendered but hidden behind an overlay
+   (`aria-hidden="true"` on the content) with the heading "Unlock Hirion Pro", the text "See your match
+   analytics, Swiss salary benchmarks, and personalized opportunities to land roles faster." and the link
+   "Upgrade to Pro" to `/settings?section=plan`. The Analytics facts in docs/intent.md were recorded on the
+   trial (Pro) account. Consequence: DASH-7 / DASH-8 as written cannot be checked on the Free test user --
+   a human decision is needed (see change-log 2026-09-30).
 7. **Password change confirmation.** The toast or message after "Update password" is not recorded.
    SET-5 asserts the observable result instead: the new password signs in.
 8. **Healing journey tests.** `scripts/heal-loop.sh` fetches the live DOM with `.auth/user.json`. After a
@@ -108,4 +111,5 @@ defects D6, D8, D9 and D10. None of the strings listed below is used in a requir
 10. **Invalid email on step 1** (plan REG-03 "qa@ -> error, stay on step 1") -- the site code checks only
    "email not empty" and "password at least 8 characters"; the input has `type="email"` but there is no
    `<form>` submit, so the browser never checks the format and "qa@" reaches step 2. Candidate defect D11
-   in docs/intent.md, to be confirmed live by a human (no account is created unless step 4 is finished).
+   in docs/intent.md. CONFIRMED live 2026-09-30 by a temporary guest probe: "qa@" plus an 8+ character
+   password -> "Step 2 of 4", no error message (no account created; the probe was not committed).

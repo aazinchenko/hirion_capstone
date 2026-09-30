@@ -143,3 +143,17 @@ no account was created. A human starts the first live run (task 2.5).
   `.auth/test-user.json` and `.auth/user.json` removed; `.auth/manual-user.json` kept.
 - Open question 2 (deletion) CONFIRMED live and recorded in proposal.md; open question 5 answered (visual
   selection works as the guard); open question 4 (wrong-password text) still open.
+
+## Open items resolved (2026-09-30)
+
+- Gmail (checked with the human's consent through the Gmail connector): exactly one mail to the test address of
+  the 2026-09-29 run -- "Welcome to Hirion. Your job search starts now" at 18:36 -- and no trial / billing mail:
+  the Free guard held.
+- D11 CONFIRMED live by a temporary guest probe (not committed): "qa@" + an 8+ character password -> the wizard
+  shows "Step 2 of 4", no error. No account was created.
+- Open question 1 (Plan & Billing on Free), 4 (wrong-password text) and 6 (Analytics on Free) answered from the
+  site code (read-only), details in proposal.md. The important one is 6: Analytics is Pro-only; a Free user sees
+  the overlay "Unlock Hirion Pro" with "Upgrade to Pro", so DASH-7 / DASH-8 need a human decision before
+  DashboardTest is written.
+- `.auth/user.json`: nothing to do -- the journey run writes a fresh one in reg9 and cleanup removes it; the
+  hand-made session stays in `.auth/manual-user.json`.
