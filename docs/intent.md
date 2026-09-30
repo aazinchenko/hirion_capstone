@@ -90,6 +90,7 @@ D4   Pricing toggle Monthly / Quarterly / Yearly has no aria-pressed.           
 D5   /login: Email / Password inputs have no autocomplete.                                (walkthrough)
 D6   /signup: "Show password" has tabindex=-1, not reachable by keyboard.                 (walkthrough)
 D7   Settings > Phone accepts letters ("00000000000000jj").                  (screenshot, to re-check)
+     NOT A DEFECT (human decision 2026-09-30): Phone is free-form text by design; no test.
 D8   Job titles show "?" instead of characters: "Senior Azure Engineer | ? oder ... Next Level ??".
                                                                           (CONFIRMED live 2026-09-25)
      Not reproduced 2026-09-30 in the feed of a new Free user: depends on the job ads in the feed,

@@ -78,3 +78,23 @@ password SHALL sign the user in on `/login`.
   "Confirm new password" with a new password, clicks "Update password", and then a fresh guest signs in on
   `/login` with the test user's email and the new password
 - **THEN** the browser URL path after "Sign in" is `/dashboard`
+
+### Requirement: SET-6 Profile fields are saved
+Filling profile fields and clicking "Save changes" SHALL show the notification "Profile updated", and the
+values SHALL still be shown after the page is reloaded. "Phone" is free-form text by design (decision
+2026-09-30) and "LinkedIn URL" is not validated by design (docs/intent.md).
+
+#### Scenario: Profile survives a reload
+- **WHEN** the signed-in test user opens `/settings` with the Profile section shown, fills "Phone" with
+  "79 000 00 00", "LinkedIn URL" with "https://www.linkedin.com/in/qa-tester-example", "Headline" with
+  "QA Automation Engineer (test account)" and "Short bio" with "Automated test account. Created and deleted
+  by Playwright.", clicks "Save changes" and reloads the page
+- **THEN** the notification "Profile updated" was shown and the four fields show the values that were filled
+
+### Requirement: SET-8 Plan & Billing shows the Free plan
+For a user on the Free plan the section Plan & Billing SHALL say "You're currently on the Free plan." and
+mark the Free plan with the button "Current plan".
+
+#### Scenario: Free plan is shown
+- **WHEN** the signed-in Free test user opens `/settings?section=plan`
+- **THEN** the page shows the text "You're currently on the Free plan." and the button "Current plan"

@@ -62,6 +62,14 @@ defects D6, D8, D9 and D10, and it adds the plan item AUTH-03 (wrong password), 
   recommendations that move there after 30 days ("When new daily matches arrive, older recommendations
   move here for 30 days."), not hidden jobs. DASH-6 (Not relevant removes the job from the feed) stays.
 
+- Plan SET-02 "Change photo": not done (human decision 2026-09-30). Every run would upload an image to the
+  site's storage, and it is not known whether account deletion removes it.
+- Plan SET-05 "LinkedIn URL not-a-url -> validation error": not a requirement -- LinkedIn URL is free text
+  by design (docs/intent.md). Plan SET-03 / D7 "phone accepts letters": Phone is free-form text by design.
+- Plan SET-04 "empty Email": not tested; D10 (SET-4) covers invalid email safely. No test ever types a valid
+  foreign address: the site would send a confirmation link to it (the sign-in email changes only after
+  that link is confirmed, so D10 cannot lock the cleanup out).
+
 ## Impact
 
 - New test classes in `src/test/java/ch/hirion/journey/`. The agent may edit `RegistrationTest`,
@@ -81,8 +89,8 @@ defects D6, D8, D9 and D10. None of the strings listed below is used in a requir
 
 ## Open questions (ASSUMED -- drafts until a human confirms on the live site)
 
-1. **Plan & Billing after a Free signup** -- answered from the site code (settings bundle, read 2026-09-30),
-   not yet seen live: a Free account shows "You're currently on the Free plan." (Pro: "You're on the Pro
+1. **Plan & Billing after a Free signup** -- answered from the site code (settings bundle, read 2026-09-30);
+   SET-8 checks it in the next live run: a Free account shows "You're currently on the Free plan." (Pro: "You're on the Pro
    plan."), the card "Free plan" with the button "Current plan", and the note "Billing handled securely.
    Cancel anytime.". The next live journey run can confirm it; then a SET requirement can be added.
 2. **Account deletion flow** -- CONFIRMED live 2026-09-29 by the first JourneyCleanup run: "Delete account"
@@ -90,10 +98,8 @@ defects D6, D8, D9 and D10. None of the strings listed below is used in a requir
    saved matches. It cannot be undone.") with "Cancel" / "Delete"; after "Delete" the URL path is `/`,
    the toast "Your account has been deleted." is shown and the user is signed out; signing in again with
    the same email and password fails. Ready for DEL requirements (change 4 or `/opsx:update`).
-3. **D7: Phone accepts letters** ("00000000000000jj"). Seen on a screenshot only, marked "to re-check".
-   There is no requirement and no test until a human re-checks it. If it is confirmed: add a
-   requirement "Phone SHALL reject letters" and a KNOWN BUG D7 test that, like D10, never saves the
-   value (see design.md).
+3. **D7: Phone accepts letters** -- closed 2026-09-30 by a human decision: "Phone" is free-form text by
+   design, so letters are not a defect. The site code has no phone validation. No KNOWN BUG test.
 4. **Wrong password error text** (AUTH-6) -- from the site code (login bundle, 2026-09-30): the toast shows
    the auth backend's error message as it is (`signInWithPassword` -> `toast.error(error.message)`), not a
    site text; for this backend that is normally "Invalid login credentials", in English also when the site
