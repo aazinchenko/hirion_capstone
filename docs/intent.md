@@ -142,7 +142,26 @@ D14  Settings > Profile: First name, Last name and Email show a "*" in the label
 ## Budget (written by a human BEFORE running the agent; actuals from the transcript AFTER)
 | Change                | output tokens | USD   | actual output | actual USD |
 |-----------------------|---------------|-------|---------------|------------|
-| 1 add-home-smoke      | <= 40 000     | <= $2 |               |            |
-| 2 add-public-coverage | <= 80 000     | <= $4 |               |            |
-| 3 add-user-journey    | <= 80 000     | <= $4 |               |            |
-| 4 update-signup-steps | <= 20 000     | <= $1 |               |            |
+| 1 add-home-smoke      | <= 40 000     | <= $2 | 125 899 (author agent 48 790)  | $16.22     |
+| 2 add-public-coverage | <= 80 000     | <= $4 | 236 817 (author agent 52 736)  | $23.10     |
+| 3 add-user-journey    | <= 80 000     | <= $4 | 395 065 (author agent 106 952) | $67.32     |
+| 4 update-signup-steps | <= 20 000     | <= $1 | 43 784 (author agent 14 996)   | $4.01      |
+| setup before change 1 | --            | --    | 81 869                         | $7.87      |
+| after change 4 (docs) | --            | --    | 48 304 (step 28 still running) | $5.92      |
+| **total**             | <= 220 000    | <= $11| **931 738**                    | **$124.45**|
+
+Actuals (2026-09-30 17:34 UTC) from `python scripts/usage-by-change.py`: every assistant message in the
+session transcripts of both windows (project folder = author agent incl. subagents, parent folder = reviewer)
+is assigned to a change by time (previous archive commit -> own archive commit), counted once, priced at the
+list price of claude-opus-5-5 (all token types). The work ran on a subscription, so USD is an estimate, not an
+invoice. Why the budget was exceeded:
+- All changes: the budget was written for one agent, but the process ran two windows (maker != checker). The
+  reviewer window produced 74% of the output (686k of 932k). The author agent alone stayed under budget in
+  changes 2 and 4 and exceeded it in 1 (+22%) and 3 (+34%).
+- USD: output is only ~15% of the cost. ~49% is re-reading the long context (304M cache-read tokens) and ~36%
+  is writing it to the 1 h cache (5.6M tokens at 2x input). Long sessions in one context made it expensive.
+- 1: the loop tooling (CheckLocatorRules, FetchLiveDom, heal-loop.sh) was built inside this change.
+- 2: 32 scenario tests plus a locator review whose three Medium findings were fixed in the same change.
+- 3: reading the site's JS bundles for facts, 11 live runs (Registration 1, Dashboard 3, Settings 6, full
+  suite 1) with trace analysis (one wrong diagnosis), and a second review round; 42% of all output.
+- 4: over by 2.2x -- the guest probe that corrected a code-read fact, and checking a failed archive sync.
