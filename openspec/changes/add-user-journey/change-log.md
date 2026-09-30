@@ -398,3 +398,6 @@ no account was created. A human starts the first live run (task 2.5).
   human to read the toast on /login.
 - Human decision: task 3.3's manual sign-in check is covered by the JourneyCleanup output (the run's
   password is never printed, and a wrong password gives the same error as a deleted account).
+- Question 4 answered 2026-09-30 by the human (screenshot of /login, own manual account, EN): a wrong
+  password shows the toast "Invalid login credentials" and the page stays on /login. Recorded as CONFIRMED
+  in proposal.md; the AUTH-6 assertion is a pending human decision.

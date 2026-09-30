@@ -111,8 +111,9 @@ defects D6, D8, D9 and D10. None of the strings listed below is used in a requir
    the auth backend's error message as it is (`signInWithPassword` -> `toast.error(error.message)`), not a
    site text; for this backend that is normally "Invalid login credentials", in English also when the site
    language is DE/FR/IT. Still to be read from the page: auth6 only checks that a toast appears, and no
-   trace is kept for a passing test. HUMAN (2026-09-30): reads the toast on /login by hand with a wrong
-   password (no account needed) and reports the text; then decide whether AUTH-6 asserts it.
+   trace is kept for a passing test. CONFIRMED live 2026-09-30 by a human (screenshot, own manual account,
+   site language EN): the toast in the Notifications region says "Invalid login credentials" (error icon,
+   no other text); the page stays on /login. Whether AUTH-6 asserts this text is a human decision.
 5. **How step 4 marks the selected plan** -- answered from the site code (signup bundle, read 2026-09-29):
    the Premium Trial and Free cards are plain `<button>` elements without `aria-pressed`, `aria-checked`
    or `role="radio"`; the selection is only visual (the selected card gets the border classes
