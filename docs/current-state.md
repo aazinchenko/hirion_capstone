@@ -1,6 +1,6 @@
 # Current state -- Capstone Hirion.ch (handoff 2026-09-30, ~17:55)
 
-Read this first in a new session. Plan: `../hirion-capstone-plan-v3-java-openspec.pdf` (30 steps).
+Read this first in a new session. Plan: `../конспекты/hirion-capstone-plan-v3-java-openspec.pdf` (30 steps).
 Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat sheet
 `../capstone-cheatsheet-agentic-engineering.pdf`.
 
