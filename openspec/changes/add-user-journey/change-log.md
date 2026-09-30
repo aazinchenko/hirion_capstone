@@ -203,3 +203,21 @@ no account was created. A human starts the first live run (task 2.5).
 - TestNG priorities are global across classes, so dash tests may interleave with reg4 / auth6; every dash test
   still waits for reg9 through `dependsOnGroups = "registered"`.
 - `testng-journey.xml` now: RegistrationTest, DashboardTest, JourneyCleanup.
+
+## Plan step 23: first live run with DashboardTest -- RED on 3 of 12 dash tests (2026-09-30 12:56-12:59)
+
+- Human "go" in chat. `mvn -q test -Dsuite=testng-journey.xml -Dqa.mailbox=<mailbox>`: 24 tests, 21 passed,
+  3 failed. RegistrationTest 12/12 again; one Free account created and deleted by JourneyCleanup (dialog
+  "Delete your account?", sign-in afterwards fails); `.auth/test-user.json` and `.auth/user.json` removed.
+- PASS live (new facts confirmed): dash1 (tabs, Analytics tab shows the badge PRO), dash3 (empty Saved /
+  Applied / Archive), dash4 (Save moves the job to Saved), dash5 x2 (Hide menu, "Already applied" -> Applied),
+  dash6 ("Not relevant" removes the job), dash9 (Preferences section headings), dash11 (View job opens an
+  external tab), dash12 (Work mode "Remote" survives a reload, toast "Preferences saved").
+- FAIL, causes found (not locator guesses):
+  - dash2_firstJobCard (DashboardTest.java:78): the score badge is `<span>87</span><span>match</span>` -- no space,
+    lower case, shown in capitals only by CSS -- so "^\d+ MATCH$" never matches. Spec DASH-2 wording ("NN
+    MATCH") came from a screenshot.
+  - dash7_analyticsProGate (:155): trace screenshot shows the Analytics tab active with loading placeholders;
+    the Pro gate renders only after the analytics data has loaded, which took longer than the 5 s default.
+  - dash10_noReplacementCharsInTitles (KNOWN BUG D8): no exception -- the feed of this fresh Free user had no
+    title with a lost character, so D8 was not reproduced (it depends on which jobs are in the feed).
