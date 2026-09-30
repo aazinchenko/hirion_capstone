@@ -1,23 +1,24 @@
-# Current state -- Capstone Hirion.ch (handoff 2026-09-30, ~17:55)
+# Current state -- Capstone Hirion.ch (handoff 2026-09-30, ~18:40)
 
 Read this first in a new session. Plan: `../конспекты/hirion-capstone-plan-v3-java-openspec.pdf` (30 steps).
 Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat sheet
 `../capstone-cheatsheet-agentic-engineering.pdf`.
 
 ## Where we are
-- Steps 1-25 DONE (2026-09-30 ~17:55). Change 3 `add-user-journey` archived (commit 5e844a6).
-- `pnpm spec:check`: specs 9 · active changes 0 · archived 3; `openspec validate --specs --strict` 9/9.
-- Last full live run `testng-all.xml` 17:38: 95/95 (public 58 + journey 37), test account deleted.
-- `pnpm check` green. Locator review 2026-09-30: APPROVE (`.agent-log/review-2026-09-30.md`); fixes in
-  63ceb04 (incl. the Medium finding #1: SET-3 counts visible matches) -- verified live in the 95/95 run.
-- Open, carried to change 4: proposal question 9 (wizard Back, `?plan=`), question 11 (D9 depends on the
-  profile data? ASSUMED). Known limit: SET-3 notice check cannot catch a notice that shows > 3 s after the
-  form settled (design.md of the archived change).
+- Steps 1-26 DONE (2026-09-30 ~18:40). Change 4 `update-signup-steps` archived: MODIFIED REG-7 (?plan=free /
+  ?plan=trial preselection, Back keeps the wizard data; 5 scenarios). Commits: 25cec2f (intent facts from a
+  guest probe), bc91ab0 (propose), 895161a (tests, journey 40/40 live), archive commit after it.
+- `pnpm spec:check`: specs 9 · active changes 0 · archived 4 (the "done" criterion of docs/intent.md);
+  `openspec validate --specs --strict` 9/9.
+- Suites: public 58/58; journey 40 (Registration 15, Dashboard 12, Settings 13) + JourneyCleanup.
+- Known flaky: `BaseTest.closeContext` once threw "Target page, context or browser has been closed" in
+  `pnpm check` (public cont3/cont4 skipped); rerun green. Human-owned file, not fixed.
+- Open: question 11 (D9 depends on profile data, ASSUMED); unknown `?plan` value -> Premium Trial (confirmed,
+  not in a spec); D11 has no test (REG-1 not extended, human decision variant A).
 
 ## Next actions
-1. Step 26: change 4 `update-signup-steps` (MODIFIED requirements; take question 9 from the archived
-   proposal). Show a plan first, act on "старт".
-2. Steps 27-30: autonomy-log.md, decisions.md + budget vs actual, video <= 2 min, Pull Request.
+1. Step 27: autonomy-log.md. 2. Step 28: decisions.md + budget vs actual (docs/intent.md budget table).
+3. Step 29: video <= 2 min. 4. Step 30: Pull Request. Show a plan first, act on "старт".
 
 ## Rules of the workflow (agreed with the human)
 - Show a plan first, act on "старт"; spec commit before test commit; every [x] in tasks.md needs evidence in
