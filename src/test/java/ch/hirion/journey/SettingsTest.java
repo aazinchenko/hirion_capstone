@@ -88,7 +88,7 @@ public class SettingsTest extends AuthenticatedTest {
     openProfile(registeredUser());
     assertThat(role(AriaRole.BUTTON, "Upload photo")).isVisible(); // presence only
     for (String label : PROFILE_FIELDS) {
-      assertThat(field(label)).isVisible();
+      assertThat(profileField(label)).isVisible();
     }
     assertThat(role(AriaRole.COMBOBOX, "Country")).isVisible(); // not the "Country code" picker next to Phone
     for (String name : List.of("View", "Re-analyse", "Replace", "Save changes")) {
@@ -105,7 +105,7 @@ public class SettingsTest extends AuthenticatedTest {
     openProfile(registeredUser());
     List<String> notRequired = new ArrayList<>();
     for (String label : REQUIRED_FIELDS) {
-      Locator input = field(label);
+      Locator input = profileField(label);
       input.waitFor(); // precondition: a missing field is a TimeoutError, never the known bug
       boolean required = (Boolean) input.evaluate(
             "e => e.required === true || e.getAttribute('aria-required') === 'true'");
@@ -180,7 +180,7 @@ public class SettingsTest extends AuthenticatedTest {
       }
     });
     try {
-      field("Email").fill(INVALID_EMAIL);
+      profileField("Email").fill(INVALID_EMAIL);
       role(AriaRole.BUTTON, "Save changes").click();
       try {
         page.waitForCondition(() -> !sent.isEmpty(), new Page.WaitForConditionOptions().setTimeout(3000));
@@ -208,13 +208,13 @@ public class SettingsTest extends AuthenticatedTest {
   public void set6_profileSurvivesReload() {
     TestUser user = registeredUser();
     openProfile(user);
-    PROFILE_VALUES.forEach((label, value) -> field(label).fill(value)); // name and email are not touched
+    PROFILE_VALUES.forEach((label, value) -> profileField(label).fill(value)); // name and email are not touched
     role(AriaRole.BUTTON, "Save changes").click();
     assertThat(notifications().getByText("Profile updated", exactOptions())).isVisible(SLOW);
 
     reload();
     waitForProfile(user);
-    PROFILE_VALUES.forEach((label, value) -> assertThat(field(label)).hasValue(value));
+    PROFILE_VALUES.forEach((label, value) -> assertThat(profileField(label)).hasValue(value));
   }
 
   // SET-8 (nothing in Plan & Billing is clicked)
@@ -297,15 +297,24 @@ public class SettingsTest extends AuthenticatedTest {
   }
 
   /**
+   * A Profile input by role textbox and accessible name. Not getByLabel(exact): the label of a required
+   * field reads "Email*" (the aria-hidden star of D14), so an exact label "Email" matches nothing, while
+   * the accessible name leaves the aria-hidden star out (live runs 2026-09-30). Password inputs have no
+   * textbox role and keep field().
+   */
+  private Locator profileField(String name) {
+    return role(AriaRole.TEXTBOX, name);
+  }
+
+  /**
    * Precondition (never an AssertionFailedError, so it cannot pass as a KNOWN BUG): the Email field shows the
    * test user's email. Also the SET-4 safety check. The email itself is never printed.
    */
   private void waitForProfile(TestUser user) {
-    // Not page.waitForCondition(() -> field(...).inputValue()): a Playwright call inside that condition
-    // fails every time (first live run 2026-09-30). hasValue() auto-waits; its AssertionFailedError is turned
-    // into a TestNG failure so the precondition can never count as a KNOWN BUG.
+    // hasValue() auto-waits; its AssertionFailedError is turned into a TestNG failure so the precondition can
+    // never count as a KNOWN BUG.
     try {
-      assertThat(field("Email")).hasValue(user.email,
+      assertThat(profileField("Email")).hasValue(user.email,
             new LocatorAssertions.HasValueOptions().setTimeout(PROFILE_TIMEOUT));
     } catch (AssertionFailedError | PlaywrightException e) {
       Assert.fail("Profile \"Email\" does not show the test user's email after "

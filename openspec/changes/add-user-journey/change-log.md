@@ -308,3 +308,15 @@ no account was created. A human starts the first live run (task 2.5).
   -- each failed with "thrown with the wrong message", as the hardened preconditions intend.
 - Fix (human): the precondition uses `assertThat(field("Email")).hasValue(email, 15 s)` and turns its
   AssertionFailedError into a TestNG failure, so it still can never count as a known bug.
+
+## Plan step 24: second live run -- same 7 failures; the earlier diagnosis was wrong (2026-09-30 15:43-15:47)
+
+- 37 tests: 30 passed, 7 failed, the same Profile precondition; account created, password changed, deleted.
+- Correction of the previous entry: `waitForCondition` was NOT the cause. The trace of this run shows the
+  real error of `hasValue`: `getByLabel("Email", exact)` -> "element(s) not found". The label of a required
+  field is "Email" + an aria-hidden "*" (the D14 star); Playwright compares the label text including the star
+  ("Email*"), so the exact label "Email" matches nothing. Only the starred fields (First name, Last name, Email)
+  were affected. The first diagnosis was made without reading the swallowed exception -- a lesson: read the
+  underlying error before fixing.
+- Fix: Profile inputs are found by `role(AriaRole.TEXTBOX, name)`; the accessible name leaves the aria-hidden
+  star out. Password inputs have no textbox role and keep `field()`.
