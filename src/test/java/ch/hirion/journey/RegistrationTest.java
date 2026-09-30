@@ -126,6 +126,36 @@ public class RegistrationTest extends BaseTest {
     assertThat(planCard("Premium Trial")).not().hasAttribute("class", SELECTED_CARD);
   }
 
+  @Test(priority = 7, description = "REG-7 plan=free preselects Free")
+  public void reg7_planFreePreselectsFree() {
+    walkToStep(4, "/signup?plan=free");
+    assertThat(planCard("Free")).hasAttribute("class", SELECTED_CARD);
+    assertThat(planCard("Premium Trial")).not().hasAttribute("class", SELECTED_CARD);
+  }
+
+  @Test(priority = 7, description = "REG-7 plan=trial preselects Premium Trial")
+  public void reg7_planTrialPreselectsTrial() {
+    walkToStep(4, "/signup?plan=trial");
+    assertThat(planCard("Premium Trial")).hasAttribute("class", SELECTED_CARD);
+    assertThat(planCard("Free")).not().hasAttribute("class", SELECTED_CARD);
+  }
+
+  @Test(priority = 7, description = "REG-7 Back keeps the wizard data")
+  public void reg7_backKeepsWizardData() {
+    walkToStep(4, "/signup");
+    planCard("Free").click();
+    assertThat(planCard("Free")).hasAttribute("class", SELECTED_CARD);
+    role(AriaRole.BUTTON, "Back").click();
+    assertThat(stepLabel(3)).isVisible(STEP);
+    // The chip of the chosen role sits inside <main>; the option list is portaled outside it.
+    assertThat(page.getByRole(AriaRole.MAIN)
+          .getByText(ROLE, new Locator.GetByTextOptions().setExact(true))).isVisible();
+    continueButton().click();
+    assertThat(stepLabel(4)).isVisible(STEP);
+    assertThat(planCard("Free")).hasAttribute("class", SELECTED_CARD);
+    assertThat(planCard("Premium Trial")).not().hasAttribute("class", SELECTED_CARD);
+  }
+
   // REG-8
 
   @Test(priority = 8, description = "REG-8 Steps 1-3 send no account data")
