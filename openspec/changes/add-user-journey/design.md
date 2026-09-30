@@ -124,7 +124,8 @@ motivation and open items are in proposal.md.
 - [D9 depends on the profile data] The false "unsaved changes" was seen on 2026-09-25 on a manual account
   with an odd stored Phone ("00000000000000jj"). A new Free user did not show it in three live runs on
   2026-09-30, also after the Profile form had fully loaded. → Decided 2026-09-30: both SET-3 scenarios are
-  regular checks. They count only VISIBLE matches of the exact text (review 2026-09-30 #1, #2). The notice
+  regular checks. They count only VISIBLE elements containing the text (substring: the full D9 texts are
+  not recorded; review 2026-09-30 #1, #2). The notice
   check is red when D9 is visible once the form has settled (within 3 s); an absence cannot be proven
   without a fixed wait, which AGENTS.md forbids, so a notice that shows later is caught by the section
   switch check, which waits for an outcome (Security form or dialog). Open question: does D9 appear when the stored value

@@ -404,3 +404,22 @@ no account was created. A human starts the first live run (task 2.5).
 - Human decision 2026-09-30: AUTH-6 keeps "an error message is visible" and does not assert "Invalid login
   credentials" (raw backend message). 3.1 [x]: every proposal question is CONFIRMED, closed by a human
   decision, or moved on (9 -> change 4; 11 is a new ASSUMED hypothesis, not a blocker).
+
+## Plan step 25 (part 2): locator-reviewer 2026-09-30 -- APPROVE (`.agent-log/review-2026-09-30.md`)
+
+- Run by the human in their own session on `7b21f12^..HEAD` (src/test/java) plus heal-log.jsonl /
+  heal-diff.patch / heal-raw.log. CheckLocatorRules PASS; KNOWN BUG D6, D10, D14 not weakened; D8 and D9
+  regular checks match the design.md decisions; heal commit 9e5fc59 justified. Every finding was checked
+  against the code by me: all 10 accurate.
+- Fixed:
+  - #1 (Medium), #2: SET-3 checks count only VISIBLE elements containing the text (`filter(setVisible(true))`
+    + `hasCount(0)`). Substring kept on purpose instead of the suggested exact match: the full D9 texts are
+    not recorded, and a wrong exact text would make the check falsely green. design.md states the limit: a
+    notice that shows more than 3 s after the form settled is caught only by the section-switch check.
+  - #5: JourneyCleanup log text via `locator("html")` (allowed exception) instead of `body`.
+  - #6: RegistrationTest comment -- Escape does not close the role option list.
+  - #7, #8: design.md -- D14 in Known bugs; Profile inputs by `role(TEXTBOX)`; card lookup by exact heading
+    and `pickCard()`; feed precondition; the heal decision (question 8).
+- Accepted, not changed: #3 (the error-toast type is only a `data-type` attribute, and attribute locators
+  are not allowed; the text is not asserted by human decision), #4 (`border-primary` until D12 is fixed,
+  reason in the code), #9, #10 (info, low risk).
