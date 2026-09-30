@@ -40,6 +40,13 @@ CONFIRMED live 2026-09-25 (browser, signed-in test account):
     Without a role: "Please add at least one target role to continue."
   - Step 4: "Choose your plan": Premium Trial ("7 days free") and Free, Back, "See my matches".
     PREMIUM TRIAL IS SELECTED BY DEFAULT. Free is preselected only via /signup?plan=free.
+    CONFIRMED live 2026-09-30 (temporary guest probe, "See my matches" never clicked, no account,
+    probe not committed; plan REG-09 / REG-11, question 9 of change 3):
+    - Step 4 preselection: /signup and /signup?plan=trial -> Premium Trial; /signup?plan=free -> Free;
+      /signup?plan=bogus -> Premium Trial (NOT "no card" as read from the site code on 2026-09-29).
+    - "Back" on step 4 -> "Step 3 of 4" still shows the chosen role chip ("QA / Test Engineer"), the
+      picker then says "1 selected" instead of "Add"; "Continue" -> step 4 again with the chosen plan
+      (Free) still selected. "Back" twice more -> "Step 2 of 4" still shows the file name "qa-cv.pdf".
   - The account is created only on step 4. Steps 1-3 send nothing except the email-taken check.
   - No email confirmation: after "See my matches" the user lands on /dashboard signed in;
     a welcome email arrives with no action required.
