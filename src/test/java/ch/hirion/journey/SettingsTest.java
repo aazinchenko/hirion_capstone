@@ -325,9 +325,19 @@ public class SettingsTest extends AuthenticatedTest {
       Assert.fail("Profile \"Email\" does not show the test user's email after "
             + (int) (PROFILE_TIMEOUT / 1000) + " s -- if the account email changed, JourneyCleanup will fail loudly");
     }
-    // A new user's CV is analysed in the background; when it finishes the site fills Headline / Short bio and
-    // re-loads the form from the server, wiping anything typed before (live run 2026-09-30: "Save changes"
-    // stayed disabled). Wait until the CV block says "N skills detected" (or "no skills detected").
+    // "Email" is filled before the profile record arrives (it comes from the session). When the profile
+    // arrives the site re-fills the whole form (names, AI Headline / Short bio from the CV), wiping anything
+    // typed before (4th live run 2026-09-30, trace: names empty after the fills, form reset 0.5 s later).
+    // Only a filled "First name" means the form is settled.
+    try {
+      assertThat(profileField("First name")).hasValue(user.firstName,
+            new LocatorAssertions.HasValueOptions().setTimeout(PROFILE_TIMEOUT));
+    } catch (AssertionFailedError | PlaywrightException e) {
+      Assert.fail("Profile \"First name\" does not show \"" + user.firstName + "\" after "
+            + (int) (PROFILE_TIMEOUT / 1000) + " s -- the profile record did not load: " + e.getMessage());
+    }
+    // The CV analysis of a new user runs in the background; wait until the CV block says "N skills detected"
+    // (or "no skills detected") so it cannot change the form later.
     try {
       assertThat(page.getByText(CV_ANALYSED).first())
             .isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(CV_ANALYSIS_TIMEOUT));

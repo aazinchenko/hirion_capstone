@@ -341,3 +341,19 @@ no account was created. A human starts the first live run (task 2.5).
 - Fix: every Profile precondition now also waits (up to 90 s) until the CV block says "N skills detected" /
   "no skills detected", so edits and the D9 checks happen on the settled form. If D9 still does not show,
   that is a human decision (like D8: data-dependent or fixed).
+
+## Plan step 24: fourth live run -- 34/37, the CV-analysis diagnosis was incomplete (2026-09-30 16:12-16:15)
+
+- 37 tests: 34 passed, 3 failed; account created and deleted by JourneyCleanup (sign-in no longer works).
+- GREEN now: set2_profileRendered ("View" as a link).
+- FAIL: set6_profileSurvivesReload ("Save changes" still disabled), set3_freshProfileNoUnsavedNotice and
+  set3_switchSectionWithoutEdits (D9 "expected exception not thrown").
+- Trace of set6: "Email" and "16 skills detected" were already shown at 54.7-54.9 s, the fills ran at
+  55.4-55.5 s, the frame at 55.6 s shows our values but EMPTY "First name" / "Last name"; the profile server
+  call (firstName "Qa", lastName "Journey") finished ~55.7-55.8 s and the frame at 56.0 s shows the names, the
+  AI Headline / Short bio and our values gone. So the form is re-filled when the profile record arrives;
+  "Email" comes from the session and the CV text from another source -- neither means "profile loaded".
+  The previous diagnosis (the CV analysis alone wipes the form) was incomplete.
+- Fix: waitForProfile also waits until "First name" shows the test user's first name ("Qa"); the
+  "skills detected" wait stays. The D9 tests used the same precondition, so D9 is re-checked on the settled
+  form in the next run before a human decision.
