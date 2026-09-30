@@ -57,6 +57,15 @@ public class SettingsTest extends AuthenticatedTest {
   /** CV block text once the background analysis is done: "18 skills detected" or "no skills detected". */
   private static final Pattern CV_ANALYSED = Pattern.compile("\\b(\\d+|no) skills detected\\b");
   private static final double CV_ANALYSIS_TIMEOUT = 90_000;
+  /**
+   * SET-2: an accessible name that would remove the CV: "Remove" / "Delete" alone, or with cv, resume, file,
+   * document or a file name ("Remove CV", "Delete file", "Remove qa-cv.pdf"). Not "Remove Java": the skill chips
+   * on the same page are "Remove {label}" (site code). The site still ships the strings "CV removed" / "Could not
+   * remove CV", so a remove control may come back (review 2026-09-30 control #1).
+   */
+  private static final Pattern REMOVE_CV = Pattern.compile(
+        "^\\s*(remove|delete)\\s*$|\\b(remove|delete)\\b.*(\\b(cv|resume|file|document)\\b|\\.(pdf|docx|txt)\\b)",
+        Pattern.CASE_INSENSITIVE);
   private static final LocatorAssertions.IsVisibleOptions SLOW =
         new LocatorAssertions.IsVisibleOptions().setTimeout(15_000);
   /** 3 s timeouts for the SET-3 (D9) checks, like QUICK_ATTR. */
@@ -127,8 +136,10 @@ public class SettingsTest extends AuthenticatedTest {
   public void set2_cvCannotBeRemoved() {
     openProfile(registeredUser());
     assertThat(role(AriaRole.BUTTON, "Replace")).isVisible(); // the CV block is rendered, so the check below means something
-    assertThat(role(AriaRole.BUTTON, "Remove")).hasCount(0);
-    assertThat(role(AriaRole.BUTTON, "Delete")).hasCount(0);
+    // buttons and links: the CV "View" is a link styled as a button, a remove control could be one too
+    for (AriaRole kind : List.of(AriaRole.BUTTON, AriaRole.LINK)) {
+      assertThat(page.getByRole(kind, new Page.GetByRoleOptions().setName(REMOVE_CV))).hasCount(0);
+    }
   }
 
   // SET-3 (known defect D9: opened by clicking "Profile", not by a deep link). Regular checks since 2026-09-30:
