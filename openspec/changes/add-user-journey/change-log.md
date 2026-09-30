@@ -401,3 +401,6 @@ no account was created. A human starts the first live run (task 2.5).
 - Question 4 answered 2026-09-30 by the human (screenshot of /login, own manual account, EN): a wrong
   password shows the toast "Invalid login credentials" and the page stays on /login. Recorded as CONFIRMED
   in proposal.md; the AUTH-6 assertion is a pending human decision.
+- Human decision 2026-09-30: AUTH-6 keeps "an error message is visible" and does not assert "Invalid login
+  credentials" (raw backend message). 3.1 [x]: every proposal question is CONFIRMED, closed by a human
+  decision, or moved on (9 -> change 4; 11 is a new ASSUMED hypothesis, not a blocker).

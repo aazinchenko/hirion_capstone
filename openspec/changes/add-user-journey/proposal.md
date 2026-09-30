@@ -113,7 +113,9 @@ defects D6, D8, D9 and D10. None of the strings listed below is used in a requir
    language is DE/FR/IT. Still to be read from the page: auth6 only checks that a toast appears, and no
    trace is kept for a passing test. CONFIRMED live 2026-09-30 by a human (screenshot, own manual account,
    site language EN): the toast in the Notifications region says "Invalid login credentials" (error icon,
-   no other text); the page stays on /login. Whether AUTH-6 asserts this text is a human decision.
+   no other text); the page stays on /login. Human decision 2026-09-30: AUTH-6 does NOT assert this text
+   -- it is the auth backend's raw message (Supabase), may change without a site change and stays English in
+   DE/FR/IT; AUTH-6 keeps "an error message is visible".
 5. **How step 4 marks the selected plan** -- answered from the site code (signup bundle, read 2026-09-29):
    the Premium Trial and Free cards are plain `<button>` elements without `aria-pressed`, `aria-checked`
    or `role="radio"`; the selection is only visual (the selected card gets the border classes
