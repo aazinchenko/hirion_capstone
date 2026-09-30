@@ -60,8 +60,8 @@ public class SettingsTest extends AuthenticatedTest {
   private static final LocatorAssertions.IsVisibleOptions SLOW =
         new LocatorAssertions.IsVisibleOptions().setTimeout(15_000);
   /** 3 s timeouts for the SET-3 (D9) checks, like QUICK_ATTR. */
-  private static final LocatorAssertions.IsHiddenOptions QUICK_HIDDEN =
-        new LocatorAssertions.IsHiddenOptions().setTimeout(3000);
+  private static final LocatorAssertions.HasCountOptions QUICK_COUNT =
+        new LocatorAssertions.HasCountOptions().setTimeout(3000);
   private static final LocatorAssertions.IsVisibleOptions QUICK_VISIBLE =
         new LocatorAssertions.IsVisibleOptions().setTimeout(3000);
   private static final SecureRandom RANDOM = new SecureRandom();
@@ -141,7 +141,9 @@ public class SettingsTest extends AuthenticatedTest {
     open("/settings");
     role(AriaRole.BUTTON, "Profile").click();
     waitForProfile(user);
-    assertThat(page.getByText("You have unsaved changes").first()).isHidden(QUICK_HIDDEN);
+    // Only visible matches count: a hidden duplicate (sr-only, aria-live) must not hide D9.
+    // Checked once the form has settled (review 2026-09-30 #1); a later notice is caught by set3_switch.
+    assertThat(visibleText("You have unsaved changes")).hasCount(0, QUICK_COUNT);
   }
 
   @Test(priority = 7, dependsOnGroups = "registered",
@@ -155,9 +157,9 @@ public class SettingsTest extends AuthenticatedTest {
     // Wait until the switch has an outcome: the Security form OR the D9 dialog. Neither -> TimeoutError (red).
     // Neither "Stay on this page" nor "Leave without saving" is clicked.
     Locator security = field("Current password");
-    Locator dialog = page.getByText("Leave without saving?").first();
+    Locator dialog = visibleText("Leave without saving?"); // visible matches only (review 2026-09-30 #2)
     security.or(dialog).first().waitFor();
-    assertThat(dialog).isHidden(QUICK_HIDDEN);
+    assertThat(dialog).hasCount(0, QUICK_COUNT);
     assertThat(security).isVisible(QUICK_VISIBLE);
   }
 
@@ -346,6 +348,14 @@ public class SettingsTest extends AuthenticatedTest {
   private Locator notifications() {
     return page.getByRole(AriaRole.REGION,
           new Page.GetByRoleOptions().setName(Pattern.compile("^Notifications")));
+  }
+
+  /**
+   * Visible elements containing this text. Substring, not exact: the full D9 texts are not recorded, and an
+   * exact match that misses them would make the check falsely green.
+   */
+  private Locator visibleText(String text) {
+    return page.getByText(text).filter(new Locator.FilterOptions().setVisible(true));
   }
 
   private Locator exactText(String text) {

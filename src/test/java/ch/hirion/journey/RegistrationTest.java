@@ -260,8 +260,9 @@ public class RegistrationTest extends BaseTest {
     page.getByRole(AriaRole.COMBOBOX)
           .filter(new Locator.FilterOptions().setHasText(Pattern.compile("^\\s*Add\\s*$"))).click();
     role(AriaRole.OPTION, ROLE).click();
-    page.keyboard().press("Escape"); // close the picker, the chip stays
-    // the chip lives in <main>; the option list is portaled outside it and may still be open
+    // Escape does not close the option list (it stays open, portaled outside <main>; heal-raw.log
+    // 2026-09-29); the chosen role shows as a chip inside <main>.
+    page.keyboard().press("Escape");
     assertThat(page.getByRole(AriaRole.MAIN)
           .getByText(ROLE, new Locator.GetByTextOptions().setExact(true))).isVisible();
   }

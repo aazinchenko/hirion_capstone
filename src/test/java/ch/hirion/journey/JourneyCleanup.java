@@ -124,7 +124,7 @@ public class JourneyCleanup {
   }
 
   private static String firstLine(Page page) {
-    String text = page.locator("body").innerText(); // locator-exception: whole page text for the log
+    String text = page.locator("html").innerText(); // locator-exception: <html>, whole page text for the log
     return text.length() > 300 ? text.substring(0, 300).replace('\n', ' ') + "..." : text.replace('\n', ' ');
   }
 
