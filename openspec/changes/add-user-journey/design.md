@@ -90,7 +90,7 @@ motivation and open items are in proposal.md.
   If that ever fails, the account email changed and the cleanup will fail loudly (see above).
   Alternatives rejected: a real save followed by a revert (the account is lost if the revert fails);
   and `route.fulfill(200)` (the UI would show success and hide what the site really does).
-- **Known bugs.** D6 (REG-10) and D10 (SET-4) use
+- **Known bugs.** D6 (REG-10), D10 (SET-4) and D14 (SET-2, required fields only a visual "*") use
   `@Test(expectedExceptions = AssertionFailedError.class, expectedExceptionsMessageRegExp = "...",
   description = "... KNOWN BUG Dn ...")` with a 3 s assertion timeout. Preconditions (page open,
   Profile visible, first card present) use `org.testng.Assert`, which throws a plain `AssertionError`
@@ -99,18 +99,20 @@ motivation and open items are in proposal.md.
   Profile by clicking "Profile" on `/settings`, not through a deep link. The documented workaround (deep
   links) is used by the other SET tests.
 - **Locators.** `role(...)` for buttons, links, headings and menu items. The dashboard tabs and settings
-  sections are `AriaRole.BUTTON` (never `TAB`). Fields use `getByLabel(..., exact)`. "Password",
+  sections are `AriaRole.BUTTON` (never `TAB`). Fields use `getByLabel(..., exact)`, except the Profile
+  inputs: their label text is "Email*" (the aria-hidden star of D14), so they use `role(TEXTBOX, name)`,
+  whose accessible name leaves the star out (live run 2026-09-30). "Password",
   "Current password", "New password" and "Confirm new password" must be exact, because every "Show password"
-  button also matches. Job cards: the job title is read from the card, and the card is re-found with
-  `getByRole(ARTICLE or LISTITEM).filter(hasText(title))`. The exact card role is decided in RED from
-  the live DOM. Match score: the badge is `<span>87</span><span>match</span>` (no space, capitals only by CSS), so
+  button also matches. Job cards: the job title is read from the card's heading, and the card is re-found
+  by `filter(setHas(heading with that exact name))`; `pickCard()` takes the first card not used by an
+  earlier test whose title is unique in the feed, so "the title left the feed" can only mean this job. Match score: the badge is `<span>87</span><span>match</span>` (no space, capitals only by CSS), so
   `getByText(Pattern.compile("^\\d+\\s*match$", CASE_INSENSITIVE))`.
 - **Healing.** Locators change only through `scripts/heal-loop.sh "<-Dtest=...>" <file> https://hirion.ch/dashboard main .auth/user.json`.
-  That needs a live session. After a normal run, `.auth/user.json` belongs to a deleted user. The human
-  chooses before task 3.2 (proposal Open question 8). Recommended: run the heal loop with the full
-  journey selector `-Dsuite=testng-journey.xml -Dqa.mailbox=...`, so each iteration registers and
-  deletes its own user. `FetchLiveDom` then runs in a short window before cleanup, or on a second user
-  that a human registers and deletes by hand. The cleanup guard is never relaxed.
+  That needs a live session. After a normal run, `.auth/user.json` belongs to a deleted user. Decided by
+  the human (proposal Open question 8): RegistrationTest is healed WITHOUT `-Dqa.mailbox` (no account is
+  created); Dashboard and Settings tests are fixed by targeted, human-approved edits whose cause is read
+  from the trace, because every heal iteration with `-Dqa.mailbox` would create and delete a real
+  account. The cleanup guard is never relaxed.
 
 ## Risks / Trade-offs
 
@@ -122,11 +124,14 @@ motivation and open items are in proposal.md.
 - [D9 depends on the profile data] The false "unsaved changes" was seen on 2026-09-25 on a manual account
   with an odd stored Phone ("00000000000000jj"). A new Free user did not show it in three live runs on
   2026-09-30, also after the Profile form had fully loaded. → Decided 2026-09-30: both SET-3 scenarios are
-  regular checks; they turn red whenever D9 appears. Open question: does D9 appear when the stored value
+  regular checks. They count only VISIBLE matches of the exact text (review 2026-09-30 #1, #2). The notice
+  check is red when D9 is visible once the form has settled (within 3 s); an absence cannot be proven
+  without a fixed wait, which AGENTS.md forbids, so a notice that shows later is caught by the section
+  switch check, which waits for an outcome (Security form or dialog). Open question: does D9 appear when the stored value
   differs from what the form shows (e.g. a Phone that the site would normalise)?
-- [The feed is too short] DASH-4, DASH-5 and DASH-6 need three different cards. A new Free user may have
-  fewer. → Precondition with `org.testng.Assert` ("feed has at least 3 jobs") so the result shows skip
-  or fail with a clear message.
+- [The feed is too short] DASH-4, DASH-5 and DASH-6 need different cards. A new Free user may have few.
+  → Precondition with `org.testng.Assert`: `feedCards(1)` (at least one card) and `pickCard()` fails with
+  a clear message when no unused card with a unique title is left.
 - [CV analysis is slow] Step 2 → step 3 and the first feed can take tens of seconds. → Explicit
   `setTimeout` on those assertions only (event-based, no fixed waits).
 - [A real account is left behind] Crash, CI kill or a wrong password state. → `accountCreated` flag,
