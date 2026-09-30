@@ -3,7 +3,7 @@
 Changes 1 and 2 cover only what a guest sees. The part of hirion.ch that users depend on is still untested:
 the signup wizard, the dashboard, the account settings and deleting the account. This change covers
 groups REG, DASH, SET and DEL from `docs/intent.md` with one disposable test user per run. It pins known
-defects D6, D8, D9 and D10, and it adds the plan item AUTH-03 (wrong password), which change 2 moved here.
+defects D6, D8, D9, D10 and D14 (added 2026-09-30), and it adds the plan item AUTH-03 (wrong password), which change 2 moved here.
 
 ## What Changes
 

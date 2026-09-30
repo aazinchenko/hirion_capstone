@@ -4,7 +4,7 @@
         <classes>
             <class name="ch.hirion.journey.RegistrationTest"/>
             <class name="ch.hirion.journey.DashboardTest"/>
-            <!-- SettingsTest is added in plan step 24, when it exists -->
+            <class name="ch.hirion.journey.SettingsTest"/>
             <class name="ch.hirion.journey.JourneyCleanup"/>
         </classes>
     </test>

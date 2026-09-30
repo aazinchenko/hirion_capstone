@@ -243,3 +243,53 @@ no account was created. A human starts the first live run (task 2.5).
 - JourneyCleanup: "deleted: <qa-user> no longer signs in"; `.auth` holds only `manual-user.json`.
 - `java scripts/CheckLocatorRules.java src/test/java` -> `PASS: no forbidden patterns`.
 - Three live runs for step 23, three test accounts, all three deleted by the cleanup.
+
+## Plan step 24 / task 2.3: SettingsTest written, not run (2026-09-30)
+
+- `src/test/java/ch/hirion/journey/SettingsTest.java` extends `AuthenticatedTest`, every method has
+  `dependsOnGroups = "registered"`, 13 `@Test` in priority order: set1_sectionButtons (1),
+  set1_securityDeepLink (2), set2_profileRendered (3), set2_requiredProfileFields (4), set2_cvCannotBeRemoved (5),
+  set3_freshProfileNoUnsavedNotice (6, KNOWN BUG D9), set3_switchSectionWithoutEdits (7, KNOWN BUG D9),
+  set4_invalidEmailNotSent (8, KNOWN BUG D10), set6_profileSurvivesReload (9), set8_freePlanShown (10),
+  set5_securityFormRendered (11), del1_deleteAccountButtonPresent (12), set5_newPasswordSignsIn (13, last).
+- Not run on purpose (a live run creates an account; a human starts it). `testng-journey.xml` not touched.
+  Only `mvn -q test-compile` was run: compiles.
+- Sections: Security and Plan & Billing through the deep links; Profile is the default of `/settings`. Only
+  the D9 tests click "Profile" / "Security". Profile tests wait until "Email" holds the test user's email
+  (`page.waitForCondition`, TimeoutError / TestNG on failure, so a precondition never passes as a known bug).
+- KNOWN BUG format: D9 fresh -- `isHidden` on "You have unsaved changes" (3 s), regex `(?s).*hidden.*`;
+  D9 switch -- after clicking "Security", first `isVisible` "Current password" (3 s), then `isHidden`
+  "Leave without saving?" (3 s), regex `(?s).*(visible|hidden).*`; the dialog buttons are never clicked.
+  D10 -- catch-all `page.route("**/*")`: non-GET requests whose body contains "not-an-email" are recorded
+  (method + URL without query) and `route.abort()`-ed, others `resume()`; after "Save changes" it waits up to
+  3 s for such a request and throws `AssertionFailedError` naming "not-an-email" if one was sent. In `finally`:
+  `unrouteAll()`, a `beforeunload` prompt is accepted, `reload()`, and the TestNG safety check that "Email"
+  still equals the test user's email (email not printed). The field-error part of the SET-4 THEN is not
+  asserted: its text is unknown.
+- SET-6 fills Phone, LinkedIn URL, Headline, Short bio with the spec values (name and email untouched),
+  "Save changes" -> "Profile updated" in the Notifications region -> `reload()` -> `hasValue` for all four.
+- SET-5: a new 16-character password (local generator: `TestUser.randomPassword()` is package-private in the
+  human-owned support package); `pendingPassword` saved before "Update password"; toast "Password updated";
+  a fresh guest context signs in on `/login` and must reach `/dashboard`; only then `currentPassword =
+  pendingPassword`, `pendingPassword = null`, `save()`.
+- Safety: "Delete account" only `isVisible` + position below "Update password" (DEL-1); "Upload photo",
+  "Replace", "Re-analyse", "View", "Current plan" only checked for presence; nothing in Plan & Billing clicked;
+  no valid foreign email is ever typed.
+- ASSUMED, to be checked in RED: the text "You're currently on the Free plan." uses a straight apostrophe;
+  "Country" is a combobox named exactly "Country"; the three required fields expose `required` or
+  `aria-required`; the D9 notice text contains "You have unsaved changes".
+
+## Plan step 24: human review of SettingsTest before the first live run (2026-09-30)
+
+- Checked: 13 `@Test`; CheckLocatorRules PASS; never clicked: "Delete account", "Upload photo", "Replace",
+  "Re-analyse", anything in Plan & Billing; the new password is saved as `pendingPassword` BEFORE "Update
+  password" and promoted only after a fresh guest signed in with it; no email or password printed.
+- The agent's unconfirmed guesses, checked against the site code: "You're currently on the Free plan." uses a
+  plain apostrophe (U+0027) -- right; the Country picker is named by `<label for="country">` -- right; First
+  name / Last name / Email are NOT required in code (only an aria-hidden "*" in the label) -- wrong.
+- Human decision: new defect D14 (docs/intent.md); set2_requiredProfileFields is a KNOWN BUG test that throws
+  "fields not marked required: [...]"; field presence is a `waitFor()` precondition.
+- D9 section switch rewritten so it cannot hide a real failure: wait for the Security form OR the D9 dialog
+  (neither -> TimeoutError), assert the dialog hidden (only this may be the known bug:
+  `expectedExceptionsMessageRegExp` ".*Leave without saving.*"), then assert the form visible.
+- `testng-journey.xml` now: RegistrationTest, DashboardTest, SettingsTest, JourneyCleanup.

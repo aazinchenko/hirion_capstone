@@ -112,6 +112,9 @@ D13  /signup step 3: the role picker is <button role="combobox"> with the visibl
      accessible name (a combobox does not take its name from content, no aria-label); a screen reader
      announces only "combobox". The same unnamed picker is used for every field of Dashboard > Preferences
      (site code, 2026-09-30).                          (candidate, seen in the live run 2026-09-29)
+D14  Settings > Profile: First name, Last name and Email show a "*" in the label (aria-hidden), but the inputs
+     have no required / aria-required, so browsers and screen readers do not know they are required.
+                                                   (from the site code 2026-09-30, human decision: KNOWN BUG)
 
 ## Done means
 - `pnpm check` exits 0 and ends with non-zero counters: specs: 9 · active changes: 0 · archived: 4.
