@@ -17,8 +17,8 @@
 
 - [x] 3.1 HUMAN: confirm proposal Open questions on the live site with the test user from 2.5 or a hand-made `+hirion-qa-` user: 2 (deletion dialog and toast, from the cleanup output), 4 (wrong-password text), 5 (step 4 selection attribute), 6 (Analytics on Free), 7 (password confirmation), 8 (heal session). Also re-check 1 (Plan & Billing on Free) and 3 (D7 Phone). Record each answer in proposal.md as CONFIRMED with the date, and move confirmed strings into the specs with `/opsx:update`. Verify: no answered question is still marked ASSUMED.
 - [x] 3.2 Fix locators only through `scripts/heal-loop.sh "<selector>" src/test/java/ch/hirion/journey/<Class>.java https://hirion.ch/dashboard main .auth/user.json`, using the session approach chosen in 3.1 (question 8). Never touch KNOWN BUG assertions. A failure caused by a wrong spec string is reported to a human, not fixed in the assertion. Verify: every change is logged in `.agent-log/heal-log.jsonl`, and a human reviews it together with the locator-reviewer output.
-- [ ] 3.3 Run `mvn -q test -Dsuite=testng-journey.xml -Dqa.mailbox=<mailbox>` again. Verify: all non-KNOWN-BUG tests pass; D6, D10 and D14 pass as expected exceptions; dash10 (D8) passes when the feed has no broken title and the two set3 checks (D9) pass when the notice does not appear; cleanup deleted the user; and the run is quoted in `change-log.md`.
+- [x] 3.3 Run `mvn -q test -Dsuite=testng-journey.xml -Dqa.mailbox=<mailbox>` again. Verify: all non-KNOWN-BUG tests pass; D6, D10 and D14 pass as expected exceptions; dash10 (D8) passes when the feed has no broken title and the two set3 checks (D9) pass when the notice does not appear; cleanup deleted the user; and the run is quoted in `change-log.md`.
 
 ## 4. Gate
 
-- [ ] 4.1 Run pnpm check and quote its summary line
+- [x] 4.1 Run pnpm check and quote its summary line

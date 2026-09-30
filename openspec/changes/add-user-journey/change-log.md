@@ -423,3 +423,16 @@ no account was created. A human starts the first live run (task 2.5).
 - Accepted, not changed: #3 (the error-toast type is only a `data-type` attribute, and attribute locators
   are not allowed; the text is not asserted by human decision), #4 (`border-primary` until D12 is fixed,
   reason in the code), #9, #10 (info, low risk).
+
+## Plan step 25 (part 3): full suite GREEN 95/95 live, gate green (2026-09-30 17:38-17:46)
+
+- 3.3 [x]: `mvn test -Dsuite=testng-all.xml -Dqa.mailbox=anatoleyz` (human "да") -> "Tests run: 95, Failures: 0,
+  Errors: 0, Skipped: 0" (public 58 + journey 37), BUILD SUCCESS. All non-KNOWN-BUG tests pass; D6, D10, D14
+  passed as expected exceptions; dash10 (D8) and set3 x2 (D9, now counting visible matches) passed as
+  regular checks; the review 2026-09-30 fixes ran live. JourneyCleanup: "deleting this run's user ...
+  (accountCreated=true)" -> "deleted: ... no longer signs in". The manual sign-in check is covered by that
+  output (human decision).
+- 4.1 [x]: `pnpm check` exit 0 -- "PASS: no forbidden patterns"; `mvn -q test` public suite
+  (TEST-TestSuite.xml tests=58 failures=0 errors=0 skipped=0); "spec:check ok — specs: 5 · active changes: 1
+  · archived: 2".
+- Next: the human runs `/opsx:archive add-user-journey`.
