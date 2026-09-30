@@ -10,11 +10,11 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <properties>
         <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!-- версии на момент написания; актуальные смотрите на Maven Central -->
+        <!-- versions at the time of writing; check Maven Central for current ones -->
         <playwright.version>1.55.0</playwright.version>
         <testng.version>7.11.0</testng.version>
         <jackson.version>2.18.2</jackson.version>
-        <suite>testng-public.xml</suite> <!-- набор по умолчанию -->
+        <suite>testng-public.xml</suite> <!-- default suite -->
     </properties>
     <dependencies>
         <dependency>

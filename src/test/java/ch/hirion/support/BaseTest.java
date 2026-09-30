@@ -30,7 +30,7 @@ public abstract class BaseTest {
   }
 
   /**
-   * Подклассы переопределяют: размер экрана, сохранённая сессия.
+   * Subclasses override: screen size, saved session.
    */
   protected Browser.NewContextOptions contextOptions() {
     return new Browser.NewContextOptions().setBaseURL(BASE_URL);
@@ -47,7 +47,7 @@ public abstract class BaseTest {
   @AfterMethod(alwaysRun = true)
   public void closeContext(ITestResult result) {
     Tracing.StopOptions stop = new Tracing.StopOptions();
-    if (!result.isSuccess()) { // трасса только для упавших тестов
+    if (!result.isSuccess()) { // trace only for failed tests
       stop.setPath(Paths.get("target/traces", getClass().getSimpleName() + "-"
             + result.getMethod().getMethodName() + ".zip"));
     }
@@ -87,7 +87,7 @@ public abstract class BaseTest {
   }
 
   /**
-   * Поиск по роли и ТОЧНОМУ имени: "Continue" не совпадёт с "Continue with Google".
+   * Find by role and EXACT name: "Continue" does not match "Continue with Google".
    */
   protected Locator role(AriaRole role, String name) {
     return page.getByRole(role, new Page.GetByRoleOptions().setName(name).setExact(true));
