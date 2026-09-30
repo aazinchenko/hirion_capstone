@@ -17,7 +17,7 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
   not in a spec); D11 has no test (REG-1 not extended, human decision variant A).
 
 ## Next actions
-1. Step 27 DONE (docs/autonomy-log.md). 2. Step 28: decisions.md + budget vs actual (docs/intent.md budget table).
+1. Step 27 DONE (docs/autonomy-log.md). 2. Step 28 DONE (docs/decisions.md, budget actuals in docs/intent.md).
 3. Step 29: video <= 2 min. 4. Step 30: Pull Request. Show a plan first, act on "старт".
 
 ## Rules of the workflow (agreed with the human)
