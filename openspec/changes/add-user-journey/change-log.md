@@ -357,3 +357,17 @@ no account was created. A human starts the first live run (task 2.5).
 - Fix: waitForProfile also waits until "First name" shows the test user's first name ("Qa"); the
   "skills detected" wait stays. The D9 tests used the same precondition, so D9 is re-checked on the settled
   form in the next run before a human decision.
+
+## Plan step 24: fifth live run -- 34/37, Profile save works; Phone normalised; D9 absent (2026-09-30 16:20-16:23)
+
+- 37 tests: 34 passed, 3 failed; account created and deleted by JourneyCleanup (sign-in no longer works).
+- The "First name" wait works: set6 filled the form, "Save changes" was enabled, "Profile updated" was shown;
+  after the reload Headline and LinkedIn URL kept their values.
+- FAIL set6_profileSurvivesReload: Phone expected "79 000 00 00", received "790000000". The save request
+  (trace) sent `"phone": "+41790000000"` -- the country code from the "+41" picker plus the digits without
+  spaces -- and Short bio in full. Normalisation, no data loss.
+- FAIL set3_freshProfileNoUnsavedNotice, set3_switchSectionWithoutEdits: "expected exception not thrown" on
+  the fully loaded form -- D9 absent in the 3rd, 4th and 5th run.
+- Human decisions (2026-09-30): (1) SET-6 fills Phone with "790000000" and the spec records the
+  normalisation; (2) D9 -> both SET-3 scenarios are regular checks (like D8); the data-dependence
+  hypothesis is an open question in design.md and docs/intent.md.

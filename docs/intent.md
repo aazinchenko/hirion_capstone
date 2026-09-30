@@ -98,6 +98,10 @@ D8   Job titles show "?" instead of characters: "Senior Azure Engineer | ? oder 
 D9   Settings > Profile shows "You have unsaved changes" right after load, with no edits;
      switching section opens "Unsaved changes -- Leave without saving?".  (CONFIRMED live 2026-09-25)
      Workaround in tests: open sections via /settings?section=... .
+     Not reproduced 2026-09-30 on a new Free user (3 live runs, also on the fully loaded form). It was
+     seen on a manual account with odd Phone data; it probably depends on the stored profile, so SET-3 is
+     a regular check, not a KNOWN BUG test (human decision). Open question (ASSUMED): D9 appears when a
+     stored value differs from what the form shows (the site normalises Phone to "+41..." without spaces).
 D10  Settings > Profile > Email* has no effective validation: an error is shown, but any string
      is saved as the email.                                               (CONFIRMED live 2026-09-25)
 

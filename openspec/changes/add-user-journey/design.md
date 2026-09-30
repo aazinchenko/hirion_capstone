@@ -90,13 +90,14 @@ motivation and open items are in proposal.md.
   If that ever fails, the account email changed and the cleanup will fail loudly (see above).
   Alternatives rejected: a real save followed by a revert (the account is lost if the revert fails);
   and `route.fulfill(200)` (the UI would show success and hide what the site really does).
-- **Known bugs.** D6 (REG-10), D9 (SET-3, both scenarios) and D10 (SET-4) use
+- **Known bugs.** D6 (REG-10) and D10 (SET-4) use
   `@Test(expectedExceptions = AssertionFailedError.class, expectedExceptionsMessageRegExp = "...",
   description = "... KNOWN BUG Dn ...")` with a 3 s assertion timeout. Preconditions (page open,
   Profile visible, first card present) use `org.testng.Assert`, which throws a plain `AssertionError`
   that does not count as the expected exception. This follows the review of change 2
-  (`.agent-log/review-2026-09-29.md` #3). D9 opens Profile by clicking "Profile" on `/settings`, not
-  through a deep link. The documented workaround (deep links) is used by the other SET tests.
+  (`.agent-log/review-2026-09-29.md` #3). The SET-3 checks (D9, regular checks since 2026-09-30) open
+  Profile by clicking "Profile" on `/settings`, not through a deep link. The documented workaround (deep
+  links) is used by the other SET tests.
 - **Locators.** `role(...)` for buttons, links, headings and menu items. The dashboard tabs and settings
   sections are `AriaRole.BUTTON` (never `TAB`). Fields use `getByLabel(..., exact)`. "Password",
   "Current password", "New password" and "Confirm new password" must be exact, because every "Show password"
@@ -118,6 +119,11 @@ motivation and open items are in proposal.md.
   → Decided 2026-09-30: DASH-10 is a regular check; it turns red whenever a broken title appears, which
   then shows D8 again. The regex (`?` next to a letter, space or `?`) can also flag a real question mark in
   a title. Both cases are reported to a human, not healed.
+- [D9 depends on the profile data] The false "unsaved changes" was seen on 2026-09-25 on a manual account
+  with an odd stored Phone ("00000000000000jj"). A new Free user did not show it in three live runs on
+  2026-09-30, also after the Profile form had fully loaded. → Decided 2026-09-30: both SET-3 scenarios are
+  regular checks; they turn red whenever D9 appears. Open question: does D9 appear when the stored value
+  differs from what the form shows (e.g. a Phone that the site would normalise)?
 - [The feed is too short] DASH-4, DASH-5 and DASH-6 need three different cards. A new Free user may have
   fewer. → Precondition with `org.testng.Assert` ("feed has at least 3 jobs") so the result shows skip
   or fail with a clear message.
