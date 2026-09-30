@@ -235,3 +235,11 @@ no account was created. A human starts the first live run (task 2.5).
   docs/intent.md was recorded on the trial account, like the Analytics one.
 - Fix: DASH-2 now requires "View job", "Save", "Hide" and the absence of the three AI buttons for a Free user
   (spec, proposal, docs/intent.md, DashboardTest). No test clicks an AI button or "Upgrade to Pro".
+
+## Plan step 23: GREEN -- third live run (2026-09-30 14:32-14:35)
+
+- Human "go" in chat. `mvn -q test -Dsuite=testng-journey.xml -Dqa.mailbox=<mailbox>` -> exit 0,
+  Tests run: 24, passed 24, failed 0, skipped 0 (RegistrationTest 12 + DashboardTest 12, 2.5 min).
+- JourneyCleanup: "deleted: <qa-user> no longer signs in"; `.auth` holds only `manual-user.json`.
+- `java scripts/CheckLocatorRules.java src/test/java` -> `PASS: no forbidden patterns`.
+- Three live runs for step 23, three test accounts, all three deleted by the cleanup.
