@@ -371,3 +371,11 @@ no account was created. A human starts the first live run (task 2.5).
 - Human decisions (2026-09-30): (1) SET-6 fills Phone with "790000000" and the spec records the
   normalisation; (2) D9 -> both SET-3 scenarios are regular checks (like D8); the data-dependence
   hypothesis is an open question in design.md and docs/intent.md.
+
+## Plan step 24: sixth live run -- GREEN 37/37, step 24 done (2026-09-30 16:30-16:33)
+
+- `mvn -q test -Dsuite=testng-journey.xml -Dqa.mailbox=anatoleyz`: exit 0; `target/surefire-reports/TEST-TestSuite.xml`:
+  tests=37 failures=0 errors=0 skipped=0 (RegistrationTest 12, DashboardTest 12, SettingsTest 13).
+- set6_profileSurvivesReload GREEN (Phone "790000000"); set3 x2 GREEN as regular checks (D9 absent again);
+  KNOWN BUG D6, D10 and D14 passed as expected exceptions.
+- JourneyCleanup: "deleting this run's user ... (accountCreated=true)" -> "deleted: ... no longer signs in".
