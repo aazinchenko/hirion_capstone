@@ -320,3 +320,24 @@ no account was created. A human starts the first live run (task 2.5).
   underlying error before fixing.
 - Fix: Profile inputs are found by `role(AriaRole.TEXTBOX, name)`; the accessible name leaves the aria-hidden
   star out. Password inputs have no textbox role and keep `field()`.
+
+## Plan step 24: third live run -- 33/37, D14 and D10 confirmed live (2026-09-30 15:50-15:53)
+
+- 37 tests: 33 passed, 4 failed; account created, password changed, cleanup signed in with the new password
+  and deleted it.
+- Confirmed live: D14 (set2_requiredProfileFields threw "fields not marked required: [First name, Last name,
+  Email]" as expected), D10 (set4: a request carrying "not-an-email" was sent -- aborted in the browser; the
+  safety reload showed the test user's email unchanged), set2_cvCannotBeRemoved.
+- FAIL:
+  - set2_profileRendered: `role(BUTTON, "View")` not found -- the CV "View" is a link styled as a button
+    (`<a href=... target=_blank>`, site code). Spec SET-2 wording and test changed to the link.
+  - set6_profileSurvivesReload: click on "Save changes" timed out. Trace screenshot: Phone and LinkedIn URL
+    empty, Headline / Short bio filled with text from the CV analysis. A new user's CV is analysed in the
+    background; when it finishes the site fills Headline / Short bio and re-loads the form from the server,
+    wiping what the test had typed, so the form was not dirty and "Save changes" (disabled until a change,
+    site code) stayed disabled.
+  - set3_freshProfileNoUnsavedNotice, set3_switchSectionWithoutEdits (D9): "expected exception not thrown" --
+    D9 did not show on this fresh account. The tests may have looked before the CV analysis finished.
+- Fix: every Profile precondition now also waits (up to 90 s) until the CV block says "N skills detected" /
+  "no skills detected", so edits and the D9 checks happen on the settled form. If D9 still does not show,
+  that is a human decision (like D8: data-dependent or fixed).
