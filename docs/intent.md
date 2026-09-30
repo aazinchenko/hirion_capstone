@@ -48,6 +48,9 @@ CONFIRMED live 2026-09-25 (browser, signed-in test account):
   - Tabs are role=button (NOT role=tab): Job Feed, Saved, Applied, Archive, Analytics (PRO badge),
     Preferences.
   - Job card buttons: View job, Save, Tailor my CV, Write Cover Letter, Hide; match score "NN MATCH".
+    (recorded on the trial = Pro account. 2026-09-30, live + site code: a Free user's cards show only
+    View job, Save and Hide -- the AI buttons incl. "Help me stand out" are Pro-only; the score badge is
+    "87" + "match" in two spans, capitals only by CSS; Analytics is Pro-only, Free sees "Unlock Hirion Pro".)
   - "Applied" has no own button: Hide (aria-haspopup=menu) -> role=menu with menuitems
     "Already applied" and "Not relevant".
     - "Already applied": the job leaves the feed and appears in the Applied tab.
@@ -89,6 +92,8 @@ D6   /signup: "Show password" has tabindex=-1, not reachable by keyboard.       
 D7   Settings > Phone accepts letters ("00000000000000jj").                  (screenshot, to re-check)
 D8   Job titles show "?" instead of characters: "Senior Azure Engineer | ? oder ... Next Level ??".
                                                                           (CONFIRMED live 2026-09-25)
+     Not reproduced 2026-09-30 in the feed of a new Free user: depends on the job ads in the feed,
+     so DASH-10 is a regular check, not a KNOWN BUG test.
 D9   Settings > Profile shows "You have unsaved changes" right after load, with no edits;
      switching section opens "Unsaved changes -- Leave without saving?".  (CONFIRMED live 2026-09-25)
      Workaround in tests: open sections via /settings?section=... .

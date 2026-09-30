@@ -221,3 +221,17 @@ no account was created. A human starts the first live run (task 2.5).
     the Pro gate renders only after the analytics data has loaded, which took longer than the 5 s default.
   - dash10_noReplacementCharsInTitles (KNOWN BUG D8): no exception -- the feed of this fresh Free user had no
     title with a lost character, so D8 was not reproduced (it depends on which jobs are in the feed).
+
+## Plan step 23: fixes by a human and the second live run (2026-09-30 14:11-14:14)
+
+- Human decisions: fix dash2 / dash7 by hand (causes known from the trace and the site code, not guessed
+  locators; heal-loop would create and delete an account per iteration); D8 -> DASH-10 is a regular check.
+- Fixes: score badge regex `^\d+\s*match$` case-insensitive (spec DASH-2 wording updated); dash7 waits up to
+  30 s for the Pro gate (the analytics data loads first); dash10 without `expectedExceptions` (spec, tasks,
+  design, docs/intent.md D8 updated).
+- Second live run: 24 tests, 23 passed, 1 failed; account created and deleted. dash7 and dash10 green now.
+  dash2 failed at `Tailor my CV`: by the site code the feed passes the AI handler only when `isPro`, so a Free
+  user's cards have NO AI buttons ("Tailor my CV", "Write Cover Letter", "Help me stand out") -- the fact in
+  docs/intent.md was recorded on the trial account, like the Analytics one.
+- Fix: DASH-2 now requires "View job", "Save", "Hide" and the absence of the three AI buttons for a Free user
+  (spec, proposal, docs/intent.md, DashboardTest). No test clicks an AI button or "Upgrade to Pro".

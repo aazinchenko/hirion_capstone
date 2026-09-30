@@ -9,7 +9,6 @@ import com.microsoft.playwright.assertions.LocatorAssertions;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 import com.microsoft.playwright.options.WaitUntilState;
-import org.opentest4j.AssertionFailedError;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -33,14 +32,16 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 public class DashboardTest extends AuthenticatedTest {
 
   private static final Pattern DASHBOARD_URL = Pattern.compile("/dashboard([?#].*)?$");
-  private static final Pattern MATCH_SCORE = Pattern.compile("^\\d+ MATCH$");
+  /** The badge is <span>87</span><span>match</span>: no space, capitals only by CSS. */
+  private static final Pattern MATCH_SCORE = Pattern.compile("^\\d+\\s*match$", Pattern.CASE_INSENSITIVE);
   /** D8: a "?" next to a letter, a space or another "?" stands in for a lost character. */
   private static final Pattern REPLACEMENT_CHAR =
         Pattern.compile("[A-Za-z\\u00C0-\\u017F\\s?]\\?|\\?[A-Za-z\\u00C0-\\u017F\\s?]");
   private static final List<String> TABS =
         List.of("Job Feed", "Saved", "Applied", "Archive", "Analytics", "Preferences");
-  private static final List<String> CARD_BUTTONS =
-        List.of("View job", "Save", "Tailor my CV", "Write Cover Letter", "Help me stand out", "Hide");
+  private static final List<String> CARD_BUTTONS = List.of("View job", "Save", "Hide");
+  /** Pro-only: the feed passes the AI handler only when isPro, so a Free user's cards have none. */
+  private static final List<String> AI_BUTTONS = List.of("Tailor my CV", "Write Cover Letter", "Help me stand out");
   private static final List<String> PREFERENCE_FIELDS = List.of("Roles", "Work mode", "Locations", "Industries",
         "Company type", "Employment eligibility", "Seniority", "Languages");
   private static final String GATE_TEXT = "See your match analytics, Swiss salary benchmarks, and personalized"
@@ -49,9 +50,9 @@ public class DashboardTest extends AuthenticatedTest {
   private static final double FEED_TIMEOUT = 30_000;
   private static final LocatorAssertions.IsVisibleOptions SLOW =
         new LocatorAssertions.IsVisibleOptions().setTimeout(15_000);
-  /** Short timeout for the KNOWN BUG D8 assertion, like QUICK_ATTR. */
-  private static final LocatorAssertions.HasCountOptions QUICK_COUNT =
-        new LocatorAssertions.HasCountOptions().setTimeout(3000);
+  /** The Pro gate renders only after the analytics data has loaded (> 5 s in the first live run). */
+  private static final LocatorAssertions.IsVisibleOptions ANALYTICS_LOADED =
+        new LocatorAssertions.IsVisibleOptions().setTimeout(30_000);
 
   /** Titles already saved / hidden by an earlier test: DASH-4, DASH-5 and DASH-6 each take a different card. */
   private final Set<String> usedTitles = new HashSet<>();
@@ -77,7 +78,10 @@ public class DashboardTest extends AuthenticatedTest {
     Locator card = feedCards(1).first();
     assertThat(card.getByText(MATCH_SCORE)).isVisible();
     for (String name : CARD_BUTTONS) {
-      assertThat(cardButton(card, name)).isVisible(); // presence only: the AI buttons are never clicked
+      assertThat(cardButton(card, name)).isVisible();
+    }
+    for (String name : AI_BUTTONS) {
+      assertThat(cardButton(card, name)).hasCount(0); // Free user: no AI buttons at all
     }
     assertThat(cardButton(card, "Hide")).hasAttribute("aria-haspopup", "menu");
   }
@@ -152,7 +156,7 @@ public class DashboardTest extends AuthenticatedTest {
   public void dash7_analyticsProGate() {
     openDashboard();
     tab("Analytics").click();
-    assertThat(role(AriaRole.HEADING, "Unlock Hirion Pro")).isVisible();
+    assertThat(role(AriaRole.HEADING, "Unlock Hirion Pro")).isVisible(ANALYTICS_LOADED);
     assertThat(exactText(GATE_TEXT)).isVisible();
     Locator upgrade = role(AriaRole.LINK, "Upgrade to Pro");
     assertThat(upgrade).isVisible();
@@ -214,23 +218,21 @@ public class DashboardTest extends AuthenticatedTest {
     assertThat(page).hasURL(DASHBOARD_URL);
   }
 
-  // DASH-10 (known defect D8)
+  // DASH-10 (D8: a regular check since 2026-09-30)
 
   /*
-   * Depends on the feed content: the "?" titles come from specific job ads. If today's feed has none, this
-   * test fails ("expected exception was not thrown"), which does NOT mean D8 is fixed -- check the feed
-   * (design.md "Risks"). The regex can also flag a real question mark in a title. Report both to a human.
+   * D8 depends on the feed content: the "?" titles come from specific job ads, and the first live run
+   * (2026-09-30) had none. So this is a regular check: it turns red whenever a broken title shows up,
+   * which reveals D8 again. The regex can also flag a real question mark in a title: report it to a human.
    */
-  @Test(priority = 12, dependsOnGroups = "registered", expectedExceptions = AssertionFailedError.class,
-        expectedExceptionsMessageRegExp = "(?s).*count.*",
-        description = "DASH-10 No replacement characters in job titles -- KNOWN BUG D8: titles show \"?\" "
-              + "instead of characters")
+  @Test(priority = 12, dependsOnGroups = "registered",
+        description = "DASH-10 No replacement characters in job titles")
   public void dash10_noReplacementCharsInTitles() {
     openDashboard();
     Locator cards = feedCards(1); // precondition through TestNG: at least one card in the feed
     Locator broken = cards.getByRole(AriaRole.HEADING)
           .filter(new Locator.FilterOptions().setHasText(REPLACEMENT_CHAR));
-    assertThat(broken).hasCount(0, QUICK_COUNT);
+    assertThat(broken).hasCount(0);
   }
 
   // ---------------------------------------------------------------------------------------------

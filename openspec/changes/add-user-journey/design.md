@@ -90,7 +90,7 @@ motivation and open items are in proposal.md.
   If that ever fails, the account email changed and the cleanup will fail loudly (see above).
   Alternatives rejected: a real save followed by a revert (the account is lost if the revert fails);
   and `route.fulfill(200)` (the UI would show success and hide what the site really does).
-- **Known bugs.** D6 (REG-10), D8 (DASH-10), D9 (SET-3, both scenarios) and D10 (SET-4) use
+- **Known bugs.** D6 (REG-10), D9 (SET-3, both scenarios) and D10 (SET-4) use
   `@Test(expectedExceptions = AssertionFailedError.class, expectedExceptionsMessageRegExp = "...",
   description = "... KNOWN BUG Dn ...")` with a 3 s assertion timeout. Preconditions (page open,
   Profile visible, first card present) use `org.testng.Assert`, which throws a plain `AssertionError`
@@ -102,7 +102,8 @@ motivation and open items are in proposal.md.
   "Current password", "New password" and "Confirm new password" must be exact, because every "Show password"
   button also matches. Job cards: the job title is read from the card, and the card is re-found with
   `getByRole(ARTICLE or LISTITEM).filter(hasText(title))`. The exact card role is decided in RED from
-  the live DOM. Match score: `getByText(Pattern.compile("^\\d+ MATCH$"))`.
+  the live DOM. Match score: the badge is `<span>87</span><span>match</span>` (no space, capitals only by CSS), so
+  `getByText(Pattern.compile("^\\d+\\s*match$", CASE_INSENSITIVE))`.
 - **Healing.** Locators change only through `scripts/heal-loop.sh "<-Dtest=...>" <file> https://hirion.ch/dashboard main .auth/user.json`.
   That needs a live session. After a normal run, `.auth/user.json` belongs to a deleted user. The human
   chooses before task 3.2 (proposal Open question 8). Recommended: run the heal loop with the full
@@ -112,10 +113,10 @@ motivation and open items are in proposal.md.
 
 ## Risks / Trade-offs
 
-- [D8 depends on the feed content] The "?" titles come from specific job ads. If today's feed has none,
-  the KNOWN BUG test does not throw and TestNG reports it as failed, which looks like "fixed".
-  → Treat a D8 failure as "check the feed" and never as "fixed" until the defect is confirmed gone on a
-  known broken ad. The regex (`?` next to a letter, space or `?`) can also flag a real question mark in
+- [D8 depends on the feed content] The "?" titles come from specific job ads. The first live run
+  (2026-09-30) had none, so the KNOWN BUG test failed with "expected exception not thrown".
+  → Decided 2026-09-30: DASH-10 is a regular check; it turns red whenever a broken title appears, which
+  then shows D8 again. The regex (`?` next to a letter, space or `?`) can also flag a real question mark in
   a title. Both cases are reported to a human, not healed.
 - [The feed is too short] DASH-4, DASH-5 and DASH-6 need three different cards. A new Free user may have
   fewer. → Precondition with `org.testng.Assert` ("feed has at least 3 jobs") so the result shows skip

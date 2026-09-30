@@ -17,13 +17,16 @@ without Pro the Analytics button also carries the badge "Pro", so its accessible
   button) and "Preferences"
 
 ### Requirement: DASH-2 Job card actions
-Every job card in the Job Feed SHALL show a match score "NN MATCH" and the buttons "View job", "Save",
-"Tailor my CV", "Write Cover Letter", "Help me stand out" and "Hide". The button "Hide" SHALL have `aria-haspopup="menu"`.
+Every job card in the Job Feed SHALL show a match score badge -- a number followed by the label "match",
+which the page renders in capitals ("87 MATCH") -- and the buttons "View job", "Save" and "Hide". The button
+"Hide" SHALL have `aria-haspopup="menu"`. The AI buttons "Tailor my CV", "Write Cover Letter" and
+"Help me stand out" are Pro-only: a Free user's cards SHALL NOT show them.
 
 #### Scenario: First job card
 - **WHEN** the signed-in test user opens `/dashboard` with the Job Feed shown
-- **THEN** the first job card shows a text matching "<digits> MATCH", the buttons "View job", "Save",
-  "Tailor my CV", "Write Cover Letter", "Help me stand out" and "Hide", and "Hide" has `aria-haspopup="menu"`
+- **THEN** the first job card shows a match score (a number followed by "match", in any letter case), the buttons "View job", "Save"
+  and "Hide", "Hide" has `aria-haspopup="menu"`, and there is no button "Tailor my CV", "Write Cover Letter"
+  or "Help me stand out" on the card
 
 ### Requirement: DASH-3 Empty lists of a new user
 For a user who has not saved, applied to or archived any job, the tabs SHALL show the empty states:
@@ -89,7 +92,9 @@ The Preferences tab SHALL show the sections with the headings "Roles", "Work mod
 
 ### Requirement: DASH-10 Job titles show their characters
 Job titles in the Job Feed SHALL show every character of the original title. A character SHALL NOT be
-replaced by "?" (for example "Senior Azure Engineer | ? oder ... Next Level ??").
+replaced by "?" (for example "Senior Azure Engineer | ? oder ... Next Level ??"). (Known defect D8,
+not reproduced in the feed of a new Free user on 2026-09-30: it depends on which job ads are in the feed,
+so the scenario is a regular check that turns red whenever such a title appears.)
 
 #### Scenario: No replacement characters in job titles
 - **WHEN** the signed-in test user opens `/dashboard` with the Job Feed shown
