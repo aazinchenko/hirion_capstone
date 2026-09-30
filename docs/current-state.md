@@ -5,7 +5,7 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
 `../capstone-cheatsheet-agentic-engineering.pdf`.
 
 ## Where we are
-- Steps 1-24 DONE. Step 24 (SettingsTest) closed with the 6th live run GREEN 37/37 (16:30, account deleted).
+- Steps 1-24 DONE, step 25 in progress (waiting for the human). Step 24 (SettingsTest) closed with the 6th live run GREEN 37/37 (16:30, account deleted).
 - `pnpm spec:check`: specs 5 · active changes 1 (`add-user-journey`) · archived 2.
 - Public suite `testng-public.xml`: 58/58 green.
 - Journey suite `testng-journey.xml` = RegistrationTest 12, DashboardTest 12, SettingsTest 13, JourneyCleanup.
@@ -15,11 +15,26 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
   a new Free user in 4 runs -> SET-3 regular checks (human decision, like D8), hypothesis in design.md.
 
 ## Next actions
-1. Step 25: task 3.x (open questions, heal if needed), `pnpm check`, locator-reviewer in the human's own
-   session, `/opsx:archive add-user-journey` -> expect specs 9 · archived 3; Purpose without TBD.
-   Before archiving: proposal.md still lists D8 and D9 among the KNOWN BUG tests -- update (human agreed to look).
-2. Steps 26-30: change 4 `update-signup-steps` (MODIFIED), autonomy-log.md, decisions.md + budget vs actual,
-   video <= 2 min, Pull Request.
+Step 25 IN PROGRESS. Done (commit 1518130): tasks 2.4, 2.5, 3.2 ticked with evidence; proposal open questions
+1, 5, 6, 7 CONFIRMED live, 2 (no DEL-2) and 8 human decisions, 9 -> change 4, new 11 (D9 hypothesis, ASSUMED);
+SET-5 names the toast "Password updated"; proposal no longer lists D8/D9 as KNOWN BUG. Human decided: the
+manual sign-in check of task 3.3 is covered by the JourneyCleanup output.
+WAITING FOR THE HUMAN:
+1. Question 4: the human reads the wrong-password toast on /login by hand and reports the text -> record in
+   proposal.md, decide whether AUTH-6 asserts it; then tick 3.1.
+2. The human runs locator-reviewer (`.claude/agents/locator-reviewer.md`) in their own session on
+   src/test/java/ch/hirion/journey and reviews `.agent-log/heal-log.jsonl`; I work through the findings.
+Then:
+3. Task 3.3 -- ONLY after an explicit "да" (one real account): `mvn test -Dsuite=testng-all.xml
+   -Dqa.mailbox=anatoleyz`, expect 95/95 (public 58 + journey 37).
+4. Task 4.1 `pnpm check` (expect active changes: 1), tick 3.3/4.1, commit
+   "test: journey suite (GREEN) -- ... see heal-log.jsonl".
+5. The human runs `/opsx:archive add-user-journey`; then `pnpm spec:check` -> specs 9 · active 0 · archived 3;
+   replace Purpose "TBD" in openspec/specs/{signup,dashboard,account-settings,account-deletion}/spec.md;
+   commit "spec: archive add-user-journey (signup, dashboard, account-settings, account-deletion)".
+6. Steps 26-30: change 4 `update-signup-steps` (MODIFIED; open question 9 goes there), autonomy-log.md,
+   decisions.md + budget vs actual, video <= 2 min, Pull Request.
+
 ## Rules of the workflow (agreed with the human)
 - Show a plan first, act on "старт"; spec commit before test commit; every [x] in tasks.md needs evidence in
   change-log.md.
