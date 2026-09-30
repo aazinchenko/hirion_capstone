@@ -54,6 +54,9 @@ public class SettingsTest extends AuthenticatedTest {
   /** Not an email address at all, so it can never reach a real mailbox (D10). */
   private static final String INVALID_EMAIL = "not-an-email";
   private static final double PROFILE_TIMEOUT = 15_000;
+  /** CV block text once the background analysis is done: "18 skills detected" or "no skills detected". */
+  private static final Pattern CV_ANALYSED = Pattern.compile("\\b(\\d+|no) skills detected\\b");
+  private static final double CV_ANALYSIS_TIMEOUT = 90_000;
   private static final LocatorAssertions.IsVisibleOptions SLOW =
         new LocatorAssertions.IsVisibleOptions().setTimeout(15_000);
   /** 3 s timeouts for the KNOWN BUG assertions, like QUICK_ATTR. */
@@ -91,7 +94,9 @@ public class SettingsTest extends AuthenticatedTest {
       assertThat(profileField(label)).isVisible();
     }
     assertThat(role(AriaRole.COMBOBOX, "Country")).isVisible(); // not the "Country code" picker next to Phone
-    for (String name : List.of("View", "Re-analyse", "Replace", "Save changes")) {
+    // "View" is a link styled as a button (<a href=... target=_blank>, site code); presence only for all four.
+    assertThat(role(AriaRole.LINK, "View")).isVisible();
+    for (String name : List.of("Re-analyse", "Replace", "Save changes")) {
       assertThat(role(AriaRole.BUTTON, name)).isVisible(); // presence only: the CV is never changed
     }
     assertThat(exactText("Skills").first()).isVisible();
@@ -319,6 +324,16 @@ public class SettingsTest extends AuthenticatedTest {
     } catch (AssertionFailedError | PlaywrightException e) {
       Assert.fail("Profile \"Email\" does not show the test user's email after "
             + (int) (PROFILE_TIMEOUT / 1000) + " s -- if the account email changed, JourneyCleanup will fail loudly");
+    }
+    // A new user's CV is analysed in the background; when it finishes the site fills Headline / Short bio and
+    // re-loads the form from the server, wiping anything typed before (live run 2026-09-30: "Save changes"
+    // stayed disabled). Wait until the CV block says "N skills detected" (or "no skills detected").
+    try {
+      assertThat(page.getByText(CV_ANALYSED).first())
+            .isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(CV_ANALYSIS_TIMEOUT));
+    } catch (AssertionFailedError | PlaywrightException e) {
+      Assert.fail("the CV analysis did not finish within " + (int) (CV_ANALYSIS_TIMEOUT / 1000) + " s: "
+            + e.getMessage());
     }
   }
 
