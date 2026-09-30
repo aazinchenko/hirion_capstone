@@ -1,7 +1,7 @@
 ## Purpose
 
 Dashboard `/dashboard` of a signed-in user (test group DASH): the job feed with Save and the Hide menu,
-the Saved / Applied / Archive lists, Analytics with the Save rate, and job preferences.
+the Saved / Applied / Archive lists, the Pro gate of Analytics for a Free user, and job preferences.
 
 ## ADDED Requirements
 
@@ -62,24 +62,17 @@ Choosing "Not relevant" in the Hide menu SHALL remove the job from the Job Feed.
 - **WHEN** the signed-in test user clicks "Hide" on a job card and chooses the menu item "Not relevant"
 - **THEN** that job title is no longer in the Job Feed
 
-### Requirement: DASH-7 Analytics sections
-The Analytics tab SHALL show three sections: "Your performance" with the metrics "Total active jobs",
-"Avg match score", "Save rate" and "Jobs in feed"; "Swiss market intelligence"; and
-"Positioning & opportunity". It SHALL NOT show counters of saved, applied or hidden jobs.
+### Requirement: DASH-7 Analytics is Pro-only for a Free user
+For a user on the Free plan the Analytics tab SHALL show the Pro gate: the heading "Unlock Hirion Pro",
+the text "See your match analytics, Swiss salary benchmarks, and personalized opportunities to land roles
+faster." and the link "Upgrade to Pro" to `/settings?section=plan`. The analytics content behind the gate
+SHALL be hidden from assistive technology (`aria-hidden="true"`).
 
-#### Scenario: Analytics is rendered
-- **WHEN** the signed-in test user opens `/dashboard` and clicks the button "Analytics"
-- **THEN** the page shows the texts "Your performance", "Total active jobs", "Avg match score",
-  "Save rate", "Jobs in feed", "Swiss market intelligence" and "Positioning & opportunity"
-
-### Requirement: DASH-8 Save rate follows saved and feed jobs
-The metric "Save rate" SHALL equal round(saved / (saved + jobs in feed) * 100) %, where saved is the
-number of saved jobs and jobs in feed is the value of "Jobs in feed". Example: a feed of 10 jobs, Save
-on one: "Jobs in feed" 9, "Save rate" 10%.
-
-#### Scenario: Save rate after one saved job
-- **WHEN** the signed-in test user has exactly one saved job and opens the Analytics tab
-- **THEN** with N the number shown for "Jobs in feed", "Save rate" shows round(1 / (1 + N) * 100) followed by "%"
+#### Scenario: Free user sees the Pro gate on Analytics
+- **WHEN** the signed-in Free test user opens `/dashboard` and clicks the button "Analytics"
+- **THEN** the page shows the heading "Unlock Hirion Pro", the text "See your match analytics, Swiss salary
+  benchmarks, and personalized opportunities to land roles faster." and the link "Upgrade to Pro" with
+  `href="/settings?section=plan"`
 
 ### Requirement: DASH-9 Preferences form
 The Preferences tab SHALL show the comboboxes "Roles", "Work mode", "Locations", "Industries",

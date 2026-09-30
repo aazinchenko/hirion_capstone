@@ -58,8 +58,7 @@ motivation and open items are in proposal.md.
   (Open question 2). The first live run records what it saw in the change log, and a human confirms it.
 - **Order and dependencies.** The suite is ordered: `RegistrationTest` → `DashboardTest` →
   `SettingsTest` → `JourneyCleanup`. Inside a class, `priority` sets the order that the scenarios need:
-  DASH-3 empty states come before DASH-4 Save, and DASH-8 comes right after DASH-4 (exactly one saved
-  job). DASH-5 and DASH-6 act on other cards than DASH-4. SET-5 comes last. The registration test
+  DASH-3 empty states come before DASH-4 Save (DASH-8 Save rate was dropped on 2026-09-30, Pro-only). DASH-5 and DASH-6 act on other cards than DASH-4. SET-5 comes last. The registration test
   (`reg9_freeSignupLandsOnDashboard`) belongs to group `registered` and saves the storage state to
   `.auth/user.json`. `DashboardTest` and `SettingsTest` extend `AuthenticatedTest` and use
   `dependsOnGroups = "registered"`, so they are skipped rather than run against a stale session.
@@ -129,5 +128,6 @@ motivation and open items are in proposal.md.
 - [Cleanup deletes the wrong account] → Guard `\+hirion-qa-\d+@` before any action. The file is
   human-owned and closed to the agent.
 - [Rate limits / lockout on /login] → One wrong attempt per run (AUTH-6). Cleanup signs in at most twice.
-- [Analytics may be paywalled for Free] → Proposal Open question 6. DASH-7 / DASH-8 fail in RED with a
-  clear message, and a human decides. No test switches to the trial.
+- [Analytics is Pro-only] → Proposal Open question 6, decided 2026-09-30: DASH-7 checks the Pro gate a Free
+  user sees and never clicks "Upgrade to Pro"; DASH-8 (Save rate) is out of this change. No test switches
+  to the trial.

@@ -11,7 +11,7 @@ defects D6, D8, D9 and D10, and it adds the plan item AUTH-03 (wrong password), 
   - `signup` (REG + AUTH-03): wizard steps 1-4 after the step 1 checks that already exist, the plan
     choice on step 4, landing on `/dashboard` without email confirmation, and a wrong password on `/login`.
   - `dashboard` (DASH): heading, tab buttons, job card, empty states, Save, "Already applied" and
-    "Not relevant" through the Hide menu, Analytics with Save rate, Preferences.
+    "Not relevant" through the Hide menu, the Analytics Pro gate a Free user sees, Preferences.
   - `account-settings` (SET): section buttons and deep link, Profile fields, Security fields, password
     change, D9 and D10.
   - `account-deletion` (DEL): the "Delete account" entry point in Settings > Security. The deletion
@@ -38,7 +38,7 @@ defects D6, D8, D9 and D10, and it adds the plan item AUTH-03 (wrong password), 
   taken email, keyboard access to "Show password" D6). Also plan choice, account creation only on
   step 4, landing on `/dashboard` signed in, and the wrong-password error on `/login` (plan AUTH-03).
 - `dashboard`: `/dashboard` for a signed-in user: heading, tab buttons, job card, empty states, Save,
-  Hide menu, Analytics and Save rate, Preferences, correct job title characters (D8).
+  Hide menu, the Analytics Pro gate for Free, Preferences, correct job title characters (D8).
 - `account-settings`: `/settings` sections Profile and Security, deep links, required profile fields,
   password change, no false "unsaved changes" (D9), invalid email not saved (D10).
 - `account-deletion`: the "Delete account" button in Settings > Security.
@@ -47,6 +47,12 @@ defects D6, D8, D9 and D10, and it adds the plan item AUTH-03 (wrong password), 
 - (none). REG-1 and REG-2 stay in `access-and-quality` and are not repeated. `signup` starts at REG-3.
   AUTH-3 in `access-and-quality` is the login autofill requirement. The wrong-password requirement
   therefore gets the new ID AUTH-6 and lives in `signup`, because it needs the registered test user.
+
+## Not in this change (human decision, 2026-09-30)
+
+- DASH-8 "Save rate follows saved and feed jobs": Analytics is Pro-only (open question 6). Checking it would
+  need Pro -- a payment or the Premium trial, both forbidden by docs/intent.md "Not doing". DASH-7 checks the
+  Pro gate instead; the ID DASH-8 stays unused.
 
 ## Impact
 
@@ -97,7 +103,8 @@ defects D6, D8, D9 and D10. None of the strings listed below is used in a requir
    analytics, Swiss salary benchmarks, and personalized opportunities to land roles faster." and the link
    "Upgrade to Pro" to `/settings?section=plan`. The Analytics facts in docs/intent.md were recorded on the
    trial (Pro) account. Consequence: DASH-7 / DASH-8 as written cannot be checked on the Free test user --
-   a human decision is needed (see change-log 2026-09-30).
+   decided 2026-09-30: DASH-7 checks the Pro gate (no click on "Upgrade to Pro"), DASH-8 is out of this
+   change (see "Not in this change").
 7. **Password change confirmation.** The toast or message after "Update password" is not recorded.
    SET-5 asserts the observable result instead: the new password signs in.
 8. **Healing journey tests.** `scripts/heal-loop.sh` fetches the live DOM with `.auth/user.json`. After a
