@@ -3,7 +3,8 @@
     <test name="journey" preserve-order="true">
         <classes>
             <class name="ch.hirion.journey.RegistrationTest"/>
-            <!-- DashboardTest and SettingsTest are added in plan steps 23 and 24, when they exist -->
+            <class name="ch.hirion.journey.DashboardTest"/>
+            <!-- SettingsTest is added in plan step 24, when it exists -->
             <class name="ch.hirion.journey.JourneyCleanup"/>
         </classes>
     </test>

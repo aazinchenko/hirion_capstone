@@ -104,7 +104,8 @@ D12  /signup step 4: the Premium Trial / Free cards do not expose which one is s
 
 D13  /signup step 3: the role picker is <button role="combobox"> with the visible text "Add" but no
      accessible name (a combobox does not take its name from content, no aria-label); a screen reader
-     announces only "combobox".                        (candidate, seen in the live run 2026-09-29)
+     announces only "combobox". The same unnamed picker is used for every field of Dashboard > Preferences
+     (site code, 2026-09-30).                          (candidate, seen in the live run 2026-09-29)
 
 ## Done means
 - `pnpm check` exits 0 and ends with non-zero counters: specs: 9 · active changes: 0 · archived: 4.

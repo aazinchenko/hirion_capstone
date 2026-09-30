@@ -157,3 +157,49 @@ no account was created. A human starts the first live run (task 2.5).
   DashboardTest is written.
 - `.auth/user.json`: nothing to do -- the journey run writes a fresh one in reg9 and cleanup removes it; the
   hand-made session stays in `.auth/manual-user.json`.
+
+## Plan step 23 / task 2.2: DashboardTest written, not run (2026-09-30)
+
+- `src/test/java/ch/hirion/journey/DashboardTest.java` extends `AuthenticatedTest`, every method has
+  `dependsOnGroups = "registered"`, 12 `@Test` in priority order: dash1_dashboardRendered (1),
+  dash2_firstJobCard (2), dash3_emptyListsOfNewUser (3), dash4_saveMovesJob (4), dash5_hideMenuItems (5),
+  dash5_alreadyAppliedMovesJob (6), dash6_notRelevantRemovesJob (7), dash7_analyticsProGate (8),
+  dash9_preferencesRendered (9), dash12_workModeSurvivesReload (10), dash11_viewJobOpensExternalTab (11),
+  dash10_noReplacementCharsInTitles (12, KNOWN BUG D8, `expectedExceptionsMessageRegExp = "(?s).*count.*"`,
+  `hasCount(0)` with a 3 s timeout on card headings matching "?" next to a letter / space / "?"; precondition
+  "at least one card" through `org.testng.Assert`; comment notes the test depends on the feed content).
+- Not run on purpose: a live run creates an account, a human starts it. `testng-journey.xml` not touched
+  (a human adds the class). Only `mvn -q test-compile` was run: compiles.
+- Safety: "Tailor my CV", "Write Cover Letter", "Help me stand out" are only checked for presence in
+  dash2; "Upgrade to Pro" only for visibility and `href="/settings?section=plan"` in dash7; "View job" is
+  clicked only in dash11 (new tab caught with `context.waitForPage`, host must not be hirion.ch, tab closed,
+  original tab still on `/dashboard`); "Save preferences" is clicked only in dash12.
+- DASH-4 / DASH-5 / DASH-6 use different cards: `pickCard()` takes the first feed card whose title is not
+  yet used by this class and is unique in the feed (so "title no longer in the feed" is meaningful).
+- ASSUMED, to be decided in RED from the live DOM (design.md "Locators"), healed only through heal-loop.sh:
+  1. the card container is role `article` (filtered by `setHas` "View job" button);
+  2. the job title is the first heading inside the card;
+  3. the dashboard has a `main` landmark (dash12 looks for the "Remote" chip inside it);
+  4. the tab buttons are named exactly "Analytics" etc. (the PRO badge might end up in the accessible name).
+- Expected RED risk, not a locator question: dash9 asserts comboboxes NAMED "Roles", "Work mode", ... as the
+  spec says, while the Work mode picker probably has no accessible name (like D13). If dash9 fails on the
+  names, that is a candidate defect / spec question for a human, not something to heal in the assertion.
+  dash12 finds the picker by role combobox + exact text "Add work mode" and precondition-checks with
+  `org.testng.Assert` that "Remote" is not already selected.
+- Order note: priorities are global inside a TestNG `<test>`, so DashboardTest methods may interleave with
+  reg4 / auth6 (priority 11 / 12 in RegistrationTest); all dash methods still run after reg9 through
+  `dependsOnGroups`.
+
+## Plan step 23: human review of DashboardTest before the first live run (2026-09-30)
+
+- Checked: 12 `@Test`; CheckLocatorRules PASS; no click on "Tailor my CV", "Write Cover Letter",
+  "Help me stand out" or "Upgrade to Pro"; "View job" clicked only in dash11, "Save preferences" only in dash12.
+- The agent's guessed locators, checked against the site code (dashboard bundle, read-only): a job card is
+  `<article>` and its title an `<h3>` -- guesses right. The Analytics tab button holds the badge "Pro" for a user
+  without Pro, so its accessible name is "Analytics Pro": `tab("Analytics")` now matches `^Analytics( Pro)?$`.
+- Spec corrections (the agent's "question about the spec"): DASH-1 names the Free user's tab "Analytics Pro";
+  DASH-9 checks the section headings, because every Preferences field is an `<h3>` section with an unnamed
+  picker -- the same component as signup step 3 (D13 extended in docs/intent.md).
+- TestNG priorities are global across classes, so dash tests may interleave with reg4 / auth6; every dash test
+  still waits for reg9 through `dependsOnGroups = "registered"`.
+- `testng-journey.xml` now: RegistrationTest, DashboardTest, JourneyCleanup.

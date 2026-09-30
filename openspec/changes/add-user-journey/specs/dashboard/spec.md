@@ -7,12 +7,14 @@ the Saved / Applied / Archive lists, the Pro gate of Analytics for a Free user, 
 
 ### Requirement: DASH-1 Dashboard heading and tab buttons
 `/dashboard` SHALL show the heading level 1 "Welcome back, <first name>" and the tabs Job Feed, Saved,
-Applied, Archive, Analytics and Preferences as elements with role `button` (not role `tab`).
+Applied, Archive, Analytics and Preferences as elements with role `button` (not role `tab`). For a user
+without Pro the Analytics button also carries the badge "Pro", so its accessible name is "Analytics Pro".
 
 #### Scenario: Dashboard is rendered
 - **WHEN** the signed-in test user opens `/dashboard`
 - **THEN** the page shows the heading level 1 "Welcome back, <first name of the test user>" and the
-  buttons "Job Feed", "Saved", "Applied", "Archive", "Analytics" and "Preferences"
+  buttons "Job Feed", "Saved", "Applied", "Archive", "Analytics Pro" (the Free user's name of the Analytics
+  button) and "Preferences"
 
 ### Requirement: DASH-2 Job card actions
 Every job card in the Job Feed SHALL show a match score "NN MATCH" and the buttons "View job", "Save",
@@ -75,13 +77,15 @@ SHALL be hidden from assistive technology (`aria-hidden="true"`).
   `href="/settings?section=plan"`
 
 ### Requirement: DASH-9 Preferences form
-The Preferences tab SHALL show the comboboxes "Roles", "Work mode", "Locations", "Industries",
-"Company type", "Employment eligibility", "Seniority" and "Languages", and the button "Save preferences".
+The Preferences tab SHALL show the sections with the headings "Roles", "Work mode", "Locations",
+"Industries", "Company type", "Employment eligibility", "Seniority" and "Languages", each with a picker
+(role `combobox`), and the button "Save preferences". The pickers themselves have no accessible name
+(candidate defect D13).
 
 #### Scenario: Preferences is rendered
 - **WHEN** the signed-in test user opens `/dashboard` and clicks the button "Preferences"
-- **THEN** the page shows comboboxes named "Roles", "Work mode", "Locations", "Industries",
-  "Company type", "Employment eligibility", "Seniority" and "Languages" and the button "Save preferences"
+- **THEN** the page shows the headings "Roles", "Work mode", "Locations", "Industries", "Company type",
+  "Employment eligibility", "Seniority" and "Languages" and the button "Save preferences"
 
 ### Requirement: DASH-10 Job titles show their characters
 Job titles in the Job Feed SHALL show every character of the original title. A character SHALL NOT be
