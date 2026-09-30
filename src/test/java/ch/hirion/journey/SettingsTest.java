@@ -301,10 +301,13 @@ public class SettingsTest extends AuthenticatedTest {
    * test user's email. Also the SET-4 safety check. The email itself is never printed.
    */
   private void waitForProfile(TestUser user) {
+    // Not page.waitForCondition(() -> field(...).inputValue()): a Playwright call inside that condition
+    // fails every time (first live run 2026-09-30). hasValue() auto-waits; its AssertionFailedError is turned
+    // into a TestNG failure so the precondition can never count as a KNOWN BUG.
     try {
-      page.waitForCondition(() -> user.email.equals(field("Email").inputValue()),
-            new Page.WaitForConditionOptions().setTimeout(PROFILE_TIMEOUT));
-    } catch (PlaywrightException e) {
+      assertThat(field("Email")).hasValue(user.email,
+            new LocatorAssertions.HasValueOptions().setTimeout(PROFILE_TIMEOUT));
+    } catch (AssertionFailedError | PlaywrightException e) {
       Assert.fail("Profile \"Email\" does not show the test user's email after "
             + (int) (PROFILE_TIMEOUT / 1000) + " s -- if the account email changed, JourneyCleanup will fail loudly");
     }

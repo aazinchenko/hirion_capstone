@@ -293,3 +293,18 @@ no account was created. A human starts the first live run (task 2.5).
   (neither -> TimeoutError), assert the dialog hidden (only this may be the known bug:
   `expectedExceptionsMessageRegExp` ".*Leave without saving.*"), then assert the form visible.
 - `testng-journey.xml` now: RegistrationTest, DashboardTest, SettingsTest, JourneyCleanup.
+
+## Plan step 24: first live run with SettingsTest -- RED on 7 of 13 (2026-09-30 15:37-15:40)
+
+- Human "go" in chat. 37 tests: 30 passed, 7 failed. Registration 12/12 and Dashboard 12/12 again.
+- Settings PASS live: set1 x2 (section buttons, Security deep link), set8 ("You're currently on the Free plan.",
+  "Current plan"), set5_securityFormRendered, del1 ("Delete account" below "Update password", not clicked),
+  set5_newPasswordSignsIn (password changed, a fresh guest signed in with it).
+- JourneyCleanup signed in with the NEW password (promoted by set5) and deleted the account; re-sign-in fails.
+- FAIL: all 7 tests that open Profile, at the same precondition (SettingsTest.java:308) "Email does not show
+  the test user's email after 15 s". The trace screenshot shows the Profile loaded with the right email, so the
+  precondition itself was broken: it called `field("Email").inputValue()` inside `page.waitForCondition`,
+  where a Playwright call cannot run. Good sign: none of the 4 KNOWN BUG tests (D9 x2, D10, D14) swallowed it
+  -- each failed with "thrown with the wrong message", as the hardened preconditions intend.
+- Fix (human): the precondition uses `assertThat(field("Email")).hasValue(email, 15 s)` and turns its
+  AssertionFailedError into a TestNG failure, so it still can never count as a known bug.
