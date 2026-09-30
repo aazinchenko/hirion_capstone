@@ -16,12 +16,12 @@ Applied, Archive, Analytics and Preferences as elements with role `button` (not 
 
 ### Requirement: DASH-2 Job card actions
 Every job card in the Job Feed SHALL show a match score "NN MATCH" and the buttons "View job", "Save",
-"Tailor my CV", "Write Cover Letter" and "Hide". The button "Hide" SHALL have `aria-haspopup="menu"`.
+"Tailor my CV", "Write Cover Letter", "Help me stand out" and "Hide". The button "Hide" SHALL have `aria-haspopup="menu"`.
 
 #### Scenario: First job card
 - **WHEN** the signed-in test user opens `/dashboard` with the Job Feed shown
 - **THEN** the first job card shows a text matching "<digits> MATCH", the buttons "View job", "Save",
-  "Tailor my CV", "Write Cover Letter" and "Hide", and "Hide" has `aria-haspopup="menu"`
+  "Tailor my CV", "Write Cover Letter", "Help me stand out" and "Hide", and "Hide" has `aria-haspopup="menu"`
 
 ### Requirement: DASH-3 Empty lists of a new user
 For a user who has not saved, applied to or archived any job, the tabs SHALL show the empty states:
@@ -91,3 +91,20 @@ replaced by "?" (for example "Senior Azure Engineer | ? oder ... Next Level ??")
 - **WHEN** the signed-in test user opens `/dashboard` with the Job Feed shown
 - **THEN** no job card title contains a "?" that stands in for a letter (a "?" next to a letter, a space
   or another "?")
+
+### Requirement: DASH-11 View job opens the vacancy in a new tab
+Clicking the button "View job" on a job card SHALL open the vacancy in a new browser tab on the external
+site of the job ad (not hirion.ch), and the dashboard SHALL stay open in its own tab.
+
+#### Scenario: View job opens an external tab
+- **WHEN** the signed-in test user clicks "View job" on the first job card in the Job Feed
+- **THEN** a new tab opens whose URL host is not hirion.ch, and the original tab still has the URL path `/dashboard`
+
+### Requirement: DASH-12 Preferences are saved
+Adding a value to a preference and clicking "Save preferences" SHALL show the notification
+"Preferences saved", and the value SHALL still be selected after the page is reloaded.
+
+#### Scenario: Work mode survives a reload
+- **WHEN** the signed-in test user opens the Preferences tab, adds "Remote" to "Work mode", clicks
+  "Save preferences" and reloads `/dashboard` and opens Preferences again
+- **THEN** the notification "Preferences saved" was shown and "Work mode" still shows "Remote"

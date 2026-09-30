@@ -53,6 +53,12 @@ defects D6, D8, D9 and D10, and it adds the plan item AUTH-03 (wrong password), 
 - DASH-8 "Save rate follows saved and feed jobs": Analytics is Pro-only (open question 6). Checking it would
   need Pro -- a payment or the Premium trial, both forbidden by docs/intent.md "Not doing". DASH-7 checks the
   Pro gate instead; the ID DASH-8 stays unused.
+- AI buttons on job cards -- "Tailor my CV", "Write Cover Letter", "Help me stand out" (plan DASH-09): only
+  checked for presence, never clicked. By the site code a click starts an AI generation that counts
+  against a monthly quota, and AGENTS.md forbids assertions on AI text.
+- Plan DASH-05 "hidden job appears in Archive" is not a requirement: by the site code Archive holds older
+  recommendations that move there after 30 days ("When new daily matches arrive, older recommendations
+  move here for 30 days."), not hidden jobs. DASH-6 (Not relevant removes the job from the feed) stays.
 
 ## Impact
 

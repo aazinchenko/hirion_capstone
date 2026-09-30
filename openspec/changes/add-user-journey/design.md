@@ -20,8 +20,8 @@ motivation and open items are in proposal.md.
 
 **Non-Goals:**
 - Plan & Billing, the deletion dialog texts and D7 (proposal Open questions 1-3).
-- Photo upload, "View job", "Tailor my CV", "Write Cover Letter", "Re-analyse", "Replace", and saving
-  Preferences. These actions call AI, change the CV or open external pages. Their buttons are only
+- Photo upload, "Tailor my CV", "Write Cover Letter", "Help me stand out", "Re-analyse" and "Replace"
+  ("View job" and saving Preferences were added on 2026-09-30 as DASH-11 / DASH-12). These actions call AI, change the CV or open external pages. Their buttons are only
   checked for presence.
 - Running the journey from `pnpm check`.
 
