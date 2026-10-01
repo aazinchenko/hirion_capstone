@@ -88,25 +88,6 @@ Every piece of work followed the same nine steps. The agent did the heavy liftin
 
 ---
 
-## Defects found on hirion.ch
-
-| ID | Defect | Covered by |
-|---|---|---|
-| D1 | Imprint page shows unfilled `[FILL: ...]` placeholders | KNOWN BUG test |
-| D2 | `<html lang>` stays `en` after switching to German | KNOWN BUG test |
-| D3 | At 375 px the Sign in link is hidden and there is no menu | KNOWN BUG test |
-| D4 | Pricing toggle has no `aria-pressed` | KNOWN BUG test |
-| D5 | Login inputs have no `autocomplete` | KNOWN BUG test |
-| D6 | "Show password" cannot be reached with the keyboard | KNOWN BUG test |
-| D10 | Any string is saved as the profile email | KNOWN BUG test |
-| D14 | Required profile fields are marked only visually | KNOWN BUG test |
-| D8, D9 | Broken characters in job titles; false "unsaved changes" warning | regular checks (not reproduced on a fresh account) |
-| D11–D13 | Signup accepts `qa@`; plan cards and role picker have no accessible state or name | documented, not yet tested |
-
-Most of these are accessibility issues that manual click-through testing usually misses.
-
----
-
 ## Time and cost
 
 **Measured**
