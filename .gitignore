@@ -4,6 +4,7 @@ target/
 !**/src/test/**/target/
 .auth/
 .idea/
+docker-out/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

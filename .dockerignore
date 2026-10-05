@@ -1,0 +1,7 @@
+target/
+node_modules/
+.auth/
+.git/
+.idea/
+.agent-log/
+docker-out/
