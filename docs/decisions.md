@@ -45,8 +45,9 @@ Budget vs actual: `docs/intent.md` "Budget".
 - Every archive is run by the human; the reviewer verifies the synced spec and commits it.
 
 **Which findings are defects** (`docs/intent.md` "Known defects")
-- KNOWN BUG tests: D1-D6, D10, D14 (D14 added `d091494`).
-- Not a defect: D7, Phone is free text by design (`ecfe8f5`).
+- KNOWN BUG tests: D1, D2, D4-D6, D10, D14 (D14 added `d091494`).
+- Not a defect: D7, Phone is free text by design (`ecfe8f5`); D3, the mobile header without "Sign in" is
+  the intended design (human decision 2026-10-05, change `remove-qa2-mobile-nav`, QA-2 removed).
 - Regular checks instead of KNOWN BUG, because they did not show on a new Free user: D8 (`3511779`),
   D9 (`8467dce`).
 - Recorded, no test in these changes: D11 (confirmed live), D12, D13 (`2d5dc5d`, `421abe4`).

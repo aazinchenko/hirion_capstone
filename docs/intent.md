@@ -93,6 +93,7 @@ ASSUMED, NOT YET VERIFIED:
 D1   /imprint: 7 unfilled templates "[FILL: ...]", email mailto:[FILL: ...].              (walkthrough)
 D2   After switching to DE the text is German but <html lang> stays "en".                 (walkthrough)
 D3   Mobile 375 px: header links and Sign in hidden, no burger menu.                      (walkthrough)
+     NOT A DEFECT (human decision 2026-10-05): intended mobile design; QA-2 removed, no test.
 D4   Pricing toggle Monthly / Quarterly / Yearly has no aria-pressed.                     (walkthrough)
 D5   /login: Email / Password inputs have no autocomplete.                                (walkthrough)
 D6   /signup: "Show password" has tabindex=-1, not reachable by keyboard.                 (walkthrough)
