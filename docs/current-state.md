@@ -1,4 +1,4 @@
-# Current state -- Capstone Hirion.ch (handoff 2026-09-30, ~18:40)
+# Current state -- Capstone Hirion.ch (handoff 2026-10-05)
 
 Read this first in a new session. Plan: `../конспекты/hirion-capstone-plan-v3-java-openspec.pdf` (30 steps).
 Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat sheet
@@ -8,9 +8,15 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
 - Steps 1-26 DONE (2026-09-30 ~18:40). Change 4 `update-signup-steps` archived: MODIFIED REG-7 (?plan=free /
   ?plan=trial preselection, Back keeps the wizard data; 5 scenarios). Commits: 25cec2f (intent facts from a
   guest probe), bc91ab0 (propose), 895161a (tests, journey 40/40 live), archive commit after it.
-- `pnpm spec:check`: specs 9 · active changes 0 · archived 4 (the "done" criterion of docs/intent.md);
-  `openspec validate --specs --strict` 9/9.
-- Suites: public 58/58; journey 40 (Registration 15, Dashboard 12, Settings 13) + JourneyCleanup.
+- 2026-10-05: full live run `testng-all.xml` GREEN 98/98 in 4:12 min (public 58 + journey 40), test account
+  deleted by JourneyCleanup. Then the human decided D3 is NOT a defect: change 5 `remove-qa2-mobile-nav`
+  (REMOVED QA-2, KNOWN BUG D3 test deleted). Commits: b575491 (propose), 68e0283 (test; `pnpm check` green,
+  public 57/57), 68c9fce (archive, run by the human; verified: only QA-2 removed).
+- `pnpm spec:check`: specs 9 · active changes 0 · archived 5; `openspec validate --specs --strict` 9/9.
+  Specs: 59 requirements, 93 scenarios.
+- Suites (TestNG counts): public 57/57; journey 40 (Registration 15, Dashboard 12, Settings 13) + JourneyCleanup;
+  full suite 97.
+- Draft, not started: Pro-user journey plan `docs/pro-journey-plan-draft.md` (needs human decisions, section 7).
 - Known flaky: `BaseTest.closeContext` once threw "Target page, context or browser has been closed" in
   `pnpm check` (public cont3/cont4 skipped); rerun green. Human-owned file, not fixed.
 - Open: question 11 (D9 depends on profile data, ASSUMED); unknown `?plan` value -> Premium Trial (confirmed,
@@ -35,7 +41,8 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
 - Test user is always Free; facts in intent.md about the dashboard/settings were recorded on a trial (Pro)
   account: Analytics is Pro-only (Free sees "Unlock Hirion Pro"), AI buttons on job cards are Pro-only, the score
   badge is "87"+"match" (capitals by CSS).
-- Defects: D1-D6, D10 KNOWN BUG tests; D7 closed (Phone free text by design); D8 and D9 regular checks (data-dependent);
+- Defects: D1, D2, D4-D6, D10 KNOWN BUG tests; D3 closed 2026-10-05 (mobile header without "Sign in" is the
+  intended design, QA-2 removed); D7 closed (Phone free text by design); D8 and D9 regular checks (data-dependent);
   D11 confirmed live (qa@ passes step 1); D12, D13 candidates (a11y); D14 new, KNOWN BUG, confirmed live
   (required fields only a visual aria-hidden "*"; that star also breaks getByLabel exact -> use role TEXTBOX).
 - DASH-8 (Save rate) and photo upload are out of change 3; plan AUTH-03 lives in change 3 as AUTH-6.

@@ -6,9 +6,9 @@ The project is the capstone of the *Agentic Engineering Crash Course*. Its quest
 
 | | |
 |---|---|
-| **Tests** | 95 automated tests, all green on the last full run |
-| **Specs** | 9 capabilities, 60 requirements, 94 scenarios (OpenSpec) |
-| **Defects found on the live site** | 13 reported, 8 pinned by `KNOWN BUG` tests |
+| **Tests** | 94 automated tests, all green on the last full run |
+| **Specs** | 9 capabilities, 59 requirements, 93 scenarios (OpenSpec) |
+| **Defects found on the live site** | 12 reported, 7 pinned by `KNOWN BUG` tests |
 | **Timeline** | 6 days, 85 commits (25–30 Sep 2026) |
 | **Stack** | Java 21 · Maven · Playwright for Java 1.55 · TestNG 7.11 · OpenSpec 1.13 |
 
@@ -16,7 +16,7 @@ The project is the capstone of the *Agentic Engineering Crash Course*. Its quest
 
 ## What is tested
 
-**Public site** (54 tests, run in parallel, no account needed)
+**Public site** (53 tests, run in parallel, no account needed)
 
 | Area | What the tests check |
 |---|---|
@@ -127,7 +127,7 @@ mvn -q test -Dsuite=testng-journey.xml -Dqa.mailbox=<your-gmail-name>
 AGENTS.md                 rules every agent session reads
 docs/                     intent and budget, trust log, decisions, current state
 openspec/specs/           9 approved capability specs (source of truth)
-openspec/changes/archive/ 4 completed changes with proposals, tasks and run evidence
+openspec/changes/archive/ 5 completed changes with proposals, tasks and run evidence
 scripts/                  gates: locator rules, spec check, heal loop, live-run guard
 src/test/java/.../pub     public-site tests
 src/test/java/.../journey signed-in journey tests and account cleanup
