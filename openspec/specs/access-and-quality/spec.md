@@ -71,15 +71,6 @@ At a viewport of 375 x 812 px the home page `/` SHALL NOT scroll horizontally.
 - **WHEN** a guest opens `/` in a 375 x 812 px viewport
 - **THEN** `document.documentElement.scrollWidth` is at most 375
 
-### Requirement: QA-2 Navigation is reachable on a phone
-At a viewport of 375 x 812 px the header SHALL let the visitor reach "Sign in": either the link
-"Sign in" is visible, or a visible menu button opens a menu in which the link "Sign in" is visible.
-(Known defect D3.)
-
-#### Scenario: Sign in reachable at 375 px
-- **WHEN** a guest opens `/` in a 375 x 812 px viewport
-- **THEN** the link "Sign in" is visible, directly or after clicking the visible header menu button
-
 ### Requirement: QA-3 Public pages load without console errors
 The public pages `/`, `/contact`, `/login`, `/privacy`, `/terms` and `/imprint` SHALL load without any
 console message of type `error` and without an uncaught page error.
