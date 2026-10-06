@@ -22,6 +22,8 @@ public abstract class BaseTest {
   /** Short timeout for KNOWN BUG assertions, so the expected failure does not cost 10 s. */
   protected static final LocatorAssertions.HasAttributeOptions QUICK_ATTR =
         new LocatorAssertions.HasAttributeOptions().setTimeout(3000);
+  /** -Dqa.attachments=false (CI journey): no screenshots or traces in Allure, they show the real test account. */
+  private static final boolean ATTACHMENTS = !"false".equals(System.getProperty("qa.attachments"));
   protected Playwright playwright;
   protected Browser browser;
   protected BrowserContext context;
@@ -54,7 +56,9 @@ public abstract class BaseTest {
     Tracing.StopOptions stop = new Tracing.StopOptions();
     Path trace = null;
     if (!result.isSuccess()) { // screenshot and trace only for failed tests
-      attachScreenshot();
+      if (ATTACHMENTS) {
+        attachScreenshot();
+      }
       trace = Paths.get("target/traces", getClass().getSimpleName() + "-"
             + result.getMethod().getMethodName() + ".zip");
       stop.setPath(trace);
@@ -67,7 +71,7 @@ public abstract class BaseTest {
       // teardown only: the test result is already final, a failed close must not skip the next tests
       System.err.println("[BaseTest] closeContext: " + e.getMessage().lines().findFirst().orElse(""));
     }
-    if (trace != null) {
+    if (trace != null && ATTACHMENTS) {
       attachTrace(trace);
     }
   }
