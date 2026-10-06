@@ -44,7 +44,7 @@ another public page.
 
 ### Requirement: I18N-4 Document language follows the chosen language
 The `lang` attribute of the `<html>` element SHALL equal the chosen language code in lower case:
-`en` by default and `de` after choosing "DE". (Known defect D2.)
+`en` by default and `de` after choosing "DE".
 
 #### Scenario: Default document language
 - **WHEN** a guest with empty `localStorage` opens `/`
