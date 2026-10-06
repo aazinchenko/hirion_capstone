@@ -52,7 +52,19 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
                 <version>3.5.2</version>
                 <configuration>
                     <suiteXmlFiles><suiteXmlFile>src/test/resources/${suite}</suiteXmlFile></suiteXmlFiles>
+                    <!-- AspectJ agent: without it @Step annotations are ignored -->
+                    <argLine>-javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"</argLine>
+                    <systemPropertyVariables>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                    </systemPropertyVariables>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
