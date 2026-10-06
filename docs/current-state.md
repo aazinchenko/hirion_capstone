@@ -1,4 +1,4 @@
-# Current state -- Capstone Hirion.ch (handoff 2026-10-05)
+# Current state -- Capstone Hirion.ch (handoff 2026-10-06)
 
 Read this first in a new session. Plan: `../конспекты/hirion-capstone-plan-v3-java-openspec.pdf` (30 steps).
 Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat sheet
@@ -12,7 +12,13 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
   deleted by JourneyCleanup. Then the human decided D3 is NOT a defect: change 5 `remove-qa2-mobile-nav`
   (REMOVED QA-2, KNOWN BUG D3 test deleted). Commits: b575491 (propose), 68e0283 (test; `pnpm check` green,
   public 57/57), 68c9fce (archive, run by the human; verified: only QA-2 removed).
-- `pnpm spec:check`: specs 9 · active changes 0 · archived 5; `openspec validate --specs --strict` 9/9.
+- 2026-10-06: GitHub Actions CI added (`a01b420`, `.github/workflows/tests.yml`): public suite on push/PR,
+  journey on manual run and nightly (cron 02:15 UTC), mailbox from the secret `QA_MAILBOX`, no artifacts for the
+  journey job. CI run 37496066639 found that the site fixed D2, D4, D5, D6, D10, D14 (their KNOWN BUG tests
+  failed with "should have thrown"): change 6 `close-fixed-defects-d2-d4-d5` and change 7
+  `close-fixed-defects-d6-d10-d14` archived, the tests are regular checks now; only D1 is still KNOWN BUG.
+  CI run 37501768600 all green: public 57, journey 40, test account deleted.
+- `pnpm spec:check`: specs 9 · active changes 0 · archived 7; `openspec validate --specs --strict` 9/9.
   Specs: 59 requirements, 93 scenarios.
 - Suites (TestNG counts): public 57/57; journey 40 (Registration 15, Dashboard 12, Settings 13) + JourneyCleanup;
   full suite 97.
