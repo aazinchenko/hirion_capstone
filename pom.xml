@@ -14,6 +14,8 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
         <playwright.version>1.55.0</playwright.version>
         <testng.version>7.11.0</testng.version>
         <jackson.version>2.18.2</jackson.version>
+        <allure.version>2.35.5</allure.version>
+        <aspectj.version>1.9.25</aspectj.version>
         <suite>testng-public.xml</suite> <!-- default suite -->
     </properties>
     <dependencies>
@@ -33,6 +35,12 @@ https://maven.apache.org/xsd/maven-4.0.0.xsd">
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>${allure.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

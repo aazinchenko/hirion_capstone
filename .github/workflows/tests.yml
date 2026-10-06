@@ -1,0 +1,83 @@
+name: Tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 2 * * *"   # every night 02:00 UTC (04:00 Zurich summer time)
+
+jobs:
+  public:
+    name: Public suite (guest)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    container:
+      image: mcr.microsoft.com/playwright/java:v1.55.0-noble
+      options: --ipc=host
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v7
+
+      - name: Cache Maven packages
+        uses: actions/cache@v6
+        with:
+          path: .m2/repository
+          key: maven-${{ hashFiles('pom.xml') }}
+
+      - name: Run public suite
+        run: mvn -B -Dmaven.repo.local=.m2/repository -Dsuite=testng-public.xml test
+
+      - name: Upload traces of failed tests
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: public-traces
+          path: target/traces/
+          if-no-files-found: ignore
+
+      - name: Upload surefire reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: public-surefire-reports
+          path: target/surefire-reports/
+
+  journey:
+    name: User journey (creates and deletes a real account)
+    # one real account per run: only the manual button and the nightly schedule, never on push/PR
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    concurrency:
+      group: hirion-journey
+      cancel-in-progress: false
+    container:
+      image: mcr.microsoft.com/playwright/java:v1.55.0-noble
+      options: --ipc=host
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v7
+
+      - name: Cache Maven packages
+        uses: actions/cache@v6
+        with:
+          path: .m2/repository
+          key: maven-${{ hashFiles('pom.xml') }}
+
+      - name: Run journey suite
+        env:
+          QA_MAILBOX: ${{ secrets.QA_MAILBOX }}
+        run: mvn -B -Dmaven.repo.local=.m2/repository -Dsuite=testng-journey.xml "-Dqa.mailbox=$QA_MAILBOX" test
+
+      - name: Check that the test account was deleted
+        if: always()
+        run: |
+          if [ -f .auth/test-user.json ]; then
+            echo "::error::.auth/test-user.json still exists: the QA account may NOT be deleted. Find the email in the 'Run journey suite' log ([JourneyCleanup]) and delete the account by hand."
+            exit 1
+          fi
+          echo "No leftover test user: account deleted by JourneyCleanup."
+      # No artifacts for this job on purpose: reports and traces contain the real email and
+      # screenshots of the test account, and artifacts of a public repo are downloadable by anyone.
