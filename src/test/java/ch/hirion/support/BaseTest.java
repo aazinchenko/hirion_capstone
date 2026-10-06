@@ -4,9 +4,14 @@ import com.microsoft.playwright.*;
 import com.microsoft.playwright.assertions.LocatorAssertions;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitUntilState;
+import io.qameta.allure.Allure;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -47,12 +52,43 @@ public abstract class BaseTest {
   @AfterMethod(alwaysRun = true)
   public void closeContext(ITestResult result) {
     Tracing.StopOptions stop = new Tracing.StopOptions();
-    if (!result.isSuccess()) { // trace only for failed tests
-      stop.setPath(Paths.get("target/traces", getClass().getSimpleName() + "-"
-            + result.getMethod().getMethodName() + ".zip"));
+    Path trace = null;
+    if (!result.isSuccess()) { // screenshot and trace only for failed tests
+      attachScreenshot();
+      trace = Paths.get("target/traces", getClass().getSimpleName() + "-"
+            + result.getMethod().getMethodName() + ".zip");
+      stop.setPath(trace);
     }
-    context.tracing().stop(stop);
-    context.close();
+    try {
+      context.tracing().stop(stop);
+      page.unrouteAll(); // no route handler may still run while the context closes
+      context.close();
+    } catch (PlaywrightException e) {
+      // teardown only: the test result is already final, a failed close must not skip the next tests
+      System.err.println("[BaseTest] closeContext: " + e.getMessage().lines().findFirst().orElse(""));
+    }
+    if (trace != null) {
+      attachTrace(trace);
+    }
+  }
+
+  /** Full-page screenshot at the moment of failure, attached to the Allure report. */
+  private void attachScreenshot() {
+    try {
+      byte[] png = page.screenshot(new Page.ScreenshotOptions().setFullPage(true));
+      Allure.addAttachment("Screenshot on failure", "image/png", new ByteArrayInputStream(png), "png");
+    } catch (PlaywrightException e) {
+      // the page is already gone: the report must not fail because of a missing screenshot
+    }
+  }
+
+  /** Playwright trace as a downloadable attachment (open with: pnpm dlx playwright show-trace file.zip). */
+  private void attachTrace(Path trace) {
+    try (InputStream in = Files.newInputStream(trace)) {
+      Allure.addAttachment("Playwright trace", "application/zip", in, "zip");
+    } catch (IOException e) {
+      // trace was not written: nothing to attach
+    }
   }
 
   @AfterClass(alwaysRun = true)
