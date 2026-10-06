@@ -5,6 +5,9 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitUntilState;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -13,6 +16,8 @@ import java.util.regex.Pattern;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 /** Group PUB: home page smoke, openspec/changes/add-home-smoke/specs/home-page/spec.md. Guest only. */
+@Epic("Public site")
+@Feature("home-page")
 public class SmokeTest extends BaseTest {
 
   private Locator faq;
@@ -42,6 +47,7 @@ public class SmokeTest extends BaseTest {
 
   // PUB-1
 
+  @Story("PUB-1 Hero call to action opens signup")
   @Test(description = "PUB-1 Guest clicks the hero CTA")
   public void pub1_heroCtaOpensSignup() {
     role(AriaRole.LINK, "Get my personalized jobs").click();
@@ -50,6 +56,7 @@ public class SmokeTest extends BaseTest {
 
   // PUB-2
 
+  @Story("PUB-2 FAQ items expand as an accordion")
   @Test(description = "PUB-2 FAQ item starts collapsed")
   public void pub2_faqStartsCollapsed() {
     Locator question = inSection(faq, AriaRole.BUTTON, "Is Hirion free to use?");
@@ -57,6 +64,7 @@ public class SmokeTest extends BaseTest {
     assertThat(question).hasAttribute("aria-expanded", "false");
   }
 
+  @Story("PUB-2 FAQ items expand as an accordion")
   @Test(description = "PUB-2 Clicking a FAQ item expands it")
   public void pub2_faqClickExpands() {
     Locator question = inSection(faq, AriaRole.BUTTON, "Is Hirion free to use?");
@@ -64,6 +72,7 @@ public class SmokeTest extends BaseTest {
     assertThat(question).hasAttribute("aria-expanded", "true");
   }
 
+  @Story("PUB-2 FAQ items expand as an accordion")
   @Test(description = "PUB-2 Expanded FAQ item shows its answer")
   public void pub2_faqShowsAnswer() {
     inSection(faq, AriaRole.BUTTON, "Is Hirion free to use?").click();
@@ -73,6 +82,7 @@ public class SmokeTest extends BaseTest {
 
   // PUB-3
 
+  @Story("PUB-3 Pricing shows prices per billing period")
   @Test(description = "PUB-3 Pricing is visible to a guest")
   public void pub3_pricingVisibleToGuest() {
     assertThat(pricing).isVisible();
@@ -81,6 +91,7 @@ public class SmokeTest extends BaseTest {
     assertThat(inSection(pricing, AriaRole.BUTTON, "Yearly")).isVisible();
   }
 
+  @Story("PUB-3 Pricing shows prices per billing period")
   @Test(description = "PUB-3 Yearly is the default period")
   public void pub3_yearlyIsDefault() {
     pricing.scrollIntoViewIfNeeded();
@@ -88,6 +99,7 @@ public class SmokeTest extends BaseTest {
     assertThat(text(pricing, "CHF 120 billed yearly")).isVisible();
   }
 
+  @Story("PUB-3 Pricing shows prices per billing period")
   @Test(description = "PUB-3 Monthly price")
   public void pub3_monthlyPrice() {
     inSection(pricing, AriaRole.BUTTON, "Monthly").click();
@@ -96,6 +108,7 @@ public class SmokeTest extends BaseTest {
     assertThat(text(pricing, "CHF 120 billed yearly")).isHidden();
   }
 
+  @Story("PUB-3 Pricing shows prices per billing period")
   @Test(description = "PUB-3 Quarterly price")
   public void pub3_quarterlyPrice() {
     inSection(pricing, AriaRole.BUTTON, "Quarterly").click();
@@ -103,6 +116,7 @@ public class SmokeTest extends BaseTest {
     assertThat(text(pricing, "CHF 39 billed quarterly")).isVisible();
   }
 
+  @Story("PUB-3 Pricing shows prices per billing period")
   @Test(description = "PUB-3 Switching back to Yearly")
   public void pub3_backToYearly() {
     inSection(pricing, AriaRole.BUTTON, "Monthly").click();
@@ -113,6 +127,7 @@ public class SmokeTest extends BaseTest {
 
   // PUB-4
 
+  @Story("PUB-4 Pricing period toggle exposes its state")
   @Test(description = "PUB-4 Selected period is aria-pressed")
   public void pub4_selectedPeriodIsAriaPressed() {
     inSection(pricing, AriaRole.BUTTON, "Monthly").click();
@@ -122,12 +137,14 @@ public class SmokeTest extends BaseTest {
 
   // PUB-5: stop at the /signup URL, never continue the signup
 
+  @Story("PUB-5 Plan cards link to signup")
   @Test(description = "PUB-5 Free plan CTA")
   public void pub5_freePlanCta() {
     inSection(pricing, AriaRole.LINK, "Start free").click();
     assertThat(page).hasURL(Pattern.compile("/signup\\?(.*&)?plan=free(&.*)?$"));
   }
 
+  @Story("PUB-5 Plan cards link to signup")
   @Test(description = "PUB-5 Paid plan CTA")
   public void pub5_paidPlanCta() {
     inSection(pricing, AriaRole.LINK, "Start 7-day free trial").click();

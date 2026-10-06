@@ -12,6 +12,9 @@ import com.microsoft.playwright.assertions.PageAssertions;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.BoundingBox;
 import com.microsoft.playwright.options.WaitUntilState;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.opentest4j.AssertionFailedError;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -36,6 +39,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
  * foreign email: the site would send a confirmation link to it. SET-5 changes the password and runs last.
  * Emails and passwords are never printed.
  */
+@Epic("User journey")
 public class SettingsTest extends AuthenticatedTest {
 
   private static final Pattern DASHBOARD_URL = Pattern.compile("/dashboard([?#].*)?$");
@@ -78,6 +82,8 @@ public class SettingsTest extends AuthenticatedTest {
   // ---------------------------------------------------------------------------------------------
   // SET-1
 
+  @Feature("account-settings")
+  @Story("SET-1 Settings sections and deep link")
   @Test(priority = 1, dependsOnGroups = "registered", description = "SET-1 Section buttons")
   public void set1_sectionButtons() {
     open("/settings");
@@ -86,6 +92,8 @@ public class SettingsTest extends AuthenticatedTest {
     }
   }
 
+  @Feature("account-settings")
+  @Story("SET-1 Settings sections and deep link")
   @Test(priority = 2, dependsOnGroups = "registered", description = "SET-1 Security deep link")
   public void set1_securityDeepLink() {
     open("/settings?section=security");
@@ -95,6 +103,8 @@ public class SettingsTest extends AuthenticatedTest {
 
   // SET-2 (Profile is the default section of /settings)
 
+  @Feature("account-settings")
+  @Story("SET-2 Profile form")
   @Test(priority = 3, dependsOnGroups = "registered", description = "SET-2 Profile is rendered")
   public void set2_profileRendered() {
     openProfile(registeredUser());
@@ -111,6 +121,8 @@ public class SettingsTest extends AuthenticatedTest {
     assertThat(exactText("Skills").first()).isVisible();
   }
 
+  @Feature("account-settings")
+  @Story("SET-2 Profile form")
   @Test(priority = 4, dependsOnGroups = "registered", description = "SET-2 Required profile fields")
   public void set2_requiredProfileFields() {
     openProfile(registeredUser());
@@ -129,6 +141,8 @@ public class SettingsTest extends AuthenticatedTest {
     }
   }
 
+  @Feature("account-settings")
+  @Story("SET-2 Profile form")
   @Test(priority = 5, dependsOnGroups = "registered", description = "SET-2 CV cannot be removed")
   public void set2_cvCannotBeRemoved() {
     openProfile(registeredUser());
@@ -142,6 +156,8 @@ public class SettingsTest extends AuthenticatedTest {
   // SET-3 (known defect D9: opened by clicking "Profile", not by a deep link). Regular checks since 2026-09-30:
   // D9 did not show on a new Free user in three live runs (it probably depends on the stored profile data).
 
+  @Feature("account-settings")
+  @Story("SET-3 Profile shows no unsaved changes before an edit")
   @Test(priority = 6, dependsOnGroups = "registered",
         description = "SET-3 Fresh profile has no unsaved-changes notice (red again when D9 shows)")
   public void set3_freshProfileNoUnsavedNotice() {
@@ -154,6 +170,8 @@ public class SettingsTest extends AuthenticatedTest {
     assertThat(visibleText("You have unsaved changes")).hasCount(0, QUICK_COUNT);
   }
 
+  @Feature("account-settings")
+  @Story("SET-3 Profile shows no unsaved changes before an edit")
   @Test(priority = 7, dependsOnGroups = "registered",
         description = "SET-3 Switching section without edits (red again when D9 shows)")
   public void set3_switchSectionWithoutEdits() {
@@ -173,6 +191,8 @@ public class SettingsTest extends AuthenticatedTest {
 
   // SET-4 (the invalid email never leaves the browser)
 
+  @Feature("account-settings")
+  @Story("SET-4 Invalid profile email is rejected and not saved")
   @Test(priority = 8, dependsOnGroups = "registered", description = "SET-4 Invalid email is not sent")
   public void set4_invalidEmailNotSent() {
     TestUser user = registeredUser();
@@ -214,6 +234,8 @@ public class SettingsTest extends AuthenticatedTest {
 
   // SET-6
 
+  @Feature("account-settings")
+  @Story("SET-6 Profile fields are saved")
   @Test(priority = 9, dependsOnGroups = "registered", description = "SET-6 Profile survives a reload")
   public void set6_profileSurvivesReload() {
     TestUser user = registeredUser();
@@ -229,6 +251,8 @@ public class SettingsTest extends AuthenticatedTest {
 
   // SET-8 (nothing in Plan & Billing is clicked)
 
+  @Feature("account-settings")
+  @Story("SET-8 Plan & Billing shows the Free plan")
   @Test(priority = 10, dependsOnGroups = "registered", description = "SET-8 Free plan is shown")
   public void set8_freePlanShown() {
     open("/settings?section=plan");
@@ -238,6 +262,8 @@ public class SettingsTest extends AuthenticatedTest {
 
   // SET-5 (form)
 
+  @Feature("account-settings")
+  @Story("SET-5 Security form changes the password")
   @Test(priority = 11, dependsOnGroups = "registered", description = "SET-5 Security form is rendered")
   public void set5_securityFormRendered() {
     open("/settings?section=security");
@@ -250,6 +276,8 @@ public class SettingsTest extends AuthenticatedTest {
 
   // DEL-1 ("Delete account" is checked, never clicked: only JourneyCleanup deletes the account)
 
+  @Feature("account-deletion")
+  @Story("DEL-1 Security section offers account deletion")
   @Test(priority = 12, dependsOnGroups = "registered", description = "DEL-1 Delete account button is present")
   public void del1_deleteAccountButtonPresent() {
     open("/settings?section=security");
@@ -264,6 +292,8 @@ public class SettingsTest extends AuthenticatedTest {
 
   // SET-5 (last: changes the password)
 
+  @Feature("account-settings")
+  @Story("SET-5 Security form changes the password")
   @Test(priority = 13, dependsOnGroups = "registered", description = "SET-5 New password signs in")
   public void set5_newPasswordSignsIn() {
     TestUser user = registeredUser();

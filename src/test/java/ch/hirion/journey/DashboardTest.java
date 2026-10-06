@@ -9,6 +9,9 @@ import com.microsoft.playwright.assertions.LocatorAssertions;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitForSelectorState;
 import com.microsoft.playwright.options.WaitUntilState;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -29,6 +32,8 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
  * "Help me stand out", "Upgrade to Pro". "View job" is clicked only in dash11, "Save preferences" only in
  * dash12. Emails and passwords are never printed.
  */
+@Epic("User journey")
+@Feature("dashboard")
 public class DashboardTest extends AuthenticatedTest {
 
   private static final Pattern DASHBOARD_URL = Pattern.compile("/dashboard([?#].*)?$");
@@ -60,6 +65,7 @@ public class DashboardTest extends AuthenticatedTest {
   // ---------------------------------------------------------------------------------------------
   // DASH-1
 
+  @Story("DASH-1 Dashboard heading and tab buttons")
   @Test(priority = 1, dependsOnGroups = "registered", description = "DASH-1 Dashboard is rendered")
   public void dash1_dashboardRendered() {
     TestUser user = registeredUser();
@@ -72,6 +78,7 @@ public class DashboardTest extends AuthenticatedTest {
 
   // DASH-2
 
+  @Story("DASH-2 Job card actions")
   @Test(priority = 2, dependsOnGroups = "registered", description = "DASH-2 First job card")
   public void dash2_firstJobCard() {
     openDashboard();
@@ -88,6 +95,7 @@ public class DashboardTest extends AuthenticatedTest {
 
   // DASH-3 (before DASH-4: the lists of a fresh user are empty)
 
+  @Story("DASH-3 Empty lists of a new user")
   @Test(priority = 3, dependsOnGroups = "registered", description = "DASH-3 Empty Saved, Applied and Archive")
   public void dash3_emptyListsOfNewUser() {
     openDashboard();
@@ -101,6 +109,7 @@ public class DashboardTest extends AuthenticatedTest {
 
   // DASH-4
 
+  @Story("DASH-4 Save moves a job to Saved")
   @Test(priority = 4, dependsOnGroups = "registered", description = "DASH-4 Save the first job")
   public void dash4_saveMovesJob() {
     openDashboard();
@@ -116,6 +125,7 @@ public class DashboardTest extends AuthenticatedTest {
 
   // DASH-5
 
+  @Story("DASH-5 Already applied moves a job to Applied")
   @Test(priority = 5, dependsOnGroups = "registered", description = "DASH-5 Hide menu items")
   public void dash5_hideMenuItems() {
     openDashboard();
@@ -128,6 +138,7 @@ public class DashboardTest extends AuthenticatedTest {
     page.keyboard().press("Escape"); // close without choosing
   }
 
+  @Story("DASH-5 Already applied moves a job to Applied")
   @Test(priority = 6, dependsOnGroups = "registered", description = "DASH-5 Mark a job as already applied")
   public void dash5_alreadyAppliedMovesJob() {
     openDashboard();
@@ -141,6 +152,7 @@ public class DashboardTest extends AuthenticatedTest {
 
   // DASH-6
 
+  @Story("DASH-6 Not relevant removes a job from the feed")
   @Test(priority = 7, dependsOnGroups = "registered", description = "DASH-6 Mark a job as not relevant")
   public void dash6_notRelevantRemovesJob() {
     openDashboard();
@@ -152,6 +164,7 @@ public class DashboardTest extends AuthenticatedTest {
 
   // DASH-7 (Free user: the Pro gate; "Upgrade to Pro" is checked, never clicked)
 
+  @Story("DASH-7 Analytics is Pro-only for a Free user")
   @Test(priority = 8, dependsOnGroups = "registered", description = "DASH-7 Free user sees the Pro gate on Analytics")
   public void dash7_analyticsProGate() {
     openDashboard();
@@ -165,6 +178,7 @@ public class DashboardTest extends AuthenticatedTest {
 
   // DASH-9
 
+  @Story("DASH-9 Preferences form")
   @Test(priority = 9, dependsOnGroups = "registered", description = "DASH-9 Preferences is rendered")
   public void dash9_preferencesRendered() {
     openDashboard();
@@ -178,6 +192,7 @@ public class DashboardTest extends AuthenticatedTest {
 
   // DASH-12 (the only test that clicks "Save preferences")
 
+  @Story("DASH-12 Preferences are saved")
   @Test(priority = 10, dependsOnGroups = "registered", description = "DASH-12 Work mode survives a reload")
   public void dash12_workModeSurvivesReload() {
     openDashboard();
@@ -202,6 +217,7 @@ public class DashboardTest extends AuthenticatedTest {
 
   // DASH-11 (the only test that clicks "View job")
 
+  @Story("DASH-11 View job opens the vacancy in a new tab")
   @Test(priority = 11, dependsOnGroups = "registered", description = "DASH-11 View job opens an external tab")
   public void dash11_viewJobOpensExternalTab() {
     openDashboard();
@@ -225,6 +241,7 @@ public class DashboardTest extends AuthenticatedTest {
    * (2026-09-30) had none. So this is a regular check: it turns red whenever a broken title shows up,
    * which reveals D8 again. The regex can also flag a real question mark in a title: report it to a human.
    */
+  @Story("DASH-10 Job titles show their characters")
   @Test(priority = 12, dependsOnGroups = "registered",
         description = "DASH-10 No replacement characters in job titles")
   public void dash10_noReplacementCharsInTitles() {

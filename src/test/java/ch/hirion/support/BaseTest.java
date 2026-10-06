@@ -5,6 +5,7 @@ import com.microsoft.playwright.assertions.LocatorAssertions;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitUntilState;
 import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
@@ -101,6 +102,7 @@ public abstract class BaseTest {
   }
 
   /** Navigates to a path and waits until TanStack Start has hydrated the page. */
+  @Step("Open {path}")
   protected Response open(String path) {
     page.setDefaultNavigationTimeout(30_000);
     Response response = page.navigate(path,

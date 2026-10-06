@@ -3,6 +3,10 @@ package ch.hirion.pub;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.assertions.LocatorAssertions;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Story;
 import org.opentest4j.AssertionFailedError;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -15,6 +19,8 @@ import java.util.regex.Pattern;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 /** Group FOOT: footer and legal pages, openspec/changes/add-public-coverage/specs/footer-and-legal. */
+@Epic("Public site")
+@Feature("footer-and-legal")
 public class FooterLegalTest extends PublicPageTest {
 
   private static final Pattern VALID_MAILTO =
@@ -27,6 +33,7 @@ public class FooterLegalTest extends PublicPageTest {
 
   // FOOT-1
 
+  @Story("FOOT-1 Footer links to legal pages and contact")
   @Test(description = "FOOT-1 Footer link targets")
   public void foot1_footerLinkTargets() {
     open("/");
@@ -36,6 +43,7 @@ public class FooterLegalTest extends PublicPageTest {
     assertThat(footerLink("Contact")).hasAttribute("href", "/contact");
   }
 
+  @Story("FOOT-1 Footer links to legal pages and contact")
   @Test(description = "FOOT-1 Footer link opens the privacy policy")
   public void foot1_footerOpensPrivacy() {
     open("/");
@@ -44,6 +52,7 @@ public class FooterLegalTest extends PublicPageTest {
     assertThat(h1("Privacy Policy")).isVisible();
   }
 
+  @Story("FOOT-1 Footer links to legal pages and contact")
   @Test(description = "FOOT-1 Internal footer links respond")
   public void foot1_internalLinksRespond() {
     SoftAssert soft = new SoftAssert();
@@ -55,6 +64,7 @@ public class FooterLegalTest extends PublicPageTest {
 
   // FOOT-2
 
+  @Story("FOOT-2 Legal pages have a heading and a page title")
   @Test(description = "FOOT-2 Privacy page")
   public void foot2_privacyPage() {
     open("/privacy");
@@ -62,6 +72,7 @@ public class FooterLegalTest extends PublicPageTest {
     assertThat(page).hasTitle("Privacy Policy, Hirion");
   }
 
+  @Story("FOOT-2 Legal pages have a heading and a page title")
   @Test(description = "FOOT-2 Terms page")
   public void foot2_termsPage() {
     open("/terms");
@@ -69,6 +80,7 @@ public class FooterLegalTest extends PublicPageTest {
     assertThat(page).hasTitle("Terms of Service, Hirion");
   }
 
+  @Story("FOOT-2 Legal pages have a heading and a page title")
   @Test(description = "FOOT-2 Imprint page")
   public void foot2_imprintPage() {
     open("/imprint");
@@ -78,6 +90,8 @@ public class FooterLegalTest extends PublicPageTest {
 
   // FOOT-3 (known defect D1)
 
+  @Story("FOOT-3 Imprint is complete")
+  @Issue("D1")
   @Test(expectedExceptions = AssertionFailedError.class,
         description = "FOOT-3 Imprint has no unfilled templates -- KNOWN BUG D1: /imprint shows [FILL: ...] templates")
   public void foot3_imprintHasNoFillTemplates() {
@@ -87,6 +101,8 @@ public class FooterLegalTest extends PublicPageTest {
           .hasCount(0, new LocatorAssertions.HasCountOptions().setTimeout(3000));
   }
 
+  @Story("FOOT-3 Imprint is complete")
+  @Issue("D1")
   @Test(expectedExceptions = AssertionFailedError.class,
         description = "FOOT-3 Imprint email is a valid mailto link -- KNOWN BUG D1: mailto:[FILL: ...]")
   public void foot3_imprintEmailIsValidMailto() {
@@ -108,6 +124,7 @@ public class FooterLegalTest extends PublicPageTest {
           {"Sample matches", "examples"}, {"Manifesto", "manifesto"}, {"FAQ", "faq"}};
   }
 
+  @Story("FOOT-4 Footer anchors lead to home page sections")
   @Test(dataProvider = "anchors", description = "FOOT-4 Footer anchor scrolls to its section")
   public void foot4_anchorScrolls(String name, String id) {
     open("/");
@@ -118,6 +135,7 @@ public class FooterLegalTest extends PublicPageTest {
 
   // FOOT-5
 
+  @Story("FOOT-5 LinkedIn link opens safely")
   @Test(description = "FOOT-5 LinkedIn link attributes")
   public void foot5_linkedInIsSafe() {
     open("/");
@@ -130,12 +148,14 @@ public class FooterLegalTest extends PublicPageTest {
 
   // FOOT-6
 
+  @Story("FOOT-6 Privacy and Terms show their update date")
   @Test(description = "FOOT-6 Privacy shows its update date")
   public void foot6_privacyLastUpdated() {
     open("/privacy");
     assertThat(page.getByText(Pattern.compile("^Last updated:"))).isVisible();
   }
 
+  @Story("FOOT-6 Privacy and Terms show their update date")
   @Test(description = "FOOT-6 Terms shows its update date")
   public void foot6_termsLastUpdated() {
     open("/terms");
@@ -144,6 +164,7 @@ public class FooterLegalTest extends PublicPageTest {
 
   // FOOT-7
 
+  @Story("FOOT-7 Copyright shows the current year")
   @Test(description = "FOOT-7 Copyright year")
   public void foot7_copyrightYear() {
     open("/");

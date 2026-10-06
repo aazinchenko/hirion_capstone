@@ -10,6 +10,9 @@ import com.microsoft.playwright.Request;
 import com.microsoft.playwright.assertions.LocatorAssertions;
 import com.microsoft.playwright.assertions.PageAssertions;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -31,6 +34,8 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
  * before the last step's submit button. reg4 and auth6 run after reg9 and use the registered test user.
  * Emails and passwords are never printed.
  */
+@Epic("User journey")
+@Feature("signup")
 public class RegistrationTest extends BaseTest {
 
   private static final Pattern DASHBOARD_URL = Pattern.compile("/dashboard([?#].*)?$");
@@ -48,6 +53,7 @@ public class RegistrationTest extends BaseTest {
   // ---------------------------------------------------------------------------------------------
   // REG-3
 
+  @Story("REG-3 Step 1 rejects a missing email or a short password")
   @Test(priority = 1, description = "REG-3 Short password is blocked")
   public void reg3_shortPasswordBlocked() {
     open("/signup");
@@ -59,6 +65,7 @@ public class RegistrationTest extends BaseTest {
 
   // REG-4 (after reg9: needs the registered test user)
 
+  @Story("REG-4 Step 1 rejects an email that already has an account")
   @Test(priority = 11, dependsOnMethods = "reg9_freeSignupLandsOnDashboard",
         description = "REG-4 Taken email is blocked")
   public void reg4_takenEmailBlocked() {
@@ -72,6 +79,7 @@ public class RegistrationTest extends BaseTest {
 
   // REG-5
 
+  @Story("REG-5 Step 2 asks for a CV")
   @Test(priority = 2, description = "REG-5 Step 2 is rendered")
   public void reg5_stepTwoRendered() {
     walkToStep(2, "/signup");
@@ -79,6 +87,7 @@ public class RegistrationTest extends BaseTest {
     assertThat(exactText("PDF, DOCX, TXT up to 10MB")).isVisible();
   }
 
+  @Story("REG-5 Step 2 asks for a CV")
   @Test(priority = 3, description = "REG-5 Step 2 without a file is blocked")
   public void reg5_stepTwoWithoutFileBlocked() {
     walkToStep(2, "/signup");
@@ -89,12 +98,14 @@ public class RegistrationTest extends BaseTest {
 
   // REG-6
 
+  @Story("REG-6 Step 3 asks for target roles")
   @Test(priority = 4, description = "REG-6 Step 3 is rendered")
   public void reg6_stepThreeRendered() {
     walkToStep(3, "/signup");
     assertThat(role(AriaRole.HEADING, "What roles are you looking for?")).isVisible();
   }
 
+  @Story("REG-6 Step 3 asks for target roles")
   @Test(priority = 5, description = "REG-6 Step 3 without a role is blocked")
   public void reg6_stepThreeWithoutRoleBlocked() {
     walkToStep(3, "/signup");
@@ -105,6 +116,7 @@ public class RegistrationTest extends BaseTest {
 
   // REG-7
 
+  @Story("REG-7 Step 4 offers Premium Trial and Free")
   @Test(priority = 6, description = "REG-7 Step 4 is rendered with Premium Trial selected")
   public void reg7_stepFourPremiumTrialSelected() {
     walkToStep(4, "/signup"); // no plan parameter: the site preselects Premium Trial
@@ -117,6 +129,7 @@ public class RegistrationTest extends BaseTest {
     assertThat(planCard("Free")).not().hasAttribute("class", SELECTED_CARD);
   }
 
+  @Story("REG-7 Step 4 offers Premium Trial and Free")
   @Test(priority = 7, description = "REG-7 Free can be selected")
   public void reg7_freeCanBeSelected() {
     walkToStep(4, "/signup");
@@ -125,6 +138,7 @@ public class RegistrationTest extends BaseTest {
     assertThat(planCard("Premium Trial")).not().hasAttribute("class", SELECTED_CARD);
   }
 
+  @Story("REG-7 Step 4 offers Premium Trial and Free")
   @Test(priority = 7, description = "REG-7 plan=free preselects Free")
   public void reg7_planFreePreselectsFree() {
     walkToStep(4, "/signup?plan=free");
@@ -132,6 +146,7 @@ public class RegistrationTest extends BaseTest {
     assertThat(planCard("Premium Trial")).not().hasAttribute("class", SELECTED_CARD);
   }
 
+  @Story("REG-7 Step 4 offers Premium Trial and Free")
   @Test(priority = 7, description = "REG-7 plan=trial preselects Premium Trial")
   public void reg7_planTrialPreselectsTrial() {
     walkToStep(4, "/signup?plan=trial");
@@ -139,6 +154,7 @@ public class RegistrationTest extends BaseTest {
     assertThat(planCard("Free")).not().hasAttribute("class", SELECTED_CARD);
   }
 
+  @Story("REG-7 Step 4 offers Premium Trial and Free")
   @Test(priority = 7, description = "REG-7 Back keeps the wizard data")
   public void reg7_backKeepsWizardData() {
     walkToStep(4, "/signup");
@@ -157,6 +173,7 @@ public class RegistrationTest extends BaseTest {
 
   // REG-8
 
+  @Story("REG-8 The account is created only on step 4")
   @Test(priority = 8, description = "REG-8 Steps 1-3 send no account data")
   public void reg8_stepsOneToThreeSendNothing() {
     List<String> sent = Collections.synchronizedList(new ArrayList<>());
@@ -182,6 +199,7 @@ public class RegistrationTest extends BaseTest {
 
   // REG-9 -- the ONLY test that creates an account
 
+  @Story("REG-9 Signup finishes on the dashboard without email confirmation")
   @Test(priority = 10, groups = "registered", description = "REG-9 Free signup lands on the dashboard")
   public void reg9_freeSignupLandsOnDashboard() {
     TestUser user = TestUser.generate(); // SkipException without -Dqa.mailbox: nothing is created
@@ -209,6 +227,7 @@ public class RegistrationTest extends BaseTest {
 
   // REG-10
 
+  @Story("REG-10 Show password is reachable by keyboard")
   @Test(priority = 9, description = "REG-10 Show password is in the tab order")
   public void reg10_showPasswordInTabOrder() {
     open("/signup");
@@ -221,6 +240,7 @@ public class RegistrationTest extends BaseTest {
 
   // AUTH-6 (plan AUTH-03, after reg9, exactly one wrong attempt)
 
+  @Story("AUTH-6 Wrong password keeps the user on the login page")
   @Test(priority = 12, dependsOnMethods = "reg9_freeSignupLandsOnDashboard",
         description = "AUTH-6 Registered test user with a wrong password")
   public void auth6_wrongPasswordStaysOnLogin() {

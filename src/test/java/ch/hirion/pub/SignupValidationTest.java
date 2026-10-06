@@ -3,6 +3,9 @@ package ch.hirion.pub;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.testng.annotations.Test;
 
 import java.util.regex.Pattern;
@@ -13,10 +16,13 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
  * Group REG, step 1 only: client-side checks on /signup, specs/access-and-quality REG-1, REG-2.
  * Nothing is submitted and no account is created, so these tests belong to the public suite.
  */
+@Epic("Public site")
+@Feature("access-and-quality")
 public class SignupValidationTest extends PublicPageTest {
 
   // REG-1
 
+  @Story("REG-1 Signup step 1 validates before continuing")
   @Test(description = "REG-1 Empty step 1 is blocked")
   public void reg1_emptyStepOneBlocked() {
     open("/signup");
@@ -29,6 +35,7 @@ public class SignupValidationTest extends PublicPageTest {
 
   // REG-2
 
+  @Story("REG-2 Show password reveals the typed password")
   @Test(description = "REG-2 Show password")
   public void reg2_showPassword() {
     open("/signup");

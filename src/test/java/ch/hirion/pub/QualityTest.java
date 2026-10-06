@@ -3,6 +3,9 @@ package ch.hirion.pub;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -13,10 +16,13 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 /** Group QA (desktop): console errors and SEO basics, specs/access-and-quality QA-3, QA-4. */
+@Epic("Public site")
+@Feature("access-and-quality")
 public class QualityTest extends PublicPageTest {
 
   // QA-3
 
+  @Story("QA-3 Public pages load without console errors")
   @Test(description = "QA-3 No console errors on public pages")
   public void qa3_noConsoleErrors() {
     List<String> errors = new CopyOnWriteArrayList<>();
@@ -34,6 +40,7 @@ public class QualityTest extends PublicPageTest {
 
   // QA-4
 
+  @Story("QA-4 Home page has SEO basics")
   @Test(description = "QA-4 Home page metadata")
   public void qa4_homeMetadata() {
     open("/");
@@ -45,6 +52,7 @@ public class QualityTest extends PublicPageTest {
     assertThat(page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setLevel(1))).hasCount(1);
   }
 
+  @Story("QA-4 Home page has SEO basics")
   @Test(description = "QA-4 robots.txt and sitemap.xml")
   public void qa4_robotsAndSitemap() {
     APIResponse robots = page.request().get(BASE_URL + "/robots.txt");

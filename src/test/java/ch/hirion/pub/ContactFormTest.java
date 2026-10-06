@@ -6,6 +6,9 @@ import com.microsoft.playwright.Request;
 import com.microsoft.playwright.Route;
 import com.microsoft.playwright.TimeoutError;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -23,6 +26,8 @@ import static org.testng.Assert.fail;
  * NEVER a real submit: every non-GET request is answered locally before it leaves the browser.
  * Only requests to the form endpoint are counted: Stripe.js posts its own beacon at random moments.
  */
+@Epic("Public site")
+@Feature("contact-form")
 public class ContactFormTest extends PublicPageTest {
 
   private static final String EMAIL = "qa-contact@example.com";
@@ -76,6 +81,7 @@ public class ContactFormTest extends PublicPageTest {
 
   // CONT-1
 
+  @Story("CONT-1 Contact form fields")
   @Test(description = "CONT-1 Contact form is rendered")
   public void cont1_formRendered() {
     assertThat(h1("Talk to the team.")).isVisible();
@@ -87,6 +93,7 @@ public class ContactFormTest extends PublicPageTest {
 
   // CONT-2
 
+  @Story("CONT-2 Invalid input is not sent")
   @Test(description = "CONT-2 Empty form is blocked")
   public void cont2_emptyFormBlocked() {
     send().click();
@@ -96,6 +103,7 @@ public class ContactFormTest extends PublicPageTest {
     assertNoMoreFormRequests(0);
   }
 
+  @Story("CONT-2 Invalid input is not sent")
   @Test(description = "CONT-2 Invalid email is blocked")
   public void cont2_invalidEmailBlocked() {
     fillValidExceptEmail();
@@ -108,6 +116,7 @@ public class ContactFormTest extends PublicPageTest {
 
   // CONT-3
 
+  @Story("CONT-3 Honeypot is hidden from people")
   @Test(description = "CONT-3 Honeypot attributes")
   public void cont3_honeypotAttributes() {
     Locator honeypot = page.locator("input[name='website']"); // locator-exception: contact-form honeypot
@@ -120,6 +129,7 @@ public class ContactFormTest extends PublicPageTest {
 
   // CONT-4
 
+  @Story("CONT-4 Valid input is sent once")
   @Test(description = "CONT-4 Valid submit with a mocked network")
   public void cont4_validSubmitMocked() {
     fillValidExceptEmail();

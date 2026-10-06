@@ -2,12 +2,17 @@ package ch.hirion.pub;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.testng.annotations.Test;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import static org.testng.Assert.assertEquals;
 
 /** Group I18N: language switcher, openspec/changes/add-public-coverage/specs/localization. */
+@Epic("Public site")
+@Feature("localization")
 public class LocalizationTest extends PublicPageTest {
 
   private static final String H1_EN = "Your AI job agent for Switzerland.";
@@ -34,6 +39,7 @@ public class LocalizationTest extends PublicPageTest {
 
   // I18N-1
 
+  @Story("I18N-1 Language menu offers four languages")
   @Test(description = "I18N-1 Default language is English")
   public void i18n1_defaultIsEnglish() {
     open("/");
@@ -41,6 +47,7 @@ public class LocalizationTest extends PublicPageTest {
     assertThat(h1(H1_EN)).isVisible();
   }
 
+  @Story("I18N-1 Language menu offers four languages")
   @Test(description = "I18N-1 Language menu lists four languages")
   public void i18n1_menuListsFourLanguages() {
     open("/");
@@ -53,6 +60,7 @@ public class LocalizationTest extends PublicPageTest {
 
   // I18N-2
 
+  @Story("I18N-2 Choosing a language translates the page")
   @Test(description = "I18N-2 Switch to German")
   public void i18n2_switchToGerman() {
     open("/");
@@ -64,6 +72,7 @@ public class LocalizationTest extends PublicPageTest {
 
   // I18N-3
 
+  @Story("I18N-3 Language choice persists")
   @Test(description = "I18N-3 German survives a reload")
   public void i18n3_germanSurvivesReload() {
     open("/");
@@ -73,6 +82,7 @@ public class LocalizationTest extends PublicPageTest {
     assertThat(h1(H1_DE)).isVisible();
   }
 
+  @Story("I18N-3 Language choice persists")
   @Test(description = "I18N-3 German applies on another page")
   public void i18n3_germanOnAnotherPage() {
     open("/");
@@ -84,12 +94,14 @@ public class LocalizationTest extends PublicPageTest {
 
   // I18N-4
 
+  @Story("I18N-4 Document language follows the chosen language")
   @Test(description = "I18N-4 Default document language")
   public void i18n4_defaultHtmlLang() {
     open("/");
     assertThat(page.locator("html")).hasAttribute("lang", "en"); // locator-exception: <html> lang attribute
   }
 
+  @Story("I18N-4 Document language follows the chosen language")
   @Test(description = "I18N-4 Document language after switching to German")
   public void i18n4_htmlLangAfterGerman() {
     open("/");
@@ -99,6 +111,7 @@ public class LocalizationTest extends PublicPageTest {
 
   // I18N-5
 
+  @Story("I18N-5 French and Italian translate the home page")
   @Test(description = "I18N-5 Switch to French")
   public void i18n5_switchToFrench() {
     open("/");
@@ -106,6 +119,7 @@ public class LocalizationTest extends PublicPageTest {
     assertThat(h1(H1_FR)).isVisible();
   }
 
+  @Story("I18N-5 French and Italian translate the home page")
   @Test(description = "I18N-5 Switch to Italian")
   public void i18n5_switchToItalian() {
     open("/");
