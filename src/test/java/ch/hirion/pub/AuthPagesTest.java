@@ -4,7 +4,6 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Response;
 import com.microsoft.playwright.options.AriaRole;
-import org.opentest4j.AssertionFailedError;
 import org.testng.annotations.Test;
 
 import java.util.regex.Pattern;
@@ -60,16 +59,15 @@ public class AuthPagesTest extends PublicPageTest {
     assertThat(role(AriaRole.LINK, "Create one")).hasAttribute("href", "/signup");
   }
 
-  // AUTH-3 (known defect D5)
+  // AUTH-3
 
-  @Test(expectedExceptions = AssertionFailedError.class,
-        description = "AUTH-3 Login autocomplete attributes -- KNOWN BUG D5: /login inputs have no autocomplete")
+  @Test(description = "AUTH-3 Login autocomplete attributes")
   public void auth3_loginAutocomplete() {
     open("/login");
-    field("Email").waitFor(); // preconditions: a missing field is a real failure, not the known bug
+    field("Email").waitFor(); // preconditions: a missing field fails here, not as a wrong attribute
     field("Password").waitFor();
-    assertThat(field("Email")).hasAttribute("autocomplete", "email", QUICK_ATTR);
-    assertThat(field("Password")).hasAttribute("autocomplete", "current-password", QUICK_ATTR);
+    assertThat(field("Email")).hasAttribute("autocomplete", "email");
+    assertThat(field("Password")).hasAttribute("autocomplete", "current-password");
   }
 
   // AUTH-4

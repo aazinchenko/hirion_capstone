@@ -3,10 +3,8 @@ package ch.hirion.pub;
 import ch.hirion.support.BaseTest;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.assertions.LocatorAssertions;
 import com.microsoft.playwright.options.AriaRole;
 import com.microsoft.playwright.options.WaitUntilState;
-import org.opentest4j.AssertionFailedError;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -113,15 +111,13 @@ public class SmokeTest extends BaseTest {
     assertThat(text(pricing, "CHF 120 billed yearly")).isVisible();
   }
 
-  // PUB-4 (known defect D4)
+  // PUB-4
 
-  @Test(expectedExceptions = AssertionFailedError.class,
-        description = "PUB-4 Selected period is aria-pressed -- KNOWN BUG D4: pricing toggle has no aria-pressed")
+  @Test(description = "PUB-4 Selected period is aria-pressed")
   public void pub4_selectedPeriodIsAriaPressed() {
-    LocatorAssertions.HasAttributeOptions quick = new LocatorAssertions.HasAttributeOptions().setTimeout(3000);
     inSection(pricing, AriaRole.BUTTON, "Monthly").click();
-    assertThat(inSection(pricing, AriaRole.BUTTON, "Monthly")).hasAttribute("aria-pressed", "true", quick);
-    assertThat(inSection(pricing, AriaRole.BUTTON, "Yearly")).hasAttribute("aria-pressed", "false", quick);
+    assertThat(inSection(pricing, AriaRole.BUTTON, "Monthly")).hasAttribute("aria-pressed", "true");
+    assertThat(inSection(pricing, AriaRole.BUTTON, "Yearly")).hasAttribute("aria-pressed", "false");
   }
 
   // PUB-5: stop at the /signup URL, never continue the signup

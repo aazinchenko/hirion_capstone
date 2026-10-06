@@ -2,7 +2,6 @@ package ch.hirion.pub;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.options.AriaRole;
-import org.opentest4j.AssertionFailedError;
 import org.testng.annotations.Test;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
@@ -19,12 +18,12 @@ public class LocalizationTest extends PublicPageTest {
 
   /**
    * Opens the language menu from "EN" and picks the given language; waits until the button shows it.
-   * waitFor() throws TimeoutError, not AssertionFailedError, so a broken switch is never taken for bug D2.
+   * waitFor() throws TimeoutError, so a broken switch fails as a precondition, not as a wrong lang.
    */
   private void switchTo(String code) {
     role(AriaRole.BUTTON, "EN").click();
     role(AriaRole.MENUITEM, code).click();
-    role(AriaRole.BUTTON, code).waitFor(); // precondition, not an assertion: keeps KNOWN BUG D2 honest
+    role(AriaRole.BUTTON, code).waitFor(); // precondition, not an assertion
   }
 
   /** A link in the header; "Loslegen" also appears in a page section, so the scope matters. */
@@ -83,7 +82,7 @@ public class LocalizationTest extends PublicPageTest {
     assertThat(h1(H1_CONTACT_DE)).isVisible();
   }
 
-  // I18N-4 (known defect D2)
+  // I18N-4
 
   @Test(description = "I18N-4 Default document language")
   public void i18n4_defaultHtmlLang() {
@@ -91,12 +90,11 @@ public class LocalizationTest extends PublicPageTest {
     assertThat(page.locator("html")).hasAttribute("lang", "en"); // locator-exception: <html> lang attribute
   }
 
-  @Test(expectedExceptions = AssertionFailedError.class,
-        description = "I18N-4 Document language after switching to German -- KNOWN BUG D2: <html lang> stays en")
+  @Test(description = "I18N-4 Document language after switching to German")
   public void i18n4_htmlLangAfterGerman() {
     open("/");
     switchTo("DE");
-    assertThat(page.locator("html")).hasAttribute("lang", "de", QUICK_ATTR); // locator-exception: <html> lang attribute
+    assertThat(page.locator("html")).hasAttribute("lang", "de"); // locator-exception: <html> lang attribute
   }
 
   // I18N-5

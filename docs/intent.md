@@ -92,10 +92,13 @@ ASSUMED, NOT YET VERIFIED:
 ## Known defects (each gets a KNOWN BUG test; the spec keeps the correct SHALL)
 D1   /imprint: 7 unfilled templates "[FILL: ...]", email mailto:[FILL: ...].              (walkthrough)
 D2   After switching to DE the text is German but <html lang> stays "en".                 (walkthrough)
+     FIXED (seen live 2026-10-06): regular test now (I18N-4, change close-fixed-defects-d2-d4-d5).
 D3   Mobile 375 px: header links and Sign in hidden, no burger menu.                      (walkthrough)
      NOT A DEFECT (human decision 2026-10-05): intended mobile design; QA-2 removed, no test.
 D4   Pricing toggle Monthly / Quarterly / Yearly has no aria-pressed.                     (walkthrough)
+     FIXED (seen live 2026-10-06): regular test now (PUB-4, change close-fixed-defects-d2-d4-d5).
 D5   /login: Email / Password inputs have no autocomplete.                                (walkthrough)
+     FIXED (seen live 2026-10-06): regular test now (AUTH-3, change close-fixed-defects-d2-d4-d5).
 D6   /signup: "Show password" has tabindex=-1, not reachable by keyboard.                 (walkthrough)
 D7   Settings > Phone accepts letters ("00000000000000jj").                  (screenshot, to re-check)
      NOT A DEFECT (human decision 2026-09-30): Phone is free-form text by design; no test.

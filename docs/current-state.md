@@ -41,7 +41,8 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
 - Test user is always Free; facts in intent.md about the dashboard/settings were recorded on a trial (Pro)
   account: Analytics is Pro-only (Free sees "Unlock Hirion Pro"), AI buttons on job cards are Pro-only, the score
   badge is "87"+"match" (capitals by CSS).
-- Defects: D1, D2, D4-D6, D10 KNOWN BUG tests; D3 closed 2026-10-05 (mobile header without "Sign in" is the
+- Defects: D1, D6, D10 KNOWN BUG tests; D2, D4, D5 FIXED by the site (seen live 2026-10-06, change
+  `close-fixed-defects-d2-d4-d5`: regular tests now); D3 closed 2026-10-05 (mobile header without "Sign in" is the
   intended design, QA-2 removed); D7 closed (Phone free text by design); D8 and D9 regular checks (data-dependent);
   D11 confirmed live (qa@ passes step 1); D12, D13 candidates (a11y); D14 new, KNOWN BUG, confirmed live
   (required fields only a visual aria-hidden "*"; that star also breaks getByLabel exact -> use role TEXTBOX).
