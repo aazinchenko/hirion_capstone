@@ -16,5 +16,5 @@
 
 ## 4. Gate
 
-- [ ] 4.1 Human: after the test commit and push, start the journey in GitHub Actions (Run workflow). Verify: run URL, "Tests run: 40, Failures: 0" and the JourneyCleanup "deleted" line, quoted in `change-log.md`. The archive waits for this green run.
+- [x] 4.1 Human: after the test commit and push, start the journey in GitHub Actions (Run workflow). Verify: run URL, "Tests run: 40, Failures: 0" and the JourneyCleanup "deleted" line, quoted in `change-log.md`. The archive waits for this green run.
 - [x] 4.2 Run `pnpm exec openspec validate close-fixed-defects-d6-d10-d14 --strict` and `pnpm check`; quote the summary lines in `change-log.md` (validate "is valid"; public suite 57 tests, 0 failures; spec:check ok).

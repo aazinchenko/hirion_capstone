@@ -35,7 +35,7 @@ is changed.
 #### Scenario: Required profile fields
 - **WHEN** the signed-in test user opens `/settings` with the Profile section shown
 - **THEN** the fields "First name", "Last name" and "Email" are marked required (`required` or
-  `aria-required="true"`) (Known defect D14: only a visual "*" in the label today.)
+  `aria-required="true"`)
 
 #### Scenario: CV cannot be removed
 - **WHEN** the signed-in test user opens `/settings` with the Profile section shown

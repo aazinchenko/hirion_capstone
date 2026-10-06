@@ -50,5 +50,8 @@
   -> "Change 'close-fixed-defects-d6-d10-d14' is valid"; `pnpm check` exit 0 -- "PASS: no forbidden patterns";
   public suite `TEST-TestSuite.xml tests="57" errors="0" skipped="0" failures="0"`;
   "spec:check ok — specs: 9 · active changes: 1 · archived: 6".
-- 4.1 [ ]: open -- the human commits and pushes, starts the journey in GitHub Actions and pastes the run URL,
-  "Tests run: 40, Failures: 0" and the JourneyCleanup "deleted" line. Archive only after that.
+- 4.1 [x]: GitHub Actions run https://github.com/aazinchenko/hirion_capstone/actions/runs/37501768600
+  (workflow_dispatch, commit `c855540`, 2026-10-06 17:12-17:16 UTC; reported by the human), both jobs success.
+  Journey job: `[INFO] Tests run: 40, Failures: 0, Errors: 0, Skipped: 0` / `BUILD SUCCESS`;
+  `[JourneyCleanup] deleted: ***+hirion-qa-... no longer signs in`; step "Check that the test account was deleted"
+  success. The converted REG-10, SET-2, SET-4 pass as regular tests on the live site.
