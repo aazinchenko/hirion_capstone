@@ -111,16 +111,13 @@ public class SettingsTest extends AuthenticatedTest {
     assertThat(exactText("Skills").first()).isVisible();
   }
 
-  @Test(priority = 4, dependsOnGroups = "registered", expectedExceptions = AssertionFailedError.class,
-        expectedExceptionsMessageRegExp = "(?s).*not marked required.*",
-        description = "SET-2 Required profile fields -- KNOWN BUG D14: only a visual \"*\" in the label, the "
-              + "inputs are not required / aria-required")
+  @Test(priority = 4, dependsOnGroups = "registered", description = "SET-2 Required profile fields")
   public void set2_requiredProfileFields() {
     openProfile(registeredUser());
     List<String> notRequired = new ArrayList<>();
     for (String label : REQUIRED_FIELDS) {
       Locator input = profileField(label);
-      input.waitFor(); // precondition: a missing field is a TimeoutError, never the known bug
+      input.waitFor(); // precondition: a missing field is a TimeoutError, not a missing "required"
       boolean required = (Boolean) input.evaluate(
             "e => e.required === true || e.getAttribute('aria-required') === 'true'");
       if (!required) {
@@ -174,16 +171,15 @@ public class SettingsTest extends AuthenticatedTest {
     assertThat(security).isVisible(QUICK_VISIBLE);
   }
 
-  // SET-4 (known defect D10: the invalid email never leaves the browser)
+  // SET-4 (the invalid email never leaves the browser)
 
-  @Test(priority = 8, dependsOnGroups = "registered", expectedExceptions = AssertionFailedError.class,
-        expectedExceptionsMessageRegExp = "(?s).*not-an-email.*",
-        description = "SET-4 Invalid email is not sent -- KNOWN BUG D10: the invalid email is sent and saved")
+  @Test(priority = 8, dependsOnGroups = "registered", description = "SET-4 Invalid email is not sent")
   public void set4_invalidEmailNotSent() {
     TestUser user = registeredUser();
     openProfile(user);
     List<String> sent = Collections.synchronizedList(new ArrayList<>());
-    // Catch-all on every host: the profile may be saved straight to a backend host (design.md "D10").
+    // Catch-all on every host: the profile may be saved straight to a backend host
+    // (change add-user-journey, design.md "D10").
     page.route("**/*", route -> {
       String body = route.request().postData();
       if (!"GET".equals(route.request().method()) && body != null && body.contains(INVALID_EMAIL)) {
@@ -321,12 +317,12 @@ public class SettingsTest extends AuthenticatedTest {
   }
 
   /**
-   * Precondition (never an AssertionFailedError, so it cannot pass as a KNOWN BUG): the Email field shows the
+   * Precondition (reported as a TestNG failure, never an AssertionFailedError): the Email field shows the
    * test user's email. Also the SET-4 safety check. The email itself is never printed.
    */
   private void waitForProfile(TestUser user) {
-    // hasValue() auto-waits; its AssertionFailedError is turned into a TestNG failure so the precondition can
-    // never count as a KNOWN BUG.
+    // hasValue() auto-waits; its AssertionFailedError is turned into a TestNG failure so a precondition failure
+    // is never reported as an assertion failure of the test itself.
     try {
       assertThat(profileField("Email")).hasValue(user.email,
             new LocatorAssertions.HasValueOptions().setTimeout(PROFILE_TIMEOUT));

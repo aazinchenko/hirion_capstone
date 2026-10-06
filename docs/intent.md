@@ -100,6 +100,7 @@ D4   Pricing toggle Monthly / Quarterly / Yearly has no aria-pressed.           
 D5   /login: Email / Password inputs have no autocomplete.                                (walkthrough)
      FIXED (seen live 2026-10-06): regular test now (AUTH-3, change close-fixed-defects-d2-d4-d5).
 D6   /signup: "Show password" has tabindex=-1, not reachable by keyboard.                 (walkthrough)
+     FIXED (seen live 2026-10-06): regular test now (REG-10, change close-fixed-defects-d6-d10-d14).
 D7   Settings > Phone accepts letters ("00000000000000jj").                  (screenshot, to re-check)
      NOT A DEFECT (human decision 2026-09-30): Phone is free-form text by design; no test.
 D8   Job titles show "?" instead of characters: "Senior Azure Engineer | ? oder ... Next Level ??".
@@ -115,6 +116,7 @@ D9   Settings > Profile shows "You have unsaved changes" right after load, with 
      stored value differs from what the form shows (the site normalises Phone to "+41..." without spaces).
 D10  Settings > Profile > Email* has no effective validation: an error is shown, but any string
      is saved as the email.                                               (CONFIRMED live 2026-09-25)
+     FIXED (seen live 2026-10-06): regular test now (SET-4, change close-fixed-defects-d6-d10-d14).
 
 D11  /signup step 1 accepts an invalid email such as "qa@": only "not empty" and "password >= 8" are
      checked, the input is type=email but not inside a form, so the error comes only on step 4.
@@ -130,11 +132,13 @@ D13  /signup step 3: the role picker is <button role="combobox"> with the visibl
 D14  Settings > Profile: First name, Last name and Email show a "*" in the label (aria-hidden), but the inputs
      have no required / aria-required, so browsers and screen readers do not know they are required.
                                                    (from the site code 2026-09-30, human decision: KNOWN BUG)
+     FIXED (seen live 2026-10-06): regular test now (SET-2, change close-fixed-defects-d6-d10-d14).
 
 ## Done means
 - `pnpm check` exits 0 and ends with non-zero counters: specs: 9 · active changes: 0 · archived: 4.
 - Every change has commits in the order: spec -> RED -> GREEN -> archive.
-- `mvn test -Dsuite=testng-all.xml` is green; known defects D1-D10 are KNOWN BUG tests.
+- `mvn test -Dsuite=testng-all.xml` is green; open known defects (D1) are KNOWN BUG tests;
+  defects fixed by the site (D2, D4-D6, D10, D14) are regular tests.
 
 ## Not doing
 - OAuth (Google / Apple), real payments, real contact-form delivery.

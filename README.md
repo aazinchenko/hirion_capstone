@@ -8,7 +8,7 @@ The project is the capstone of the *Agentic Engineering Crash Course*. Its quest
 |---|---|
 | **Tests** | 94 automated tests, all green on the last full run |
 | **Specs** | 9 capabilities, 59 requirements, 93 scenarios (OpenSpec) |
-| **Defects found on the live site** | 12 reported, 7 pinned by `KNOWN BUG` tests; 3 of them (D2, D4, D5) fixed by the site, now regular tests |
+| **Defects found on the live site** | 12 reported, 7 pinned by `KNOWN BUG` tests; 6 of them (D2, D4, D5, D6, D10, D14) fixed by the site, now regular tests |
 | **Timeline** | 6 days, 85 commits (25–30 Sep 2026) |
 | **Stack** | Java 21 · Maven · Playwright for Java 1.55 · TestNG 7.11 · OpenSpec 1.13 |
 

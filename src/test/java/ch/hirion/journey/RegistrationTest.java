@@ -10,7 +10,6 @@ import com.microsoft.playwright.Request;
 import com.microsoft.playwright.assertions.LocatorAssertions;
 import com.microsoft.playwright.assertions.PageAssertions;
 import com.microsoft.playwright.options.AriaRole;
-import org.opentest4j.AssertionFailedError;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -208,18 +207,16 @@ public class RegistrationTest extends BaseTest {
     assertThat(h1("Welcome back, " + user.firstName)).isVisible(STEP);
   }
 
-  // REG-10 (known defect D6)
+  // REG-10
 
-  @Test(priority = 9, expectedExceptions = AssertionFailedError.class,
-        expectedExceptionsMessageRegExp = "(?s).*tabindex.*",
-        description = "REG-10 Show password is in the tab order -- KNOWN BUG D6: the button has tabindex=-1")
+  @Test(priority = 9, description = "REG-10 Show password is in the tab order")
   public void reg10_showPasswordInTabOrder() {
     open("/signup");
     Locator show = role(AriaRole.BUTTON, "Show password");
     show.waitFor();
-    // Precondition through TestNG: a missing button is a real failure, not the known bug.
+    // Precondition through TestNG: a missing button fails here, not as a tabindex failure.
     Assert.assertEquals(show.count(), 1, "exactly one Show password button on step 1");
-    assertThat(show).not().hasAttribute("tabindex", "-1", QUICK_ATTR);
+    assertThat(show).not().hasAttribute("tabindex", "-1");
   }
 
   // AUTH-6 (plan AUTH-03, after reg9, exactly one wrong attempt)
