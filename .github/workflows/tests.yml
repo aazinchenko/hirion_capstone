@@ -44,6 +44,14 @@ jobs:
           name: public-surefire-reports
           path: target/surefire-reports/
 
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: allure-results-public
+          path: target/allure-results/
+          retention-days: 7
+
   journey:
     name: User journey (creates and deletes a real account)
     # one real account per run: only the manual button and the nightly schedule, never on push/PR
@@ -69,7 +77,8 @@ jobs:
       - name: Run journey suite
         env:
           QA_MAILBOX: ${{ secrets.QA_MAILBOX }}
-        run: mvn -B -Dmaven.repo.local=.m2/repository -Dsuite=testng-journey.xml "-Dqa.mailbox=$QA_MAILBOX" test
+        # -Dqa.attachments=false: no screenshots or traces, they show the real test account
+        run: mvn -B -Dmaven.repo.local=.m2/repository -Dsuite=testng-journey.xml "-Dqa.mailbox=$QA_MAILBOX" -Dqa.attachments=false test
 
       - name: Check that the test account was deleted
         if: always()
@@ -79,5 +88,74 @@ jobs:
             exit 1
           fi
           echo "No leftover test user: account deleted by JourneyCleanup."
-      # No artifacts for this job on purpose: reports and traces contain the real email and
-      # screenshots of the test account, and artifacts of a public repo are downloadable by anyone.
+
+      - name: Mask the mailbox in the Allure results
+        if: always()
+        env:
+          QA_MAILBOX: ${{ secrets.QA_MAILBOX }}
+        run: |
+          if [ -d target/allure-results ] && [ -n "$QA_MAILBOX" ]; then
+            find target/allure-results -type f -exec sed -i "s/${QA_MAILBOX}/***/g" {} +
+          fi
+
+      # Only the Allure results leave this job: no screenshots or traces (-Dqa.attachments=false) and the
+      # mailbox is masked. Surefire reports and traces stay here: they contain the real email.
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: allure-results-journey
+          path: target/allure-results/
+          retention-days: 7
+
+  report:
+    name: Allure report on GitHub Pages
+    needs: [public, journey]
+    # also after failed tests (a red report is the point), but never for pull requests
+    if: always() && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - name: Download Allure results of this run
+        uses: actions/download-artifact@v8
+        with:
+          pattern: allure-results-*
+          merge-multiple: true
+          path: allure-results
+
+      - name: Restore history from the published report (Trend)
+        run: |
+          mkdir -p allure-results/history
+          for f in history.json history-trend.json duration-trend.json categories-trend.json retry-trend.json; do
+            curl -sfL "https://aazinchenko.github.io/hirion_capstone/history/$f" -o "allure-results/history/$f" \
+              || rm -f "allure-results/history/$f"
+          done
+          ls allure-results/history
+
+      - name: Set up Java for the Allure CLI
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Generate the report
+        run: npx -y allure-commandline@2.46.1 generate allure-results --clean -o allure-report
+
+      - name: Upload the report for Pages
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: allure-report
+
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v5
