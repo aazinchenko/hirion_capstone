@@ -6,7 +6,7 @@ on:
   pull_request:
   workflow_dispatch:
   schedule:
-    - cron: "15 2 * * *"   # every night 02:00 UTC (04:00 Zurich summer time)
+    - cron: "15 2 * * *"   # every night 02:15 UTC (04:15 Zurich summer time, 03:15 winter)
 
 jobs:
   public:
