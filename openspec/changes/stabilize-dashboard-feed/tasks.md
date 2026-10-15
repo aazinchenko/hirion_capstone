@@ -5,5 +5,5 @@
 
 ## 2. Gate
 
-- [ ] 2.1 One journey run (human: local with `-Dqa.mailbox` on "да", or CI). Verify: `Failures: 0`, DASH-6 passed or skipped with the short-feed message, JourneyCleanup "deleted"; quoted in `change-log.md`.
-- [ ] 2.2 Run `pnpm exec openspec validate stabilize-dashboard-feed --strict` and `pnpm check`; quote the summary lines in `change-log.md`.
+- [x] 2.1 One journey run (human: local with `-Dqa.mailbox` on "да", or CI). Verify: `Failures: 0`, DASH-6 passed or skipped with the short-feed message, JourneyCleanup "deleted"; quoted in `change-log.md`.
+- [x] 2.2 Run `pnpm exec openspec validate stabilize-dashboard-feed --strict` and `pnpm check`; quote the summary lines in `change-log.md`.
