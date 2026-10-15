@@ -1,7 +1,7 @@
 ## 1. Test
 
-- [ ] 1.1 `DashboardTest`: priorities reordered as design.md Decision 1 (DASH-10 and DASH-11 before DASH-4). Verify: `grep -n "priority" src/test/java/ch/hirion/journey/DashboardTest.java` shows the new order.
-- [ ] 1.2 `pickCard()`: wait until no card with a used title is shown, then pick; `SkipException` when titles were used and no unused card is left (design.md Decisions 2-3). Verify: `mvn -q test-compile` exits 0; `pnpm check:locators` prints "PASS: no forbidden patterns".
+- [x] 1.1 `DashboardTest`: priorities reordered as design.md Decision 1 (DASH-10 and DASH-11 before DASH-4). Verify: `grep -n "priority" src/test/java/ch/hirion/journey/DashboardTest.java` shows the new order.
+- [x] 1.2 `pickCard()`: wait until no card with a used title is shown, then pick; `SkipException` when titles were used and no unused card is left (design.md Decisions 2-3). Verify: `mvn -q test-compile` exits 0; `pnpm check:locators` prints "PASS: no forbidden patterns".
 
 ## 2. Gate
 

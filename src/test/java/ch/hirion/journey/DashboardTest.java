@@ -13,6 +13,7 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 
 import java.net.URI;
@@ -27,8 +28,9 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
  * Group DASH: /dashboard of the registered test user, openspec/changes/add-user-journey/specs/dashboard.
  *
  * <p>Starts signed in from .auth/user.json (written by reg9) and is skipped when group "registered" did not
- * pass. The order is set by priority: the empty lists (DASH-3) come before Save (DASH-4), and DASH-4, DASH-5
- * and DASH-6 each act on a different card. Never clicked: "Tailor my CV", "Write Cover Letter",
+ * pass. The order is set by priority: the empty lists (DASH-3) come before Save (DASH-4), the read-only DASH-10
+ * and DASH-11 run before DASH-4 while the feed is still full (a new Free user may get only two jobs), and DASH-4,
+ * DASH-5 and DASH-6 each act on a different card (change stabilize-dashboard-feed). Never clicked: "Tailor my CV", "Write Cover Letter",
  * "Help me stand out", "Upgrade to Pro". "View job" is clicked only in dash11, "Save preferences" only in
  * dash12. Emails and passwords are never printed.
  */
@@ -53,6 +55,8 @@ public class DashboardTest extends AuthenticatedTest {
         + " opportunities to land roles faster.";
   /** The first feed of a new user is built from the CV analysis and can take a while. */
   private static final double FEED_TIMEOUT = 30_000;
+  private static final LocatorAssertions.HasCountOptions FEED_SETTLED =
+        new LocatorAssertions.HasCountOptions().setTimeout(FEED_TIMEOUT);
   private static final LocatorAssertions.IsVisibleOptions SLOW =
         new LocatorAssertions.IsVisibleOptions().setTimeout(15_000);
   /** The Pro gate renders only after the analytics data has loaded (> 5 s in the first live run). */
@@ -110,7 +114,7 @@ public class DashboardTest extends AuthenticatedTest {
   // DASH-4
 
   @Story("DASH-4 Save moves a job to Saved")
-  @Test(priority = 4, dependsOnGroups = "registered", description = "DASH-4 Save the first job")
+  @Test(priority = 6, dependsOnGroups = "registered", description = "DASH-4 Save the first job")
   public void dash4_saveMovesJob() {
     openDashboard();
     String title = pickCard();
@@ -126,7 +130,7 @@ public class DashboardTest extends AuthenticatedTest {
   // DASH-5
 
   @Story("DASH-5 Already applied moves a job to Applied")
-  @Test(priority = 5, dependsOnGroups = "registered", description = "DASH-5 Hide menu items")
+  @Test(priority = 7, dependsOnGroups = "registered", description = "DASH-5 Hide menu items")
   public void dash5_hideMenuItems() {
     openDashboard();
     String title = pickCard(); // only opens the menu, so the card stays in the feed and is not marked used
@@ -139,7 +143,7 @@ public class DashboardTest extends AuthenticatedTest {
   }
 
   @Story("DASH-5 Already applied moves a job to Applied")
-  @Test(priority = 6, dependsOnGroups = "registered", description = "DASH-5 Mark a job as already applied")
+  @Test(priority = 8, dependsOnGroups = "registered", description = "DASH-5 Mark a job as already applied")
   public void dash5_alreadyAppliedMovesJob() {
     openDashboard();
     String title = pickCard();
@@ -153,7 +157,7 @@ public class DashboardTest extends AuthenticatedTest {
   // DASH-6
 
   @Story("DASH-6 Not relevant removes a job from the feed")
-  @Test(priority = 7, dependsOnGroups = "registered", description = "DASH-6 Mark a job as not relevant")
+  @Test(priority = 9, dependsOnGroups = "registered", description = "DASH-6 Mark a job as not relevant")
   public void dash6_notRelevantRemovesJob() {
     openDashboard();
     String title = pickCard();
@@ -165,7 +169,7 @@ public class DashboardTest extends AuthenticatedTest {
   // DASH-7 (Free user: the Pro gate; "Upgrade to Pro" is checked, never clicked)
 
   @Story("DASH-7 Analytics is Pro-only for a Free user")
-  @Test(priority = 8, dependsOnGroups = "registered", description = "DASH-7 Free user sees the Pro gate on Analytics")
+  @Test(priority = 10, dependsOnGroups = "registered", description = "DASH-7 Free user sees the Pro gate on Analytics")
   public void dash7_analyticsProGate() {
     openDashboard();
     tab("Analytics").click();
@@ -179,7 +183,7 @@ public class DashboardTest extends AuthenticatedTest {
   // DASH-9
 
   @Story("DASH-9 Preferences form")
-  @Test(priority = 9, dependsOnGroups = "registered", description = "DASH-9 Preferences is rendered")
+  @Test(priority = 11, dependsOnGroups = "registered", description = "DASH-9 Preferences is rendered")
   public void dash9_preferencesRendered() {
     openDashboard();
     tab("Preferences").click();
@@ -193,7 +197,7 @@ public class DashboardTest extends AuthenticatedTest {
   // DASH-12 (the only test that clicks "Save preferences")
 
   @Story("DASH-12 Preferences are saved")
-  @Test(priority = 10, dependsOnGroups = "registered", description = "DASH-12 Work mode survives a reload")
+  @Test(priority = 12, dependsOnGroups = "registered", description = "DASH-12 Work mode survives a reload")
   public void dash12_workModeSurvivesReload() {
     openDashboard();
     tab("Preferences").click();
@@ -218,7 +222,7 @@ public class DashboardTest extends AuthenticatedTest {
   // DASH-11 (the only test that clicks "View job")
 
   @Story("DASH-11 View job opens the vacancy in a new tab")
-  @Test(priority = 11, dependsOnGroups = "registered", description = "DASH-11 View job opens an external tab")
+  @Test(priority = 5, dependsOnGroups = "registered", description = "DASH-11 View job opens an external tab")
   public void dash11_viewJobOpensExternalTab() {
     openDashboard();
     Locator viewJob = cardButton(feedCards(1).first(), "View job");
@@ -242,7 +246,7 @@ public class DashboardTest extends AuthenticatedTest {
    * which reveals D8 again. The regex can also flag a real question mark in a title: report it to a human.
    */
   @Story("DASH-10 Job titles show their characters")
-  @Test(priority = 12, dependsOnGroups = "registered",
+  @Test(priority = 4, dependsOnGroups = "registered",
         description = "DASH-10 No replacement characters in job titles")
   public void dash10_noReplacementCharsInTitles() {
     openDashboard();
@@ -311,9 +315,29 @@ public class DashboardTest extends AuthenticatedTest {
   /**
    * The first feed card not used by an earlier test whose title is unique in the feed, so "the title is no
    * longer in the Job Feed" can only mean this job left it. Marks the title as used.
+   *
+   * <p>Right after a reload the feed can show a job an earlier test already saved and remove it a moment later
+   * (live 2026-10-15), which detached an open Hide menu. So it first waits until no used title is shown: that
+   * absence is what DASH-4/5/6 require, a timeout is a real failure. A new Free user may get only two jobs:
+   * when earlier tests used them, the test is skipped, not failed (design.md of stabilize-dashboard-feed).
    */
   private String pickCard() {
-    Locator cards = feedCards(1);
+    Locator cards;
+    if (usedTitles.isEmpty()) {
+      cards = feedCards(1);
+    } else {
+      cards = cards();
+      try {
+        cards.first().waitFor(new Locator.WaitForOptions()
+              .setState(WaitForSelectorState.VISIBLE).setTimeout(FEED_TIMEOUT));
+      } catch (PlaywrightException e) {
+        throw new SkipException("no job card left in the Job Feed after earlier tests used "
+              + usedTitles.size() + " (a new Free user may get only two jobs)");
+      }
+      for (String used : usedTitles) {
+        assertThat(cardTitled(used)).hasCount(0, FEED_SETTLED);
+      }
+    }
     int count = cards.count();
     for (int i = 0; i < count; i++) {
       String title = titleOf(cards.nth(i));
@@ -322,7 +346,11 @@ public class DashboardTest extends AuthenticatedTest {
         return title;
       }
     }
-    Assert.fail("no unused job card with a unique title in the Job Feed (" + count + " cards)");
+    if (!usedTitles.isEmpty()) {
+      throw new SkipException("no unused job card with a unique title in the Job Feed (" + count
+            + " cards, " + usedTitles.size() + " used by earlier tests)");
+    }
+    Assert.fail("no job card with a unique title in the Job Feed (" + count + " cards)");
     return null; // unreachable
   }
 

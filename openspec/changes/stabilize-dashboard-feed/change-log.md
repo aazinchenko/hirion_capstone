@@ -8,3 +8,9 @@
   `Tests run: 40, Failures: 2` -- `dash5_alreadyAppliedMovesJob` "element was detached from the DOM" on
   "Already applied", `dash6_notRelevantRemovesJob` "no unused job card with a unique title in the Job Feed
   (1 cards)"; JourneyCleanup "deleted: ... no longer signs in".
+
+## Evidence for tasks
+
+- 1.1 [x]: `grep -n "priority" DashboardTest.java` -> DASH-1 1, DASH-2 2, DASH-3 3, DASH-10 4, DASH-11 5, DASH-4 6,
+  DASH-5 menu 7, DASH-5 applied 8, DASH-6 9, DASH-7 10, DASH-9 11, DASH-12 12.
+- 1.2 [x]: `mvn -q test-compile` exit 0; `pnpm check:locators` -> "PASS: no forbidden patterns".
