@@ -36,6 +36,8 @@ public class DashboardTest extends AuthenticatedTest {
         List.of("Job Feed", "Saved", "Applied", "Archive", "Analytics", "Preferences");
   /** The teaser heading; group 1 is the number of locked jobs. */
   private static final Pattern TEASER_HEADING = Pattern.compile("^We found (\\d+) jobs? for you$");
+  /** The teaser shows at most this many locked rows, whatever N the heading says. */
+  private static final int TEASER_ROWS = 3;
   /** Each locked row ends with its match score, e.g. <span>88%</span>. */
   private static final Pattern MATCH_PERCENT = Pattern.compile("^\\d+%$");
   /** Both teaser links point to the plan section of Settings; neither is clicked. */
@@ -81,9 +83,10 @@ public class DashboardTest extends AuthenticatedTest {
     Assert.assertTrue(found.matches(), "teaser heading: " + heading.innerText());
     int jobs = Integer.parseInt(found.group(1));
 
-    // The rows are aria-hidden, so they are found by text: one match score per locked job.
+    // The rows are aria-hidden, so they are found by text: one match score per row. The teaser previews at most
+    // three jobs (2 jobs -> 2 rows, 10 jobs -> 3 rows; change fix-teaser-row-count).
     Locator scores = main().getByText(MATCH_PERCENT);
-    assertThat(scores).hasCount(jobs);
+    assertThat(scores).hasCount(Math.min(jobs, TEASER_ROWS));
     // Read in the browser: the row sits inside an aria-hidden block and its title block is blurred.
     Object lockedRow = scores.first().evaluate("score => !!score.closest('[aria-hidden=\"true\"]')"
           + " && getComputedStyle(score.previousElementSibling).filter.includes('blur')");

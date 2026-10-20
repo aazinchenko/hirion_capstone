@@ -11,3 +11,12 @@
 - Site code, supporting only (`https://hirion.ch/assets/dashboard-CtYdgbir.js`, fetched 2026-10-20), minified:
   `function xo({jobs:e}){const{t}=D(),n=e.filter(a=>a.title).slice(0,3);` ... heading
   `e.length>0?t("feed_teaser_title",{n:e.length}):t("feed_teaser_title_zero")`, rows `n.map(...)`.
+
+## Evidence for tasks
+
+- 1.1 [x]: `DashboardTest` `TEASER_ROWS = 3`, `assertThat(scores).hasCount(Math.min(jobs, TEASER_ROWS))`;
+  `mvn -q test-compile` exit 0; `pnpm check:locators` -> "PASS: no forbidden patterns".
+- 2.2 [x]: `pnpm exec openspec validate fix-teaser-row-count --strict` -> "Change 'fix-teaser-row-count' is valid";
+  `pnpm check` exit 0: "PASS: no forbidden patterns", public `total="57" passed="57" failed="0" skipped="0"`,
+  "spec:check ok -- specs: 9 · active changes: 1 · archived: 9".
+- 2.1 [ ]: open -- one journey run with a real test account (human's "да" or CI).
