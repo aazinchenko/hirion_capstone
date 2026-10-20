@@ -19,4 +19,7 @@
 - 2.2 [x]: `pnpm exec openspec validate fix-teaser-row-count --strict` -> "Change 'fix-teaser-row-count' is valid";
   `pnpm check` exit 0: "PASS: no forbidden patterns", public `total="57" passed="57" failed="0" skipped="0"`,
   "spec:check ok -- specs: 9 · active changes: 1 · archived: 9".
-- 2.1 [ ]: open -- one journey run with a real test account (human's "да" or CI).
+- 2.1 [x]: local live journey run 2026-10-20 10:56-10:59 CEST (human's "да", `../journey-run-2026-10-20c.log`):
+  `Tests run: 36, Failures: 0, Errors: 0, Skipped: 0`, BUILD SUCCESS; `dash2_freeJobFeedIsLockedTeaser` PASS (15.0 s);
+  JourneyCleanup "deleted: ... no longer signs in". The heading's N is not recorded: a passing test writes no trace.
+  The case N > 3 is covered by the CI run of 08:44 UTC (N = 10, 3 rows).
