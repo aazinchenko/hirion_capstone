@@ -41,4 +41,14 @@
 - 3.3 [x]: `pnpm exec openspec validate update-plans-and-pricing --strict` -> "Change 'update-plans-and-pricing'
   is valid"; `pnpm check` exit 0: "PASS: no forbidden patterns", public suite `total="57" passed="57" failed="0"
   skipped="0"` (testng-results.xml), "spec:check ok -- specs: 9 · active changes: 1 · archived: 8".
-- 3.2 [ ]: open -- one journey run with a real test account (human's "да" or CI).
+- 3.2 [ ]: NOT met. Local live journey run 2026-10-20 (human's "да", `../journey-run-2026-10-20.log`):
+  `Tests run: 42, Failures: 7, Errors: 0, Skipped: 0`; all 17 RegistrationTest tests passed (REG-9 clicked
+  "Join for free" and landed on /dashboard), Settings 13/13, Dashboard 5/12; JourneyCleanup "deleted: ... no longer
+  signs in". The 7 failures (`dash2`, `dash4`, `dash5` x2, `dash6`, `dash10`, `dash11`) are "no job card in the
+  Job Feed after 30 s": the site changed the Free dashboard too. Trace and failure screenshot: the Job Feed of a
+  Free user is a locked teaser "We found 2 jobs for you" with blurred rows (title, location, match %), the text
+  "Unlock them with Basic: every week the jobs that fit your profile best, each with a match score. Or go Premium
+  for daily alerts and a CV and cover letter for each job." and the links "Unlock with Basic"
+  (`href="/settings?section=plan"`) and "See all plans"; no "View job", "Save" or "Hide". The feed server function
+  returns the jobs with `id` "locked-0"/"locked-1", empty company and url, and `locked`; another one returns
+  `teaser`. Out of the scope written for this change: needs a human decision on the dashboard spec.
