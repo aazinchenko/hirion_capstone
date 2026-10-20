@@ -32,9 +32,9 @@ public class TestUser {
   public String currentPassword;
   /** Set before "Update password" (SET-5); promoted to currentPassword once it signs in. */
   public String pendingPassword;
-  /** true from the moment "See my matches" is clicked: an account may exist even if the run dies next. */
+  /** true from the moment "Join for free" is clicked: an account may exist even if the run dies next. */
   public boolean submitted;
-  /** false until /dashboard is reached after "See my matches". */
+  /** false until /dashboard is reached after "Join for free". */
   public boolean accountCreated;
 
   /** Builds a new user from -Dqa.mailbox; skips the journey when the mailbox is not given. */

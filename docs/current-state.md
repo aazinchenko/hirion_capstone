@@ -18,10 +18,15 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
   failed with "should have thrown"): change 6 `close-fixed-defects-d2-d4-d5` and change 7
   `close-fixed-defects-d6-d10-d14` archived, the tests are regular checks now; only D1 is still KNOWN BUG.
   CI run 37501768600 all green: public 57, journey 40, test account deleted.
+- 2026-10-15: change 8 `stabilize-dashboard-feed` archived (DASH-10/11 before DASH-4, settled feed, DASH-6 skip
+  on a 2-job feed).
+- 2026-10-19/20: the site changed its plans (CI public 51/57). Change 9 `update-plans-and-pricing`: `#pricing`
+  Monthly / Yearly with Free / Basic / Premium, new FAQ answer, signup step 4 with three cards (`aria-pressed`,
+  D12 fixed) and the submit button "Join for free"; new KNOWN BUG D16 (`?plan=basic` selects Premium).
 - `pnpm spec:check`: specs 9 · active changes 0 · archived 7; `openspec validate --specs --strict` 9/9.
   Specs: 59 requirements, 93 scenarios.
-- Suites (TestNG counts): public 57/57; journey 40 (Registration 15, Dashboard 12, Settings 13) + JourneyCleanup;
-  full suite 97.
+- Suites (TestNG counts): public 57; journey 42 (Registration 17, Dashboard 12, Settings 13) + JourneyCleanup;
+  full suite 99.
 - Draft, not started: Pro-user journey plan `docs/pro-journey-plan-draft.md` (needs human decisions, section 7).
 - Known flaky: `BaseTest.closeContext` once threw "Target page, context or browser has been closed" in
   `pnpm check` (public cont3/cont4 skipped); rerun green. Human-owned file, not fixed.
@@ -47,10 +52,10 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
 - Test user is always Free; facts in intent.md about the dashboard/settings were recorded on a trial (Pro)
   account: Analytics is Pro-only (Free sees "Unlock Hirion Pro"), AI buttons on job cards are Pro-only, the score
   badge is "87"+"match" (capitals by CSS).
-- Defects: D1 KNOWN BUG tests; D2, D4, D5, D6, D10, D14 FIXED by the site (seen live 2026-10-06, changes
+- Defects: D1 and D16 KNOWN BUG tests; D2, D4, D5, D6, D10, D14 FIXED by the site (seen live 2026-10-06, changes
   `close-fixed-defects-d2-d4-d5` and `close-fixed-defects-d6-d10-d14`: regular tests now); D3 closed 2026-10-05 (mobile header without "Sign in" is the
   intended design, QA-2 removed); D7 closed (Phone free text by design); D8 and D9 regular checks (data-dependent);
-  D11 confirmed live (qa@ passes step 1); D12, D13 candidates (a11y); D14 FIXED (see above;
+  D11 confirmed live (qa@ passes step 1); D12 FIXED (seen live 2026-10-19); D13 candidate (a11y); D14 FIXED (see above;
   the aria-hidden "*" in the label still breaks getByLabel exact -> use role TEXTBOX).
 - DASH-8 (Save rate) and photo upload are out of change 3; plan AUTH-03 lives in change 3 as AUTH-6.
 - A new user's CV is analysed in the background (AI fills Headline / Short bio) and the Profile form reloads when

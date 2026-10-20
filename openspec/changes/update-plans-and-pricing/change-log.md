@@ -25,3 +25,20 @@
   covers the dropped parameter.
 - `pnpm exec openspec validate update-plans-and-pricing --strict` -> "Change 'update-plans-and-pricing' is valid"
   (a first draft with MODIFIED PUB-3 was refused: "omits scenario(s) the current spec still has: "Quarterly price"").
+
+## Evidence for tasks
+
+- 1.1 [x]: `grep -n "Quarterly\|billed" src/test/java/ch/hirion/pub/SmokeTest.java` -> no output (exit 1);
+  `pub3_quarterlyPrice` deleted, `pub5_basicPlanCta` checks `href="/signup?plan=basic"`.
+- 1.2 [x]: `grep -rn "See my matches\|Premium Trial\|border-primary" src/test/java` -> only the two REG-7 test
+  descriptions that keep the scenario names ("... with Premium Trial selected", "plan=trial preselects Premium
+  Trial"); REG-9 clicks "Join for free" after the aria-pressed guard; `TestUser` comments say "Join for free".
+- 1.3 [x]: `mvn -q test-compile` exit 0; `pnpm check:locators` -> "PASS: no forbidden patterns".
+- 2.1 [x]: `grep -c "D12\|D16"` -> docs/intent.md 4, docs/decisions.md 2, docs/current-state.md 3, README.md 1
+  (D12 FIXED, D16 KNOWN BUG, counts public 57 / journey 42 / full 99).
+- 3.1 [x]: guest run 2026-10-20 `mvn -B test "-Dtest=RegistrationTest#reg7_*"` (no `-Dqa.mailbox`, no account):
+  `Tests run: 7, Failures: 0, Errors: 0, Skipped: 0` (D16 passes as the expected failure).
+- 3.3 [x]: `pnpm exec openspec validate update-plans-and-pricing --strict` -> "Change 'update-plans-and-pricing'
+  is valid"; `pnpm check` exit 0: "PASS: no forbidden patterns", public suite `total="57" passed="57" failed="0"
+  skipped="0"` (testng-results.xml), "spec:check ok -- specs: 9 · active changes: 1 · archived: 8".
+- 3.2 [ ]: open -- one journey run with a real test account (human's "да" or CI).

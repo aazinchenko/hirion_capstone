@@ -11,6 +11,7 @@ import io.qameta.allure.Story;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
@@ -76,53 +77,56 @@ public class SmokeTest extends BaseTest {
   @Test(description = "PUB-2 Expanded FAQ item shows its answer")
   public void pub2_faqShowsAnswer() {
     inSection(faq, AriaRole.BUTTON, "Is Hirion free to use?").click();
-    assertThat(faq.getByText(Pattern.compile("^Yes, start free with weekly job alerts\\.")))
+    assertThat(faq.getByText(Pattern.compile("^Get started for free and upgrade whenever you need")))
           .isVisible();
   }
 
   // PUB-3
 
-  @Story("PUB-3 Pricing shows prices per billing period")
+  @Story("PUB-3 Pricing shows plans per billing period")
   @Test(description = "PUB-3 Pricing is visible to a guest")
   public void pub3_pricingVisibleToGuest() {
     assertThat(pricing).isVisible();
     assertThat(inSection(pricing, AriaRole.BUTTON, "Monthly")).isVisible();
-    assertThat(inSection(pricing, AriaRole.BUTTON, "Quarterly")).isVisible();
     assertThat(inSection(pricing, AriaRole.BUTTON, "Yearly")).isVisible();
+    for (String plan : List.of("Free", "Basic", "Premium")) {
+      assertThat(text(pricing, plan)).isVisible();
+    }
   }
 
-  @Story("PUB-3 Pricing shows prices per billing period")
+  @Story("PUB-3 Pricing shows plans per billing period")
   @Test(description = "PUB-3 Yearly is the default period")
   public void pub3_yearlyIsDefault() {
     pricing.scrollIntoViewIfNeeded();
-    assertThat(text(pricing, "CHF 10")).isVisible();
-    assertThat(text(pricing, "CHF 120 billed yearly")).isVisible();
+    assertYearlyPrices();
+    assertThat(text(pricing, "CHF 0")).isVisible();
   }
 
-  @Story("PUB-3 Pricing shows prices per billing period")
+  @Story("PUB-3 Pricing shows plans per billing period")
   @Test(description = "PUB-3 Monthly price")
   public void pub3_monthlyPrice() {
     inSection(pricing, AriaRole.BUTTON, "Monthly").click();
+    assertThat(text(pricing, "CHF 3")).isVisible();
     assertThat(text(pricing, "CHF 15")).isVisible();
-    assertThat(text(pricing, "CHF 15 billed monthly")).isVisible();
-    assertThat(text(pricing, "CHF 120 billed yearly")).isHidden();
+    assertThat(text(pricing, "/month")).hasCount(2); // Basic and Premium
+    assertThat(text(pricing, "CHF 120")).isHidden();
   }
 
-  @Story("PUB-3 Pricing shows prices per billing period")
-  @Test(description = "PUB-3 Quarterly price")
-  public void pub3_quarterlyPrice() {
-    inSection(pricing, AriaRole.BUTTON, "Quarterly").click();
-    assertThat(text(pricing, "CHF 13")).isVisible();
-    assertThat(text(pricing, "CHF 39 billed quarterly")).isVisible();
-  }
-
-  @Story("PUB-3 Pricing shows prices per billing period")
+  @Story("PUB-3 Pricing shows plans per billing period")
   @Test(description = "PUB-3 Switching back to Yearly")
   public void pub3_backToYearly() {
     inSection(pricing, AriaRole.BUTTON, "Monthly").click();
+    assertThat(text(pricing, "CHF 15")).isVisible(); // the switch happened before going back
     inSection(pricing, AriaRole.BUTTON, "Yearly").click();
+    assertYearlyPrices();
+  }
+
+  /** Yearly: Basic "CHF 10" and Premium "CHF 120", each with "/year" (exact texts, one element each). */
+  private void assertYearlyPrices() {
     assertThat(text(pricing, "CHF 10")).isVisible();
-    assertThat(text(pricing, "CHF 120 billed yearly")).isVisible();
+    assertThat(text(pricing, "CHF 120")).isVisible();
+    assertThat(text(pricing, "/year")).hasCount(2); // Basic and Premium
+    assertThat(text(pricing, "/year").first()).isVisible();
   }
 
   // PUB-4
@@ -142,6 +146,13 @@ public class SmokeTest extends BaseTest {
   public void pub5_freePlanCta() {
     inSection(pricing, AriaRole.LINK, "Start free").click();
     assertThat(page).hasURL(Pattern.compile("/signup\\?(.*&)?plan=free(&.*)?$"));
+  }
+
+  @Story("PUB-5 Plan cards link to signup")
+  @Test(description = "PUB-5 Basic plan CTA")
+  public void pub5_basicPlanCta() {
+    // href only: following the link lands on /signup without plan=basic (known defect D16, REG-7)
+    assertThat(inSection(pricing, AriaRole.LINK, "Choose Basic")).hasAttribute("href", "/signup?plan=basic");
   }
 
   @Story("PUB-5 Plan cards link to signup")

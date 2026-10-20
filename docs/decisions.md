@@ -45,7 +45,8 @@ Budget vs actual: `docs/intent.md` "Budget".
 - Every archive is run by the human; the reviewer verifies the synced spec and commits it.
 
 **Which findings are defects** (`docs/intent.md` "Known defects")
-- KNOWN BUG tests: D1 (D14 was added in `d091494`, closed with D6 and D10 below).
+- KNOWN BUG tests: D1 (D14 was added in `d091494`, closed with D6 and D10 below); D16, `?plan=basic` does not
+  preselect Basic (confirmed live 2026-10-20, change `update-plans-and-pricing`).
 - Fixed by the site: D2, D4, D5 (seen live 2026-10-06, their KNOWN BUG tests failed with "should have
   thrown"); now regular tests I18N-4, PUB-4, AUTH-3 (change `close-fixed-defects-d2-d4-d5`). D6, D10, D14 (seen
   live 2026-10-06 in a GitHub Actions journey run); now regular tests REG-10, SET-4, SET-2 (change
@@ -54,7 +55,8 @@ Budget vs actual: `docs/intent.md` "Budget".
   the intended design (human decision 2026-10-05, change `remove-qa2-mobile-nav`, QA-2 removed).
 - Regular checks instead of KNOWN BUG, because they did not show on a new Free user: D8 (`3511779`),
   D9 (`8467dce`).
-- Recorded, no test in these changes: D11 (confirmed live), D12, D13 (`2d5dc5d`, `421abe4`).
+- Recorded, no test in these changes: D11 (confirmed live), D13 (`2d5dc5d`, `421abe4`). D12 is fixed by the site
+  (seen live 2026-10-19: the plan cards expose aria-pressed) and REG-7 now checks it.
 
 **Review outcomes**
 - Locator reviews 2026-09-28/29/30: which findings to fix now and which to accept (`.agent-log/review-*.md`,

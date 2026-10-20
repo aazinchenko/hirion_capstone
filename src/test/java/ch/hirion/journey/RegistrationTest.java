@@ -12,14 +12,15 @@ import com.microsoft.playwright.assertions.PageAssertions;
 import com.microsoft.playwright.options.AriaRole;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Issue;
 import io.qameta.allure.Story;
+import org.opentest4j.AssertionFailedError;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.net.URI;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -41,8 +42,9 @@ public class RegistrationTest extends BaseTest {
   private static final Pattern DASHBOARD_URL = Pattern.compile("/dashboard([?#].*)?$");
   private static final Pattern LOGIN_URL = Pattern.compile("/login([?#].*)?$");
   private static final Pattern SIGNUP_URL = Pattern.compile("/signup([?#].*)?$");
-  /** The selected plan card has the class token "border-primary"; others have "hover:border-primary/40". */
-  private static final Pattern SELECTED_CARD = Pattern.compile("(^|\\s)border-primary(\\s|$)");
+  private static final List<String> PLANS = List.of("Free", "Basic", "Premium");
+  /** Never submitted: Premium starts a trial, Basic a payment. */
+  private static final List<String> PAID_PLANS = List.of("Basic", "Premium");
   /** Step changes wait for the email check (step 1) and a React re-render. */
   private static final LocatorAssertions.IsVisibleOptions STEP =
         new LocatorAssertions.IsVisibleOptions().setTimeout(15_000);
@@ -116,50 +118,71 @@ public class RegistrationTest extends BaseTest {
 
   // REG-7
 
-  @Story("REG-7 Step 4 offers Premium Trial and Free")
+  @Story("REG-7 Step 4 offers Free, Basic and Premium")
   @Test(priority = 6, description = "REG-7 Step 4 is rendered with Premium Trial selected")
   public void reg7_stepFourPremiumTrialSelected() {
-    walkToStep(4, "/signup"); // no plan parameter: the site preselects Premium Trial
+    walkToStep(4, "/signup"); // no plan parameter: the site preselects Premium
     assertThat(role(AriaRole.HEADING, "Choose your plan")).isVisible();
     assertThat(exactText("7 days free")).isVisible();
     assertThat(planCard("Free")).isVisible();
+    assertThat(planCard("Basic")).isVisible();
     assertThat(role(AriaRole.BUTTON, "Back")).isVisible();
-    assertThat(role(AriaRole.BUTTON, "See my matches")).isVisible(); // visible only, never clicked here
-    assertThat(planCard("Premium Trial")).hasAttribute("class", SELECTED_CARD);
-    assertThat(planCard("Free")).not().hasAttribute("class", SELECTED_CARD);
+    assertThat(role(AriaRole.BUTTON, "Start my free trial")).isVisible(); // visible only, never clicked
+    assertSelected("Premium");
   }
 
-  @Story("REG-7 Step 4 offers Premium Trial and Free")
+  @Story("REG-7 Step 4 offers Free, Basic and Premium")
   @Test(priority = 7, description = "REG-7 Free can be selected")
   public void reg7_freeCanBeSelected() {
     walkToStep(4, "/signup");
     planCard("Free").click();
-    assertThat(planCard("Free")).hasAttribute("class", SELECTED_CARD);
-    assertThat(planCard("Premium Trial")).not().hasAttribute("class", SELECTED_CARD);
+    assertSelected("Free");
+    assertThat(role(AriaRole.BUTTON, "Join for free")).isVisible(); // visible only, clicked only in reg9
   }
 
-  @Story("REG-7 Step 4 offers Premium Trial and Free")
+  @Story("REG-7 Step 4 offers Free, Basic and Premium")
+  @Test(priority = 7, description = "REG-7 Basic can be selected")
+  public void reg7_basicCanBeSelected() {
+    walkToStep(4, "/signup");
+    planCard("Basic").click();
+    assertSelected("Basic");
+    assertThat(role(AriaRole.BUTTON, "Continue to payment")).isVisible(); // paid plan: NEVER clicked
+  }
+
+  @Story("REG-7 Step 4 offers Free, Basic and Premium")
   @Test(priority = 7, description = "REG-7 plan=free preselects Free")
   public void reg7_planFreePreselectsFree() {
     walkToStep(4, "/signup?plan=free");
-    assertThat(planCard("Free")).hasAttribute("class", SELECTED_CARD);
-    assertThat(planCard("Premium Trial")).not().hasAttribute("class", SELECTED_CARD);
+    assertSelected("Free");
   }
 
-  @Story("REG-7 Step 4 offers Premium Trial and Free")
+  @Story("REG-7 Step 4 offers Free, Basic and Premium")
   @Test(priority = 7, description = "REG-7 plan=trial preselects Premium Trial")
   public void reg7_planTrialPreselectsTrial() {
     walkToStep(4, "/signup?plan=trial");
-    assertThat(planCard("Premium Trial")).hasAttribute("class", SELECTED_CARD);
-    assertThat(planCard("Free")).not().hasAttribute("class", SELECTED_CARD);
+    assertSelected("Premium");
   }
 
-  @Story("REG-7 Step 4 offers Premium Trial and Free")
+  @Story("REG-7 Step 4 offers Free, Basic and Premium")
+  @Issue("D16")
+  @Test(priority = 7, expectedExceptions = AssertionFailedError.class,
+        description = "REG-7 plan=basic preselects Basic -- KNOWN BUG D16: plan=basic selects Premium")
+  public void reg7_planBasicPreselectsBasic() {
+    try {
+      walkToStep(4, "/signup?plan=basic");
+    } catch (AssertionFailedError e) {
+      // precondition with TestNG: a broken wizard must never pass as the known bug
+      Assert.fail("precondition: step 4 not reached -- " + e.getMessage());
+    }
+    assertThat(planCard("Basic")).hasAttribute("aria-pressed", "true", QUICK_ATTR);
+  }
+
+  @Story("REG-7 Step 4 offers Free, Basic and Premium")
   @Test(priority = 7, description = "REG-7 Back keeps the wizard data")
   public void reg7_backKeepsWizardData() {
     walkToStep(4, "/signup");
     planCard("Free").click();
-    assertThat(planCard("Free")).hasAttribute("class", SELECTED_CARD);
+    assertSelected("Free");
     role(AriaRole.BUTTON, "Back").click();
     assertThat(stepLabel(3)).isVisible(STEP);
     // The chip of the chosen role sits inside <main>; the option list is portaled outside it.
@@ -167,8 +190,7 @@ public class RegistrationTest extends BaseTest {
           .getByText(ROLE, new Locator.GetByTextOptions().setExact(true))).isVisible();
     continueButton().click();
     assertThat(stepLabel(4)).isVisible(STEP);
-    assertThat(planCard("Free")).hasAttribute("class", SELECTED_CARD);
-    assertThat(planCard("Premium Trial")).not().hasAttribute("class", SELECTED_CARD);
+    assertSelected("Free");
   }
 
   // REG-8
@@ -205,18 +227,23 @@ public class RegistrationTest extends BaseTest {
     TestUser user = TestUser.generate(); // SkipException without -Dqa.mailbox: nothing is created
     walkToStep(4, "/signup?plan=free", user.firstName, "Journey", user.email, user.currentPassword);
 
-    Locator free = planCard("Free");
-    Locator trial = planCard("Premium Trial");
-    free.click();
-    assertThat(free).hasAttribute("class", SELECTED_CARD);
-    // GUARD: with Premium Trial selected the site starts the Stripe trial at once. Stop before the submit.
-    Assert.assertTrue(isSelected(free), "Free card is not selected -- account NOT created");
-    Assert.assertFalse(isSelected(trial), "Premium Trial card is selected -- account NOT created");
+    planCard("Free").click();
+    assertSelected("Free");
+    // GUARD: Premium starts a trial, Basic leads to "Continue to payment". Stop before the submit unless
+    // Free is the only selected card and the button says "Join for free".
+    for (String paid : PAID_PLANS) {
+      Assert.assertEquals(planCard(paid).getAttribute("aria-pressed"), "false",
+            paid + " card is selected -- account NOT created");
+    }
+    Assert.assertEquals(planCard("Free").getAttribute("aria-pressed"), "true",
+          "Free card is not selected -- account NOT created");
+    Locator join = role(AriaRole.BUTTON, "Join for free");
+    Assert.assertTrue(join.isVisible(), "no \"Join for free\" button -- account NOT created");
 
     user.accountCreated = false;
     user.submitted = true; // an account may exist from the click on; cleanup must then never drop it silently
     user.save(); // before the click, so JourneyCleanup finds the user even if the run dies right after it
-    role(AriaRole.BUTTON, "See my matches").click();
+    join.click();
 
     assertThat(page).hasURL(DASHBOARD_URL, new PageAssertions.HasURLOptions().setTimeout(60_000));
     user.accountCreated = true;
@@ -328,16 +355,18 @@ public class RegistrationTest extends BaseTest {
   }
 
   /**
-   * Plan cards are plain buttons without aria-pressed / aria-checked (candidate defect D12). The Free card
-   * is the button holding the exact text "Free"; a substring match would also hit "7 days free".
+   * A plan card is the button holding the exact text "Free", "Basic" or "Premium"; a substring match would also
+   * hit "Join for free" and "7 days free". The cards expose their selection with aria-pressed (D12 fixed).
    */
   private Locator planCard(String label) {
     return page.getByRole(AriaRole.BUTTON).filter(new Locator.FilterOptions().setHas(exactText(label)));
   }
 
-  private static boolean isSelected(Locator card) {
-    String cls = card.getAttribute("class");
-    return cls != null && Arrays.asList(cls.trim().split("\\s+")).contains("border-primary");
+  /** {@code selected} has aria-pressed="true", the other two plan cards "false". */
+  private void assertSelected(String selected) {
+    for (String plan : PLANS) {
+      assertThat(planCard(plan)).hasAttribute("aria-pressed", plan.equals(selected) ? "true" : "false");
+    }
   }
 
   /** Non-GET to hirion.ch or the auth backend, or any server-function call. Stripe and others are ignored. */

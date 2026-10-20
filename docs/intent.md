@@ -124,6 +124,8 @@ D11  /signup step 1 accepts an invalid email such as "qa@": only "not empty" and
 D12  /signup step 4: the Premium Trial / Free cards do not expose which one is selected (no
      aria-pressed / aria-checked / role=radio); the selection is only visual.
                                                    (candidate, from the site code 2026-09-29, confirm live)
+     FIXED (seen live 2026-10-19): the cards (now Free / Basic / Premium) expose aria-pressed; REG-7 checks
+     it (change update-plans-and-pricing).
 
 D13  /signup step 3: the role picker is <button role="combobox"> with the visible text "Add" but no
      accessible name (a combobox does not take its name from content, no aria-label); a screen reader
@@ -133,17 +135,23 @@ D14  Settings > Profile: First name, Last name and Email show a "*" in the label
      have no required / aria-required, so browsers and screen readers do not know they are required.
                                                    (from the site code 2026-09-30, human decision: KNOWN BUG)
      FIXED (seen live 2026-10-06): regular test now (SET-2, change close-fixed-defects-d6-d10-d14).
+D16  /signup?plan=basic, the target of the home page link "Choose Basic", does not preselect Basic on step 4:
+     the page drops plan=basic from the URL, Premium is selected and the button says "Start my free trial".
+                                                   (CONFIRMED live 2026-10-20 by a guest probe; KNOWN BUG,
+                                                   REG-7, change update-plans-and-pricing)
+     (D15 is not used here: the 2026-10-15 candidate "saved job shown for a moment after reload" was decided
+     by the human outside this file.)
 
 ## Done means
 - `pnpm check` exits 0 and ends with non-zero counters: specs: 9 · active changes: 0 · archived: 4.
 - Every change has commits in the order: spec -> RED -> GREEN -> archive.
-- `mvn test -Dsuite=testng-all.xml` is green; open known defects (D1) are KNOWN BUG tests;
-  defects fixed by the site (D2, D4-D6, D10, D14) are regular tests.
+- `mvn test -Dsuite=testng-all.xml` is green; open known defects (D1, D16) are KNOWN BUG tests;
+  defects fixed by the site (D2, D4-D6, D10, D12, D14) are regular tests.
 
 ## Not doing
 - OAuth (Google / Apple), real payments, real contact-form delivery.
-- Starting Premium Trial: signup tests MUST select Free on step 4 (or open /signup?plan=free),
-  because Premium Trial is the default.
+- Starting a trial or a payment: signup tests MUST select Free on step 4 (or open /signup?plan=free) and
+  click only "Join for free", because Premium (trial) is the default and Basic leads to "Continue to payment".
 - Assertions on the text of AI answers (Tailor my CV, Cover Letter).
 - Tests against a real personal account.
 
