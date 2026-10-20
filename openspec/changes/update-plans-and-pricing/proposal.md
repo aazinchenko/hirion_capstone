@@ -24,6 +24,13 @@ clicked the submit button):
 
 The nightly journey would fail at REG-9 (its guard stops before the submit, so no account would be created).
 
+A local journey run with these changes on 2026-10-20 (human's "да") then showed the third change of the site:
+REG-9 created the account with "Join for free", but a Free user's Job Feed is now a locked teaser ("We found 2
+jobs for you", blurred rows hidden from assistive technology, "Unlock with Basic" and "See all plans" ->
+`/settings?section=plan`), with no "View job", "Save" or "Hide". Seven dashboard tests failed with "no job card
+in the Job Feed after 30 s". The human decided (2026-10-20) to extend this change: DASH-2 checks the teaser,
+DASH-4/5/6/10/11 are removed for Free.
+
 ## What Changes
 
 - MODIFIED `PUB-2` (spec `home-page`): new FAQ answer text.
@@ -36,6 +43,8 @@ The nightly journey would fail at REG-9 (its guard stops before the submit, so n
   `aria-pressed`; submit button names per plan; new scenarios "Basic can be selected" and "plan=basic
   preselects Basic" (known defect D16).
 - MODIFIED `REG-8` and `REG-9` (spec `signup`): the submit button is "Join for free".
+- REMOVED `DASH-2 Job card actions` and ADDED `DASH-2 Free Job Feed is a locked teaser` (spec `dashboard`);
+  REMOVED `DASH-4`, `DASH-5`, `DASH-6`, `DASH-10`, `DASH-11`: the job actions need the paid plan Basic.
 - Tests: `SmokeTest` PUB-2 / PUB-3 / PUB-5, `RegistrationTest` REG-7 / REG-9 and the REG-9 guard (Free selected,
   Basic and Premium not, button "Join for free"), `TestUser` comments.
 - Docs: D12 FIXED (cards expose `aria-pressed`), new KNOWN BUG D16; counts in README / current-state.
@@ -50,11 +59,13 @@ The nightly journey would fail at REG-9 (its guard stops before the submit, so n
 
 - `home-page`: PUB-2 and PUB-5 modified, PUB-3 replaced (removed + added under a new name).
 - `signup`: REG-7 (renamed), REG-8, REG-9.
+- `dashboard`: DASH-2 replaced; DASH-4, DASH-5, DASH-6, DASH-10, DASH-11 removed.
 
 ## Impact
 
-- Public suite stays 57 tests (pub3 Quarterly removed, pub5 Basic CTA added); journey 40 -> 42 (REG-7 "Basic can
-  be selected" and the KNOWN BUG D16 test). Full suite 97 -> 99.
+- Public suite stays 57 tests (pub3 Quarterly removed, pub5 Basic CTA added); journey 40 -> 36 (REG-7 +2:
+  "Basic can be selected" and the KNOWN BUG D16 test; Dashboard 12 -> 6: dash4, dash5 x2, dash6, dash10, dash11
+  deleted, dash2 rewritten). Full suite 97 -> 93. D8 is no longer observable for a Free user.
 - Safety: REG-9 is still the only test that clicks a submit button on step 4, and only "Join for free" with
   Free selected. "Start my free trial" and "Continue to payment" are never clicked.
 - Verification: public suite and the REG-7 guest tests locally (no account); one journey run with a real test

@@ -36,19 +36,28 @@ Evidence, all as a guest without an account (proposal.md "Why"):
    then `user.save()` and the click on "Join for free". Alternative "click the button whatever its name" was
    rejected: Basic leads to "Continue to payment".
 3. **D16 as a KNOWN BUG.** `reg7_planBasicPreselectsBasic` uses `expectedExceptions = AssertionFailedError.class`
-   and "KNOWN BUG D16" in the description, a 3 s assertion timeout (`QUICK`), and checks its precondition with
+   and "KNOWN BUG D16" in the description, a 3 s assertion timeout (`QUICK_ATTR`), and checks its precondition with
    TestNG: if `walkToStep` throws an `AssertionFailedError`, the test rethrows it as `Assert.fail(...)`
    (`java.lang.AssertionError`), so a broken wizard is never mistaken for the known bug.
 4. **PUB-3 locators.** Exact texts inside `#pricing` (`text(pricing, "CHF 10")`); "/year" and "/month" appear
    twice, so the test checks `.first()` for visibility and `hasCount(2)` for the unit.
 5. **Requirement names.** `@Story` labels follow the new names ("PUB-3 Pricing shows plans per billing period",
    "REG-7 Step 4 offers Free, Basic and Premium"); test descriptions keep the scenario names.
+6. **Free Job Feed teaser (DASH-2).** Heading by role (`^We found (\d+) jobs? for you$`); the rows are
+   `aria-hidden`, so they are found by text: the match percentages `^\d+%$` inside `<main>`, count = N from the
+   heading. "Hidden and blurred" is read in the browser for the first percentage: its closest
+   `[aria-hidden="true"]` ancestor exists and the row's text block has a CSS `filter` containing `blur`.
+   Links by role and exact name, checked by `href` only; "Unlock with Basic" and "See all plans" are never
+   clicked. No button "View job", "Save" or "Hide" inside `<main>`. All card helpers (`cards`, `feedCards`,
+   `pickCard`, `usedTitles`) are deleted with the tests that used them.
 
 ## Risks / Trade-offs
 
 - [The site changes plans again] → the PUB-3 / REG-7 tests fail on text, not silently.
 - [The REG-9 guard is wrong] → it fails before `user.save()` and the click: no account, no payment.
 - [D16 is intended behaviour] → open question for the human; the test is one line to flip.
+- [Fewer dashboard checks] DASH-4/5/6/10/11 cannot run without a paid plan → recorded as removed with the reason;
+  a paid-plan journey stays a separate decision (`docs/pro-journey-plan-draft.md`).
 
 ## Migration Plan
 
