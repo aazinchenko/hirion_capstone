@@ -18,5 +18,10 @@
   `[PROBE] /signup?plan=basic` -> `Free aria-pressed=false`, `Basic aria-pressed=false`, `Premium aria-pressed=true`,
   `buttons=[Back, Start my free trial]`; `/signup` after a click on Basic -> `buttons=[Back, Continue to payment] Basic=true`;
   after "Monthly" -> `monthly prices=[CHF 0, CHF 3, CHF 15] units=[/month, /month]`.
+- 2026-10-20 first `pnpm check` with the new tests: `Tests run: 57, Failures: 1` -- `pub5_basicPlanCta`
+  "Page URL expected to match regex: /signup\?(.*&)?plan=basic(&.*)?$ Received: https://hirion.ch/signup".
+  Browser, guest: opening `https://hirion.ch/signup?plan=basic` -> `location.href` "https://hirion.ch/signup";
+  `/signup?plan=free` keeps its query. Spec amended: the Basic CTA scenario checks the link `href`, D16 also
+  covers the dropped parameter.
 - `pnpm exec openspec validate update-plans-and-pricing --strict` -> "Change 'update-plans-and-pricing' is valid"
   (a first draft with MODIFIED PUB-3 was refused: "omits scenario(s) the current spec still has: "Quarterly price"").

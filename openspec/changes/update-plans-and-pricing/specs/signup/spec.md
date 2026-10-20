@@ -13,7 +13,7 @@ others). The submit button SHALL say what happens next: "Join for free" with Fre
 trial" with Premium selected, "Continue to payment" with Basic selected.
 When `/signup` is opened without a `plan` parameter, Premium SHALL be the selected card. With `?plan=free`
 Free SHALL be selected, with `?plan=trial` Premium, and with `?plan=basic` Basic. (Known defect D16, seen
-live 2026-10-20: with `?plan=basic` the site selects Premium.) "Back" on step 4 SHALL return to step 3
+live 2026-10-20: the signup page drops `plan=basic` from the URL and selects Premium.) "Back" on step 4 SHALL return to step 3
 without losing the wizard data: the chosen target role stays, and "Continue" SHALL lead to step 4 again
 with the chosen plan still selected. (Seen live 2026-10-19 and 2026-10-20 by guest runs that never clicked
 the submit button.)

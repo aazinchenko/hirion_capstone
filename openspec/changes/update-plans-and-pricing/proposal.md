@@ -19,7 +19,8 @@ clicked the submit button):
 - The submit button is "Join for free" with Free selected, "Start my free trial" with Premium selected and
   "Continue to payment" with Basic selected. The button "See my matches" is gone.
 - No `plan` parameter and `?plan=trial` select Premium; `?plan=free` selects Free; `?plan=basic` selects
-  **Premium**, not Basic, although the home page link "Choose Basic" leads there.
+  **Premium**, not Basic, although the home page link "Choose Basic" leads there. The signup page also drops
+  `plan=basic` from the URL (`/signup?plan=basic` becomes `/signup`; `plan=free` stays), seen 2026-10-20.
 
 The nightly journey would fail at REG-9 (its guard stops before the submit, so no account would be created).
 
@@ -29,7 +30,8 @@ The nightly journey would fail at REG-9 (its guard stops before the submit, so n
 - REMOVED `PUB-3 Pricing shows prices per billing period` and ADDED `PUB-3 Pricing shows plans per billing
   period` (spec `home-page`): periods Monthly / Yearly, three plans, new prices. A MODIFIED block cannot drop
   the scenario "Quarterly price" (`openspec validate` refuses it), so the requirement is replaced.
-- MODIFIED `PUB-5` (spec `home-page`): new scenario "Basic plan CTA" (`/signup?plan=basic`).
+- MODIFIED `PUB-5` (spec `home-page`): new scenario "Basic plan CTA": the link's `href` is
+  `/signup?plan=basic` (following it lands on `/signup` without the parameter, part of D16).
 - RENAMED + MODIFIED `REG-7` (spec `signup`): "Step 4 offers Free, Basic and Premium"; selection through
   `aria-pressed`; submit button names per plan; new scenarios "Basic can be selected" and "plan=basic
   preselects Basic" (known defect D16).
