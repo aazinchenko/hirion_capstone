@@ -14,5 +14,5 @@
 ## 3. Gate
 
 - [x] 3.1 Guest run without `-Dqa.mailbox`: `mvn test "-Dtest=RegistrationTest#reg7_*"`. Verify: 7 tests, 0 failures (D16 passes as the expected failure); quote in `change-log.md`.
-- [ ] 3.2 One journey run with a real test account (human: local with `-Dqa.mailbox` on "да", or CI). Verify: `Tests run: 36, Failures: 0`, JourneyCleanup "deleted"; quote in `change-log.md`.
+- [x] 3.2 One journey run with a real test account (human: local with `-Dqa.mailbox` on "да", or CI). Verify: `Tests run: 36, Failures: 0`, JourneyCleanup "deleted"; quote in `change-log.md`.
 - [x] 3.3 Run `pnpm exec openspec validate update-plans-and-pricing --strict` and `pnpm check`; quote the summary lines in `change-log.md` (validate "is valid"; public suite 57 tests, 0 failures; spec:check ok).

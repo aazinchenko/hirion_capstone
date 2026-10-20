@@ -71,3 +71,7 @@
   is updated after the archive, when the main specs change.)
 - `pnpm check` exit 0 after the dashboard edits: public `total="57" passed="57" failed="0"`, "spec:check ok --
   specs: 9 · active changes: 1 · archived: 8".
+- 3.2 [x]: local live journey run 2026-10-20 10:26-10:29 CEST (human's "да", `../journey-run-2026-10-20b.log`):
+  `Tests run: 36, Failures: 0, Errors: 0, Skipped: 0`, BUILD SUCCESS; `dash2_freeJobFeedIsLockedTeaser` PASS
+  (19.9 s, the feed is built from the CV first); REG-9 created the account through "Join for free"; JourneyCleanup
+  "deleted: ... no longer signs in"; `.auth` holds only `manual-user.json`.
