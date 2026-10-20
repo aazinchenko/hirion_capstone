@@ -107,6 +107,8 @@ D8   Job titles show "?" instead of characters: "Senior Azure Engineer | ? oder 
                                                                           (CONFIRMED live 2026-09-25)
      Not reproduced 2026-09-30 in the feed of a new Free user: depends on the job ads in the feed,
      so DASH-10 is a regular check, not a KNOWN BUG test.
+     2026-10-20: not observable any more for a Free user (the Job Feed is a locked teaser with blurred,
+     aria-hidden titles); DASH-10 removed in change update-plans-and-pricing.
 D9   Settings > Profile shows "You have unsaved changes" right after load, with no edits;
      switching section opens "Unsaved changes -- Leave without saving?".  (CONFIRMED live 2026-09-25)
      Workaround in tests: open sections via /settings?section=... .

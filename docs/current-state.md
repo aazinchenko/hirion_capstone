@@ -23,10 +23,12 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
 - 2026-10-19/20: the site changed its plans (CI public 51/57). Change 9 `update-plans-and-pricing`: `#pricing`
   Monthly / Yearly with Free / Basic / Premium, new FAQ answer, signup step 4 with three cards (`aria-pressed`,
   D12 fixed) and the submit button "Join for free"; new KNOWN BUG D16 (`?plan=basic` selects Premium).
+  The Free Job Feed is now a locked teaser ("We found N jobs for you", "Unlock with Basic"): DASH-2 checks it,
+  DASH-4/5/6/10/11 removed (they need the paid plan Basic).
 - `pnpm spec:check`: specs 9 · active changes 0 · archived 7; `openspec validate --specs --strict` 9/9.
   Specs: 59 requirements, 93 scenarios.
-- Suites (TestNG counts): public 57; journey 42 (Registration 17, Dashboard 12, Settings 13) + JourneyCleanup;
-  full suite 99.
+- Suites (TestNG counts): public 57; journey 36 (Registration 17, Dashboard 6, Settings 13) + JourneyCleanup;
+  full suite 93.
 - Draft, not started: Pro-user journey plan `docs/pro-journey-plan-draft.md` (needs human decisions, section 7).
 - Known flaky: `BaseTest.closeContext` once threw "Target page, context or browser has been closed" in
   `pnpm check` (public cont3/cont4 skipped); rerun green. Human-owned file, not fixed.
@@ -54,7 +56,7 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
   badge is "87"+"match" (capitals by CSS).
 - Defects: D1 and D16 KNOWN BUG tests; D2, D4, D5, D6, D10, D14 FIXED by the site (seen live 2026-10-06, changes
   `close-fixed-defects-d2-d4-d5` and `close-fixed-defects-d6-d10-d14`: regular tests now); D3 closed 2026-10-05 (mobile header without "Sign in" is the
-  intended design, QA-2 removed); D7 closed (Phone free text by design); D8 and D9 regular checks (data-dependent);
+  intended design, QA-2 removed); D7 closed (Phone free text by design); D8 not observable for Free since 2026-10-20 (DASH-10 removed), D9 regular check (data-dependent);
   D11 confirmed live (qa@ passes step 1); D12 FIXED (seen live 2026-10-19); D13 candidate (a11y); D14 FIXED (see above;
   the aria-hidden "*" in the label still breaks getByLabel exact -> use role TEXTBOX).
 - DASH-8 (Save rate) and photo upload are out of change 3; plan AUTH-03 lives in change 3 as AUTH-6.

@@ -53,7 +53,8 @@ Budget vs actual: `docs/intent.md` "Budget".
   `close-fixed-defects-d6-d10-d14`).
 - Not a defect: D7, Phone is free text by design (`ecfe8f5`); D3, the mobile header without "Sign in" is
   the intended design (human decision 2026-10-05, change `remove-qa2-mobile-nav`, QA-2 removed).
-- Regular checks instead of KNOWN BUG, because they did not show on a new Free user: D8 (`3511779`),
+- Regular checks instead of KNOWN BUG, because they did not show on a new Free user: D8 (`3511779`; removed
+  2026-10-20 with DASH-10: a Free user sees only blurred titles),
   D9 (`8467dce`).
 - Recorded, no test in these changes: D11 (confirmed live), D13 (`2d5dc5d`, `421abe4`). D12 is fixed by the site
   (seen live 2026-10-19: the plan cards expose aria-pressed) and REG-7 now checks it.

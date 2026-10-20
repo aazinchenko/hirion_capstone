@@ -4,22 +4,16 @@ import ch.hirion.support.AuthenticatedTest;
 import ch.hirion.support.TestUser;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.PlaywrightException;
 import com.microsoft.playwright.assertions.LocatorAssertions;
 import com.microsoft.playwright.options.AriaRole;
-import com.microsoft.playwright.options.WaitForSelectorState;
-import com.microsoft.playwright.options.WaitUntilState;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.testng.Assert;
-import org.testng.SkipException;
 import org.testng.annotations.Test;
 
-import java.net.URI;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
@@ -28,10 +22,9 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
  * Group DASH: /dashboard of the registered test user, openspec/changes/add-user-journey/specs/dashboard.
  *
  * <p>Starts signed in from .auth/user.json (written by reg9) and is skipped when group "registered" did not
- * pass. The order is set by priority: the empty lists (DASH-3) come before Save (DASH-4), the read-only DASH-10
- * and DASH-11 run before DASH-4 while the feed is still full (a new Free user may get only two jobs), and DASH-4,
- * DASH-5 and DASH-6 each act on a different card (change stabilize-dashboard-feed). Never clicked: "Tailor my CV", "Write Cover Letter",
- * "Help me stand out", "Upgrade to Pro". "View job" is clicked only in dash11, "Save preferences" only in
+ * pass. A Free user's Job Feed is a locked teaser (DASH-2, change update-plans-and-pricing): there are no job
+ * cards, so Save / Hide / View job (former DASH-4, 5, 6, 10, 11) need the paid plan Basic and are not tested.
+ * Never clicked: "Unlock with Basic", "See all plans", "Upgrade to Pro". "Save preferences" is clicked only in
  * dash12. Emails and passwords are never printed.
  */
 @Epic("User journey")
@@ -39,32 +32,28 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 public class DashboardTest extends AuthenticatedTest {
 
   private static final Pattern DASHBOARD_URL = Pattern.compile("/dashboard([?#].*)?$");
-  /** The badge is <span>87</span><span>match</span>: no space, capitals only by CSS. */
-  private static final Pattern MATCH_SCORE = Pattern.compile("^\\d+\\s*match$", Pattern.CASE_INSENSITIVE);
-  /** D8: a "?" next to a letter, a space or another "?" stands in for a lost character. */
-  private static final Pattern REPLACEMENT_CHAR =
-        Pattern.compile("[A-Za-z\\u00C0-\\u017F\\s?]\\?|\\?[A-Za-z\\u00C0-\\u017F\\s?]");
   private static final List<String> TABS =
         List.of("Job Feed", "Saved", "Applied", "Archive", "Analytics", "Preferences");
-  private static final List<String> CARD_BUTTONS = List.of("View job", "Save", "Hide");
-  /** Pro-only: the feed passes the AI handler only when isPro, so a Free user's cards have none. */
-  private static final List<String> AI_BUTTONS = List.of("Tailor my CV", "Write Cover Letter", "Help me stand out");
+  /** The teaser heading; group 1 is the number of locked jobs. */
+  private static final Pattern TEASER_HEADING = Pattern.compile("^We found (\\d+) jobs? for you$");
+  /** Each locked row ends with its match score, e.g. <span>88%</span>. */
+  private static final Pattern MATCH_PERCENT = Pattern.compile("^\\d+%$");
+  /** Both teaser links point to the plan section of Settings; neither is clicked. */
+  private static final List<String> TEASER_LINKS = List.of("Unlock with Basic", "See all plans");
+  /** Job actions of a paid plan: a Free user's Job Feed has none of them. */
+  private static final List<String> JOB_ACTIONS = List.of("View job", "Save", "Hide");
   private static final List<String> PREFERENCE_FIELDS = List.of("Roles", "Work mode", "Locations", "Industries",
         "Company type", "Employment eligibility", "Seniority", "Languages");
   private static final String GATE_TEXT = "See your match analytics, Swiss salary benchmarks, and personalized"
         + " opportunities to land roles faster.";
   /** The first feed of a new user is built from the CV analysis and can take a while. */
-  private static final double FEED_TIMEOUT = 30_000;
-  private static final LocatorAssertions.HasCountOptions FEED_SETTLED =
-        new LocatorAssertions.HasCountOptions().setTimeout(FEED_TIMEOUT);
+  private static final LocatorAssertions.IsVisibleOptions FEED_LOADED =
+        new LocatorAssertions.IsVisibleOptions().setTimeout(30_000);
   private static final LocatorAssertions.IsVisibleOptions SLOW =
         new LocatorAssertions.IsVisibleOptions().setTimeout(15_000);
   /** The Pro gate renders only after the analytics data has loaded (> 5 s in the first live run). */
   private static final LocatorAssertions.IsVisibleOptions ANALYTICS_LOADED =
         new LocatorAssertions.IsVisibleOptions().setTimeout(30_000);
-
-  /** Titles already saved / hidden by an earlier test: DASH-4, DASH-5 and DASH-6 each take a different card. */
-  private final Set<String> usedTitles = new HashSet<>();
 
   // ---------------------------------------------------------------------------------------------
   // DASH-1
@@ -82,22 +71,35 @@ public class DashboardTest extends AuthenticatedTest {
 
   // DASH-2
 
-  @Story("DASH-2 Job card actions")
-  @Test(priority = 2, dependsOnGroups = "registered", description = "DASH-2 First job card")
-  public void dash2_firstJobCard() {
+  @Story("DASH-2 Free Job Feed is a locked teaser")
+  @Test(priority = 2, dependsOnGroups = "registered", description = "DASH-2 Locked teaser for a Free user")
+  public void dash2_freeJobFeedIsLockedTeaser() {
     openDashboard();
-    Locator card = feedCards(1).first();
-    assertThat(card.getByText(MATCH_SCORE)).isVisible();
-    for (String name : CARD_BUTTONS) {
-      assertThat(cardButton(card, name)).isVisible();
+    Locator heading = page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(TEASER_HEADING));
+    assertThat(heading).isVisible(FEED_LOADED);
+    Matcher found = TEASER_HEADING.matcher(heading.innerText().trim());
+    Assert.assertTrue(found.matches(), "teaser heading: " + heading.innerText());
+    int jobs = Integer.parseInt(found.group(1));
+
+    // The rows are aria-hidden, so they are found by text: one match score per locked job.
+    Locator scores = main().getByText(MATCH_PERCENT);
+    assertThat(scores).hasCount(jobs);
+    // Read in the browser: the row sits inside an aria-hidden block and its title block is blurred.
+    Object lockedRow = scores.first().evaluate("score => !!score.closest('[aria-hidden=\"true\"]')"
+          + " && getComputedStyle(score.previousElementSibling).filter.includes('blur')");
+    Assert.assertEquals(lockedRow, Boolean.TRUE, "the first teaser row is not hidden and blurred");
+
+    assertThat(main().getByText(Pattern.compile("^Unlock them with Basic"))).isVisible();
+    for (String name : TEASER_LINKS) {
+      assertThat(main().getByRole(AriaRole.LINK, exactName(name)))
+            .hasAttribute("href", "/settings?section=plan");
     }
-    for (String name : AI_BUTTONS) {
-      assertThat(cardButton(card, name)).hasCount(0); // Free user: no AI buttons at all
+    for (String name : JOB_ACTIONS) {
+      assertThat(main().getByRole(AriaRole.BUTTON, exactName(name))).hasCount(0);
     }
-    assertThat(cardButton(card, "Hide")).hasAttribute("aria-haspopup", "menu");
   }
 
-  // DASH-3 (before DASH-4: the lists of a fresh user are empty)
+  // DASH-3
 
   @Story("DASH-3 Empty lists of a new user")
   @Test(priority = 3, dependsOnGroups = "registered", description = "DASH-3 Empty Saved, Applied and Archive")
@@ -109,61 +111,6 @@ public class DashboardTest extends AuthenticatedTest {
     assertThat(exactText("No applications tracked yet")).isVisible();
     tab("Archive").click();
     assertThat(exactText("No archived jobs yet")).isVisible();
-  }
-
-  // DASH-4
-
-  @Story("DASH-4 Save moves a job to Saved")
-  @Test(priority = 6, dependsOnGroups = "registered", description = "DASH-4 Save the first job")
-  public void dash4_saveMovesJob() {
-    openDashboard();
-    String title = pickCard();
-    cardButton(cardTitled(title), "Save").click();
-    // Checked before the tab click: while the card is still there its button is also named "Saved".
-    assertThat(cardTitled(title)).hasCount(0);
-    tab("Saved").click();
-    assertThat(exactText(title).first()).isVisible();
-    tab("Job Feed").click();
-    assertThat(cardTitled(title)).hasCount(0);
-  }
-
-  // DASH-5
-
-  @Story("DASH-5 Already applied moves a job to Applied")
-  @Test(priority = 7, dependsOnGroups = "registered", description = "DASH-5 Hide menu items")
-  public void dash5_hideMenuItems() {
-    openDashboard();
-    String title = pickCard(); // only opens the menu, so the card stays in the feed and is not marked used
-    usedTitles.remove(title);
-    cardButton(cardTitled(title), "Hide").click();
-    assertThat(page.getByRole(AriaRole.MENU)).isVisible();
-    assertThat(role(AriaRole.MENUITEM, "Already applied")).isVisible();
-    assertThat(role(AriaRole.MENUITEM, "Not relevant")).isVisible();
-    page.keyboard().press("Escape"); // close without choosing
-  }
-
-  @Story("DASH-5 Already applied moves a job to Applied")
-  @Test(priority = 8, dependsOnGroups = "registered", description = "DASH-5 Mark a job as already applied")
-  public void dash5_alreadyAppliedMovesJob() {
-    openDashboard();
-    String title = pickCard();
-    cardButton(cardTitled(title), "Hide").click();
-    role(AriaRole.MENUITEM, "Already applied").click();
-    assertThat(cardTitled(title)).hasCount(0);
-    tab("Applied").click();
-    assertThat(exactText(title).first()).isVisible();
-  }
-
-  // DASH-6
-
-  @Story("DASH-6 Not relevant removes a job from the feed")
-  @Test(priority = 9, dependsOnGroups = "registered", description = "DASH-6 Mark a job as not relevant")
-  public void dash6_notRelevantRemovesJob() {
-    openDashboard();
-    String title = pickCard();
-    cardButton(cardTitled(title), "Hide").click();
-    role(AriaRole.MENUITEM, "Not relevant").click();
-    assertThat(cardTitled(title)).hasCount(0);
   }
 
   // DASH-7 (Free user: the Pro gate; "Upgrade to Pro" is checked, never clicked)
@@ -219,45 +166,8 @@ public class DashboardTest extends AuthenticatedTest {
     assertThat(page.getByRole(AriaRole.MAIN).getByText("Remote", exactOptions())).isVisible(SLOW);
   }
 
-  // DASH-11 (the only test that clicks "View job")
-
-  @Story("DASH-11 View job opens the vacancy in a new tab")
-  @Test(priority = 5, dependsOnGroups = "registered", description = "DASH-11 View job opens an external tab")
-  public void dash11_viewJobOpensExternalTab() {
-    openDashboard();
-    Locator viewJob = cardButton(feedCards(1).first(), "View job");
-    // "View job" is a button calling window.open(url, "_blank"), not a link.
-    Page vacancy = context.waitForPage(viewJob::click);
-    vacancy.waitForURL(url -> !url.startsWith("about:"), new Page.WaitForURLOptions()
-          .setTimeout(30_000).setWaitUntil(WaitUntilState.COMMIT));
-    String host = URI.create(vacancy.url()).getHost();
-    vacancy.close();
-    Assert.assertNotNull(host, "the new tab has no URL host");
-    Assert.assertFalse(host.equals("hirion.ch") || host.endsWith(".hirion.ch"),
-          "View job opened hirion.ch (" + host + ") instead of the external job ad");
-    assertThat(page).hasURL(DASHBOARD_URL);
-  }
-
-  // DASH-10 (D8: a regular check since 2026-09-30)
-
-  /*
-   * D8 depends on the feed content: the "?" titles come from specific job ads, and the first live run
-   * (2026-09-30) had none. So this is a regular check: it turns red whenever a broken title shows up,
-   * which reveals D8 again. The regex can also flag a real question mark in a title: report it to a human.
-   */
-  @Story("DASH-10 Job titles show their characters")
-  @Test(priority = 4, dependsOnGroups = "registered",
-        description = "DASH-10 No replacement characters in job titles")
-  public void dash10_noReplacementCharsInTitles() {
-    openDashboard();
-    Locator cards = feedCards(1); // precondition through TestNG: at least one card in the feed
-    Locator broken = cards.getByRole(AriaRole.HEADING)
-          .filter(new Locator.FilterOptions().setHasText(REPLACEMENT_CHAR));
-    assertThat(broken).hasCount(0);
-  }
-
   // ---------------------------------------------------------------------------------------------
-  // Helpers. None of them clicks an AI button, "Upgrade to Pro", "View job" or "Save preferences".
+  // Helpers. None of them clicks a teaser link, "Upgrade to Pro" or "Save preferences".
 
   private void openDashboard() {
     open("/dashboard");
@@ -277,84 +187,6 @@ public class DashboardTest extends AuthenticatedTest {
   }
 
   /**
-   * A job card is the article holding a "View job" button (no CSS classes). The card role is ASSUMED
-   * (design.md "Locators": decided in RED from the live DOM); a wrong role is healed with heal-loop.sh.
-   */
-  private Locator cards() {
-    return page.getByRole(AriaRole.ARTICLE)
-          .filter(new Locator.FilterOptions().setHas(page.getByRole(AriaRole.BUTTON,
-                new Page.GetByRoleOptions().setName("View job").setExact(true))));
-  }
-
-  private Locator cardTitled(String title) {
-    return cards().filter(new Locator.FilterOptions().setHas(page.getByRole(AriaRole.HEADING,
-          new Page.GetByRoleOptions().setName(title).setExact(true))));
-  }
-
-  private static Locator cardButton(Locator card, String name) {
-    return card.getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(name).setExact(true));
-  }
-
-  private static String titleOf(Locator card) {
-    return card.getByRole(AriaRole.HEADING).first().innerText().trim().replaceAll("\\s+", " ");
-  }
-
-  /** Waits for the feed; fewer than {@code min} cards is a precondition failure (TestNG), not a known bug. */
-  private Locator feedCards(int min) {
-    Locator cards = cards();
-    try {
-      cards.first().waitFor(new Locator.WaitForOptions()
-            .setState(WaitForSelectorState.VISIBLE).setTimeout(FEED_TIMEOUT));
-    } catch (PlaywrightException e) {
-      Assert.fail("no job card in the Job Feed after " + (int) (FEED_TIMEOUT / 1000) + " s");
-    }
-    Assert.assertTrue(cards.count() >= min, "the Job Feed has fewer than " + min + " job cards");
-    return cards;
-  }
-
-  /**
-   * The first feed card not used by an earlier test whose title is unique in the feed, so "the title is no
-   * longer in the Job Feed" can only mean this job left it. Marks the title as used.
-   *
-   * <p>Right after a reload the feed can show a job an earlier test already saved and remove it a moment later
-   * (live 2026-10-15), which detached an open Hide menu. So it first waits until no used title is shown: that
-   * absence is what DASH-4/5/6 require, a timeout is a real failure. A new Free user may get only two jobs:
-   * when earlier tests used them, the test is skipped, not failed (design.md of stabilize-dashboard-feed).
-   */
-  private String pickCard() {
-    Locator cards;
-    if (usedTitles.isEmpty()) {
-      cards = feedCards(1);
-    } else {
-      cards = cards();
-      try {
-        cards.first().waitFor(new Locator.WaitForOptions()
-              .setState(WaitForSelectorState.VISIBLE).setTimeout(FEED_TIMEOUT));
-      } catch (PlaywrightException e) {
-        throw new SkipException("no job card left in the Job Feed after earlier tests used "
-              + usedTitles.size() + " (a new Free user may get only two jobs)");
-      }
-      for (String used : usedTitles) {
-        assertThat(cardTitled(used)).hasCount(0, FEED_SETTLED);
-      }
-    }
-    int count = cards.count();
-    for (int i = 0; i < count; i++) {
-      String title = titleOf(cards.nth(i));
-      if (!title.isEmpty() && !usedTitles.contains(title) && cardTitled(title).count() == 1) {
-        usedTitles.add(title);
-        return title;
-      }
-    }
-    if (!usedTitles.isEmpty()) {
-      throw new SkipException("no unused job card with a unique title in the Job Feed (" + count
-            + " cards, " + usedTitles.size() + " used by earlier tests)");
-    }
-    Assert.fail("no job card with a unique title in the Job Feed (" + count + " cards)");
-    return null; // unreachable
-  }
-
-  /**
    * The Work mode picker: a combobox with the visible text "Add work mode" and, like D13 on signup step 3,
    * probably no accessible name, so it is matched by role + exact visible text.
    */
@@ -366,6 +198,14 @@ public class DashboardTest extends AuthenticatedTest {
   private Locator notifications() {
     return page.getByRole(AriaRole.REGION,
           new Page.GetByRoleOptions().setName(Pattern.compile("^Notifications")));
+  }
+
+  private Locator main() {
+    return page.getByRole(AriaRole.MAIN);
+  }
+
+  private static Locator.GetByRoleOptions exactName(String name) {
+    return new Locator.GetByRoleOptions().setName(name).setExact(true);
   }
 
   private Locator exactText(String text) {

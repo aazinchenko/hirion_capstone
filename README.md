@@ -6,7 +6,7 @@ The project is the capstone of the *Agentic Engineering Crash Course*. Its quest
 
 | | |
 |---|---|
-| **Tests** | 99 automated tests (public 57 + journey 42) after change `update-plans-and-pricing` (2026-10-20); last all-green CI run with 97 tests: [37501768600](https://github.com/aazinchenko/hirion_capstone/actions/runs/37501768600); CI workflow `.github/workflows/tests.yml` |
+| **Tests** | 93 automated tests (public 57 + journey 36) after change `update-plans-and-pricing` (2026-10-20); last all-green CI run with 97 tests: [37501768600](https://github.com/aazinchenko/hirion_capstone/actions/runs/37501768600); CI workflow `.github/workflows/tests.yml` |
 | **Specs** | 9 capabilities, 59 requirements, 93 scenarios (OpenSpec) |
 | **Defects found on the live site** | 13 reported, 8 pinned by `KNOWN BUG` tests; 6 of them (D2, D4, D5, D6, D10, D14) fixed by the site, now regular tests; D1 and D16 still open; D12 fixed by the site |
 | **Timeline** | 25 Sep - 6 Oct 2026, 100 commits |
@@ -27,12 +27,12 @@ The project is the capstone of the *Agentic Engineering Crash Course*. Its quest
 | Auth pages | login and signup forms, 404 page, autocomplete attributes |
 | Quality | mobile layout at 375 px, SEO basics, `robots.txt` |
 
-**Signed-in user journey** (42 tests, one real disposable account per run)
+**Signed-in user journey** (36 tests, one real disposable account per run)
 
 | Area | What the tests check |
 |---|---|
 | Registration | 4-step signup wizard, plan preselection by URL, Back keeps the entered data |
-| Dashboard | job feed, match score, job details, Pro-only features hidden for Free users, preferences |
+| Dashboard | Free user's locked Job Feed teaser, empty lists, Pro-only Analytics gate, preferences |
 | Settings | profile, CV upload, password change, plan and billing view |
 | Account deletion | the test account is deleted at the end and can no longer sign in |
 

@@ -52,3 +52,22 @@
   (`href="/settings?section=plan"`) and "See all plans"; no "View job", "Save" or "Hide". The feed server function
   returns the jobs with `id` "locked-0"/"locked-1", empty company and url, and `locked`; another one returns
   `teaser`. Out of the scope written for this change: needs a human decision on the dashboard spec.
+
+## 2026-10-20: extended to the dashboard (human decision)
+
+- Teaser DOM from the trace of `dash10_noReplacementCharsInTitles`: `H3` "We found 2 jobs for you"; rows inside
+  `DIV aria-hidden="true"`, each `DIV` with a blurred block (title, location) and `SPAN` "88" "%"; `P` "Unlock them
+  with Basic: ..."; `A href="/settings?section=plan"` "Unlock with Basic" and `A href="/settings?section=plan"`
+  "See all plans".
+- Spec commit `9a8215f`: ADDED "DASH-2 Free Job Feed is a locked teaser", REMOVED DASH-2 "Job card actions",
+  DASH-4, DASH-5, DASH-6, DASH-10, DASH-11; `openspec validate --strict` -> "is valid".
+- 1.4 [x]: `grep -c "@Test" src/test/java/ch/hirion/journey/DashboardTest.java` -> 6;
+  `grep -n "View job\|pickCard\|feedCards\|usedTitles" ...DashboardTest.java` -> only the class comment and
+  `JOB_ACTIONS = List.of("View job", "Save", "Hide")` (the "no job action" check); `mvn -q test-compile` exit 0;
+  `pnpm check:locators` -> "PASS: no forbidden patterns".
+- 2.2 [x]: README "93 automated tests (public 57 + journey 36)", "Signed-in user journey (36 tests ...)";
+  current-state "journey 36 (Registration 17, Dashboard 6, Settings 13) + JourneyCleanup; full suite 93"; D8 noted
+  as not observable for Free in intent.md, decisions.md, current-state.md. (README "59 requirements, 93 scenarios"
+  is updated after the archive, when the main specs change.)
+- `pnpm check` exit 0 after the dashboard edits: public `total="57" passed="57" failed="0"`, "spec:check ok --
+  specs: 9 · active changes: 1 · archived: 8".
