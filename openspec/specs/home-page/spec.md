@@ -30,34 +30,32 @@ The expanded answer SHALL be visible.
 
 #### Scenario: Expanded FAQ item shows its answer
 - **WHEN** a guest opens `/` and clicks the button "Is Hirion free to use?" in `#faq`
-- **THEN** `#faq` shows visible text starting with "Yes, start free with weekly job alerts."
+- **THEN** `#faq` shows visible text starting with "Get started for free and upgrade whenever you need"
 
-### Requirement: PUB-3 Pricing shows prices per billing period
+### Requirement: PUB-3 Pricing shows plans per billing period
 The pricing section `#pricing` on `/` SHALL be rendered for guests and Free users (it is hidden for Pro
-users). It SHALL offer the period buttons "Monthly", "Quarterly" and "Yearly", SHALL select "Yearly" by
-default, and SHALL show the paid plan price for the selected period as a big price and a billed line:
-Monthly "CHF 15" / "CHF 15 billed monthly"; Quarterly "CHF 13" / "CHF 39 billed quarterly";
-Yearly "CHF 10" / "CHF 120 billed yearly".
+users). It SHALL offer the period buttons "Monthly" and "Yearly", SHALL select "Yearly" by default, and SHALL
+show the plans Free ("CHF 0"), Basic and Premium. For the selected period the paid plans SHALL show their
+price and unit: Yearly: Basic "CHF 10" and Premium "CHF 120", each with "/year"; Monthly: Basic "CHF 3" and
+Premium "CHF 15", each with "/month". (Seen live 2026-10-19; replaces "PUB-3 Pricing shows prices per billing
+period" after the site removed the period "Quarterly" and the "billed ..." lines.)
 
 #### Scenario: Pricing is visible to a guest
 - **WHEN** a guest with no stored session opens `/`
-- **THEN** the section `#pricing` is visible with the buttons "Monthly", "Quarterly" and "Yearly"
+- **THEN** the section `#pricing` is visible with the buttons "Monthly" and "Yearly" and the plan names
+  "Free", "Basic" and "Premium"
 
 #### Scenario: Yearly is the default period
 - **WHEN** a guest opens `/` and scrolls to `#pricing` without clicking any period
-- **THEN** `#pricing` shows the text "CHF 10" and the text "CHF 120 billed yearly"
+- **THEN** `#pricing` shows the texts "CHF 0", "CHF 10", "CHF 120" and "/year"
 
 #### Scenario: Monthly price
 - **WHEN** a guest opens `/` and clicks the button "Monthly" in `#pricing`
-- **THEN** `#pricing` shows the text "CHF 15" and the text "CHF 15 billed monthly" and does not show "CHF 120 billed yearly"
-
-#### Scenario: Quarterly price
-- **WHEN** a guest opens `/` and clicks the button "Quarterly" in `#pricing`
-- **THEN** `#pricing` shows the text "CHF 13" and the text "CHF 39 billed quarterly"
+- **THEN** `#pricing` shows the texts "CHF 3", "CHF 15" and "/month" and does not show "CHF 120"
 
 #### Scenario: Switching back to Yearly
 - **WHEN** a guest opens `/`, clicks "Monthly", then clicks "Yearly" in `#pricing`
-- **THEN** `#pricing` shows the text "CHF 10" and the text "CHF 120 billed yearly"
+- **THEN** `#pricing` shows the texts "CHF 10", "CHF 120" and "/year"
 
 ### Requirement: PUB-4 Pricing period toggle exposes its state
 Each period button in `#pricing` SHALL expose its selection state to assistive technology with
@@ -69,12 +67,18 @@ Each period button in `#pricing` SHALL expose its selection state to assistive t
 
 ### Requirement: PUB-5 Plan cards link to signup
 Each plan card in `#pricing` SHALL have a call to action link that opens signup with the plan
-preselected: "Start free" SHALL point to `/signup?plan=free` and "Start 7-day free trial" SHALL point to
-`/signup?plan=trial`. Following a CTA SHALL NOT create an account or start a trial by itself.
+preselected: "Start free" SHALL point to `/signup?plan=free`, "Choose Basic" SHALL point to
+`/signup?plan=basic` and "Start 7-day free trial" SHALL point to `/signup?plan=trial`. Following a CTA SHALL
+NOT create an account, start a trial or start a payment by itself.
 
 #### Scenario: Free plan CTA
 - **WHEN** a guest opens `/` and clicks the link "Start free" in `#pricing`
 - **THEN** the browser URL path is `/signup` and its query contains `plan=free`
+
+#### Scenario: Basic plan CTA
+- **WHEN** a guest opens `/` and finds the link "Choose Basic" in `#pricing`
+- **THEN** the link points to `/signup?plan=basic` (its `href`; following it is not checked here because the
+  signup page drops `plan=basic` from the URL, known defect D16)
 
 #### Scenario: Paid plan CTA
 - **WHEN** a guest opens `/` and clicks the link "Start 7-day free trial" in `#pricing`
