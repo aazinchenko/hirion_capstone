@@ -25,7 +25,9 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
   D12 fixed) and the submit button "Join for free"; new KNOWN BUG D16 (`?plan=basic` selects Premium).
   The Free Job Feed is now a locked teaser ("We found N jobs for you", "Unlock with Basic"): DASH-2 checks it,
   DASH-4/5/6/10/11 removed (they need the paid plan Basic).
-- `pnpm spec:check`: specs 9 · active changes 0 · archived 9; `openspec validate --specs --strict` 9/9.
+- 2026-10-20: change 10 `fix-teaser-row-count`: the teaser shows min(N, 3) rows (CI run N = 10 -> 3 rows); journey
+  36/36 live after the fix.
+- `pnpm spec:check`: specs 9 · active changes 0 · archived 10; `openspec validate --specs --strict` 9/9.
   Specs: 54 requirements, 89 scenarios.
 - Suites (TestNG counts): public 57; journey 36 (Registration 17, Dashboard 6, Settings 13) + JourneyCleanup;
   full suite 93.
