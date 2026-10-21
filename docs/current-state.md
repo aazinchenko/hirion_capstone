@@ -54,7 +54,7 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
 
 ## Key facts / decisions (details in docs/intent.md and proposal.md of change 3)
 - Test user is always Free; facts in intent.md about the dashboard/settings were recorded on a trial (Pro)
-  account: Analytics is Pro-only (Free sees "Unlock Hirion Pro"), AI buttons on job cards are Pro-only, the score
+  account: Analytics is Pro-only (Free sees "Unlock Hirion Premium" since 2026-10-21, before "Unlock Hirion Pro"), AI buttons on job cards are Pro-only, the score
   badge is "87"+"match" (capitals by CSS).
 - Defects: D1 and D16 KNOWN BUG tests; D2, D4, D5, D6, D10, D14 FIXED by the site (seen live 2026-10-06, changes
   `close-fixed-defects-d2-d4-d5` and `close-fixed-defects-d6-d10-d14`: regular tests now); D3 closed 2026-10-05 (mobile header without "Sign in" is the

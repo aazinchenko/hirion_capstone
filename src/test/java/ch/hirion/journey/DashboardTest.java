@@ -24,7 +24,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
  * <p>Starts signed in from .auth/user.json (written by reg9) and is skipped when group "registered" did not
  * pass. A Free user's Job Feed is a locked teaser (DASH-2, change update-plans-and-pricing): there are no job
  * cards, so Save / Hide / View job (former DASH-4, 5, 6, 10, 11) need the paid plan Basic and are not tested.
- * Never clicked: "Unlock with Basic", "See all plans", "Upgrade to Pro". "Save preferences" is clicked only in
+ * Never clicked: "Unlock with Basic", "See all plans", "Upgrade to Premium". "Save preferences" is clicked only in
  * dash12. Emails and passwords are never printed.
  */
 @Epic("User journey")
@@ -116,16 +116,16 @@ public class DashboardTest extends AuthenticatedTest {
     assertThat(exactText("No archived jobs yet")).isVisible();
   }
 
-  // DASH-7 (Free user: the Pro gate; "Upgrade to Pro" is checked, never clicked)
+  // DASH-7 (Free user: the paid-plan gate; "Upgrade to Premium" is checked, never clicked)
 
   @Story("DASH-7 Analytics is Pro-only for a Free user")
   @Test(priority = 10, dependsOnGroups = "registered", description = "DASH-7 Free user sees the Pro gate on Analytics")
   public void dash7_analyticsProGate() {
     openDashboard();
     tab("Analytics").click();
-    assertThat(role(AriaRole.HEADING, "Unlock Hirion Pro")).isVisible(ANALYTICS_LOADED);
+    assertThat(role(AriaRole.HEADING, "Unlock Hirion Premium")).isVisible(ANALYTICS_LOADED);
     assertThat(exactText(GATE_TEXT)).isVisible();
-    Locator upgrade = role(AriaRole.LINK, "Upgrade to Pro");
+    Locator upgrade = role(AriaRole.LINK, "Upgrade to Premium");
     assertThat(upgrade).isVisible();
     assertThat(upgrade).hasAttribute("href", "/settings?section=plan");
   }
@@ -170,7 +170,7 @@ public class DashboardTest extends AuthenticatedTest {
   }
 
   // ---------------------------------------------------------------------------------------------
-  // Helpers. None of them clicks a teaser link, "Upgrade to Pro" or "Save preferences".
+  // Helpers. None of them clicks a teaser link, "Upgrade to Premium" or "Save preferences".
 
   private void openDashboard() {
     open("/dashboard");

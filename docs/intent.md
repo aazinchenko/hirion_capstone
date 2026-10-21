@@ -57,7 +57,8 @@ CONFIRMED live 2026-09-25 (browser, signed-in test account):
   - Job card buttons: View job, Save, Tailor my CV, Write Cover Letter, Hide; match score "NN MATCH".
     (recorded on the trial = Pro account. 2026-09-30, live + site code: a Free user's cards show only
     View job, Save and Hide -- the AI buttons incl. "Help me stand out" are Pro-only; the score badge is
-    "87" + "match" in two spans, capitals only by CSS; Analytics is Pro-only, Free sees "Unlock Hirion Pro".)
+    "87" + "match" in two spans, capitals only by CSS; Analytics is Pro-only, Free sees "Unlock Hirion Pro";
+    renamed to "Unlock Hirion Premium" / "Upgrade to Premium" by 2026-10-21.)
   - "Applied" has no own button: Hide (aria-haspopup=menu) -> role=menu with menuitems
     "Already applied" and "Not relevant".
     - "Already applied": the job leaves the feed and appears in the Applied tab.
