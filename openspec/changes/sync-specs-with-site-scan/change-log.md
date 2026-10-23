@@ -47,5 +47,8 @@
 - 2.2 [x]: `pnpm exec openspec validate sync-specs-with-site-scan --strict` -> "Change 'sync-specs-with-site-scan' is
   valid"; `pnpm check` exit 0 (`../pnpm-check-2026-10-23.log`): "PASS: no forbidden patterns", public
   `total="65" passed="65" failed="0" skipped="0"`, "spec:check ok — specs: 9 · active changes: 1 · archived: 11".
-- 2.1 [ ]: open -- journey run only after the human's "да" (2026-10-23: "journey-прогон — только после моего «да»"),
-  or the next nightly CI run.
+- 2.1 [x]: human "да, запускай journey-прогон (один аккаунт, удаляется JourneyCleanup)" (2026-10-23). Local live
+  journey run 2026-10-23, finished 20:09:05 CEST, 03:01 min (`../journey-run-2026-10-23.log`): `Tests run: 36,
+  Failures: 0, Errors: 0, Skipped: 0`, BUILD SUCCESS; `testng-results.xml` total="36" passed="36";
+  `dash2_freeJobFeedIsLockedTeaser` status="PASS" -- the new link targets are seen live; JourneyCleanup "deleted:
+  ...+hirion-qa-...@gmail.com no longer signs in"; `.auth` holds only `manual-user.json`.

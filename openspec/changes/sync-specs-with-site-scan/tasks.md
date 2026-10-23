@@ -7,5 +7,5 @@
 
 ## 2. Gate
 
-- [ ] 2.1 One journey run with a real test account (only after the human's "да"), or the next nightly CI journey run. Verify: `Tests run: 36, Failures: 0`, DASH-2 PASS, JourneyCleanup "deleted"; quote in `change-log.md`.
+- [x] 2.1 One journey run with a real test account (only after the human's "да"), or the next nightly CI journey run. Verify: `Tests run: 36, Failures: 0`, DASH-2 PASS, JourneyCleanup "deleted"; quote in `change-log.md`.
 - [x] 2.2 Run `pnpm exec openspec validate sync-specs-with-site-scan --strict` and `pnpm check`; quote the summary lines in `change-log.md`.

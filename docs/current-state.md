@@ -34,7 +34,8 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
   `/settings?section=plan&buy=basic` (starts the Basic checkout). Change 12 `sync-specs-with-site-scan` (active):
   MODIFIED DASH-2, AUTH-1 (+ /onboarding, /employer/, /admin); ADDED AUTH-7 (Google / Apple buttons), AUTH-8
   (reset-password without a link); new capability `email-link-pages` LINK-1..3 (survey, unsubscribe, checkout
-  return). Candidates D17-D19 in intent.md. Public 65/65 green; journey run for DASH-2 open (human "да" or CI).
+  return). Candidates D17-D19 in intent.md. Public 65/65 green; live journey 36/36 (2026-10-23 20:09, account deleted); all tasks ticked,
+  waiting for the archive.
 - `pnpm spec:check`: specs 9 · active changes 0 · archived 11; `openspec validate --specs --strict` 9/9.
   Specs: 54 requirements, 89 scenarios.
 - Suites (TestNG counts): public 65 (since change 12; before 57); journey 36 (Registration 17, Dashboard 6,
