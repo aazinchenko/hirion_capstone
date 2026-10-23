@@ -31,13 +31,14 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
   "Upgrade to Premium" (CI journey 35/36 before); journey 36/36 live after the fix; archived by the agent at the
   human's request ("сделай весь цикл сам").
 - 2026-10-23: full site scan (human's request). Nightly CI 92/93: DASH-2 "Unlock with Basic" now points to
-  `/settings?section=plan&buy=basic` (starts the Basic checkout). Change 12 `sync-specs-with-site-scan` (active):
+  `/settings?section=plan&buy=basic` (starts the Basic checkout). Change 12 `sync-specs-with-site-scan`:
   MODIFIED DASH-2, AUTH-1 (+ /onboarding, /employer/, /admin); ADDED AUTH-7 (Google / Apple buttons), AUTH-8
   (reset-password without a link); new capability `email-link-pages` LINK-1..3 (survey, unsubscribe, checkout
-  return). Candidates D17-D19 in intent.md. Public 65/65 green; live journey 36/36 (2026-10-23 20:09, account deleted); all tasks ticked,
-  waiting for the archive.
-- `pnpm spec:check`: specs 9 · active changes 0 · archived 11; `openspec validate --specs --strict` 9/9.
-  Specs: 54 requirements, 89 scenarios.
+  return). Candidates D17-D19 in intent.md. Public 65/65 green; live journey 36/36 (2026-10-23 20:09, account deleted); archived by the agent at
+  the human's request via `pnpm exec openspec archive` (verified: only AUTH-1 and DASH-2 changed, AUTH-7/8 and
+  LINK-1..3 added verbatim).
+- `pnpm spec:check`: specs 10 · active changes 0 · archived 12; `openspec validate --specs --strict` 10/10.
+  Specs: 59 requirements, 97 scenarios.
 - Suites (TestNG counts): public 65 (since change 12; before 57); journey 36 (Registration 17, Dashboard 6,
   Settings 13) + JourneyCleanup; full suite 101.
 - Draft, not started: Pro-user journey plan `docs/pro-journey-plan-draft.md` (needs human decisions, section 7).
