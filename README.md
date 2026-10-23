@@ -6,7 +6,7 @@ The project is the capstone of the *Agentic Engineering Crash Course*. Its quest
 
 | | |
 |---|---|
-| **Tests** | 93 automated tests (public 57 + journey 36) after change `update-plans-and-pricing` (2026-10-20); last all-green CI run with 97 tests: [37501768600](https://github.com/aazinchenko/hirion_capstone/actions/runs/37501768600); CI workflow `.github/workflows/tests.yml` |
+| **Tests** | 101 automated tests (public 65 + journey 36) after change `sync-specs-with-site-scan` (2026-10-23); last all-green CI run with 97 tests: [37501768600](https://github.com/aazinchenko/hirion_capstone/actions/runs/37501768600); CI workflow `.github/workflows/tests.yml` |
 | **Specs** | 9 capabilities, 54 requirements, 89 scenarios (OpenSpec) |
 | **Defects found on the live site** | 13 reported, 8 pinned by `KNOWN BUG` tests; 6 of them (D2, D4, D5, D6, D10, D14) fixed by the site, now regular tests; D1 and D16 still open; D12 fixed by the site |
 | **Timeline** | 25 Sep - 6 Oct 2026, 100 commits |
@@ -16,7 +16,7 @@ The project is the capstone of the *Agentic Engineering Crash Course*. Its quest
 
 ## What is tested
 
-**Public site** (57 tests, run in parallel, no account needed)
+**Public site** (65 tests, run in parallel, no account needed)
 
 | Area | What the tests check |
 |---|---|
@@ -24,7 +24,8 @@ The project is the capstone of the *Agentic Engineering Crash Course*. Its quest
 | Footer and legal pages | every footer link answers HTTP 200; Imprint, Privacy and Terms content |
 | Localization | EN / DE / FR / IT switch, translated headings and buttons |
 | Contact form | validation, honeypot field, confirmation toast; the network is mocked, nothing is really sent |
-| Auth pages | login and signup forms, 404 page, autocomplete attributes |
+| Auth pages | login and signup forms, Google / Apple buttons (never clicked), reset-password and 404 pages, autocomplete attributes, guest redirects |
+| Email link pages | feedback survey (submit with a mocked network), unsubscribe and checkout-return pages without a valid link |
 | Quality | mobile layout at 375 px, SEO basics, `robots.txt` |
 
 **Signed-in user journey** (36 tests, one real disposable account per run)

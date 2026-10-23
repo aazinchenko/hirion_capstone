@@ -13,6 +13,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,8 +41,13 @@ public class DashboardTest extends AuthenticatedTest {
   private static final int TEASER_ROWS = 3;
   /** Each locked row ends with its match score, e.g. <span>88%</span>. */
   private static final Pattern MATCH_PERCENT = Pattern.compile("^\\d+%$");
-  /** Both teaser links point to the plan section of Settings; neither is clicked. */
-  private static final List<String> TEASER_LINKS = List.of("Unlock with Basic", "See all plans");
+  /**
+   * Teaser links and their targets; neither is clicked: "Unlock with Basic" starts the Basic checkout at once
+   * (buy=basic, change sync-specs-with-site-scan).
+   */
+  private static final Map<String, String> TEASER_LINKS = Map.of(
+        "Unlock with Basic", "/settings?section=plan&buy=basic",
+        "See all plans", "/settings?section=plan");
   /** Job actions of a paid plan: a Free user's Job Feed has none of them. */
   private static final List<String> JOB_ACTIONS = List.of("View job", "Save", "Hide");
   private static final List<String> PREFERENCE_FIELDS = List.of("Roles", "Work mode", "Locations", "Industries",
@@ -93,9 +99,9 @@ public class DashboardTest extends AuthenticatedTest {
     Assert.assertEquals(lockedRow, Boolean.TRUE, "the first teaser row is not hidden and blurred");
 
     assertThat(main().getByText(Pattern.compile("^Unlock them with Basic"))).isVisible();
-    for (String name : TEASER_LINKS) {
-      assertThat(main().getByRole(AriaRole.LINK, exactName(name)))
-            .hasAttribute("href", "/settings?section=plan");
+    for (Map.Entry<String, String> link : TEASER_LINKS.entrySet()) {
+      assertThat(main().getByRole(AriaRole.LINK, exactName(link.getKey())))
+            .hasAttribute("href", link.getValue());
     }
     for (String name : JOB_ACTIONS) {
       assertThat(main().getByRole(AriaRole.BUTTON, exactName(name))).hasCount(0);

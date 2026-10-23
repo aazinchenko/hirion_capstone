@@ -29,4 +29,23 @@
 
 ## Evidence for tasks
 
-(none yet)
+- 1.1 [x]: `DashboardTest.dash2_freeJobFeedIsLockedTeaser` checks "Unlock with Basic" `href="/settings?section=plan&buy=basic"`
+  and "See all plans" `href="/settings?section=plan"` (map `TEASER_LINKS`, nothing clicked); `mvn -q test-compile`
+  exit 0; `pnpm check:locators` -> "PASS: no forbidden patterns". Live confirmation: task 2.1.
+- 1.2 [x]: `AuthPagesTest` + `auth1_guestOtherPrivatePagesRedirect`, `auth7_socialButtonsOnLogin`,
+  `auth7_socialButtonsOnSignup`, `auth8_resetPasswordWithoutLink`. `mvn test -Dtest=EmailLinkPagesTest,AuthPagesTest`
+  (`../sync-scan-guest-tests-2026-10-23.log`): `Tests run: 16, Failures: 0, Errors: 0, Skipped: 0`. The tests were
+  green at the first run: they describe behaviour the site already had (no RED step possible).
+- 1.3 [x]: new `pub/EmailLinkPagesTest` (picked up by `testng-public.xml`, package `ch.hirion.pub`):
+  `link1_surveyRendered`, `link1_surveyWithoutIdSendsNothing`, `link2_unsubscribeWithoutLink`,
+  `link3_checkoutReturnWithoutSession` -- all PASS in the same run (surefire testcase names listed). LINK-1 "Survey
+  without an id sends nothing" is now CONFIRMED live (mocked network, toast seen, 0 requests to
+  `/api/public/survey-response`); intent.md moved it from ASSUMED to CONFIRMED.
+- 1.4 [x]: `grep -n "D17\|D18\|D19\|LINK" docs/intent.md` -> group LINK (line 18), D17/D18/D19 candidates;
+  README: 101 tests (public 65 + journey 36), new row "Email link pages"; current-state: change 12 bullet, suites
+  public 65, full 101. Spec counts in README stay 54/89 until the archive.
+- 2.2 [x]: `pnpm exec openspec validate sync-specs-with-site-scan --strict` -> "Change 'sync-specs-with-site-scan' is
+  valid"; `pnpm check` exit 0 (`../pnpm-check-2026-10-23.log`): "PASS: no forbidden patterns", public
+  `total="65" passed="65" failed="0" skipped="0"`, "spec:check ok — specs: 9 · active changes: 1 · archived: 11".
+- 2.1 [ ]: open -- journey run only after the human's "да" (2026-10-23: "journey-прогон — только после моего «да»"),
+  or the next nightly CI run.

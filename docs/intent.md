@@ -96,6 +96,8 @@ CONFIRMED live 2026-10-23 (full site scan, guest browser + nightly CI; change sy
 - /reset-password without a link: h1 "Set a new password", "This reset link is invalid or has expired. Request a
   new one.", link "Send reset link" -> /forgot-password.
 - /survey (public, -> /survey?id=): h1 "Help us make Hirion better", 6 questions, "Send feedback".
+- /survey without an id: "Send feedback" shows "This survey link is missing its id — please use the link from the
+  email." and sends no request to /api/public/survey-response (EmailLinkPagesTest, mocked network, 2026-10-23).
 - /unsubscribe without a link: h1 "Invalid link", "This unsubscribe link is invalid or has expired."
 - /checkout/return without a session: h1 "No session found", link "Go to my account" ->
   /settings?section=plan&checkout=success.
@@ -105,9 +107,8 @@ CONFIRMED live 2026-10-23 (full site scan, guest browser + nightly CI; change sy
 ASSUMED, NOT YET VERIFIED:
 - (site code 2026-10-23) /settings?buy=basic replaces the URL with ?section=plan and starts the Basic checkout at
   once for a Free user -- never opened by the tests.
-- (site code) /survey without an id: "Send feedback" shows "This survey link is missing its id — please use the
-  link from the email." and sends nothing (to confirm with a mocked network, task 1.3); with an id it requires
-  answers 1-3 ("Please answer questions 1-3 before submitting.") and POSTs /api/public/survey-response.
+- (site code) /survey with an id requires answers 1-3 ("Please answer questions 1-3 before submitting.") and
+  POSTs /api/public/survey-response.
 - (site code) Settings > Plan for a trial without a card: "Free trial ends on {date}. No card on file, nothing will
   be charged."; promo codes incl. new QATEST25 "25% off your first payment"; /settings?checkout=success shows
   "Welcome to Premium!" / "Your subscription is being activated."

@@ -42,6 +42,16 @@ public class AuthPagesTest extends PublicPageTest {
     assertThat(h1("Welcome back")).isVisible();
   }
 
+  @Story("AUTH-1 Guests are redirected to sign in")
+  @Test(description = "AUTH-1 Guest opens the other private pages")
+  public void auth1_guestOtherPrivatePagesRedirect() {
+    for (String path : new String[] {"/onboarding", "/employer/", "/admin"}) {
+      open(path);
+      assertThat(page).hasURL(LOGIN_URL);
+      assertThat(h1("Welcome back")).isVisible();
+    }
+  }
+
   // AUTH-2
 
   @Story("AUTH-2 Login page")
@@ -105,5 +115,41 @@ public class AuthPagesTest extends PublicPageTest {
     assertThat(page.getByText("Page not found", new Page.GetByTextOptions().setExact(true)))
           .isVisible();
     assertThat(role(AriaRole.LINK, "Go home")).hasAttribute("href", "/");
+  }
+
+  // AUTH-7: the buttons are only checked for visibility, never clicked (AGENTS.md: no OAuth)
+
+  private void assertSocialSignInButtons() {
+    assertThat(role(AriaRole.BUTTON, "Continue with Google")).isVisible();
+    assertThat(role(AriaRole.BUTTON, "Continue with Apple")).isVisible();
+  }
+
+  @Story("AUTH-7 Login and signup offer Google and Apple sign-in")
+  @Test(description = "AUTH-7 Social sign-in buttons on the login page")
+  public void auth7_socialButtonsOnLogin() {
+    open("/login");
+    assertSocialSignInButtons();
+    assertThat(page.getByText("OR", new Page.GetByTextOptions().setExact(true))).isVisible();
+  }
+
+  @Story("AUTH-7 Login and signup offer Google and Apple sign-in")
+  @Test(description = "AUTH-7 Social sign-in buttons on signup step 1")
+  public void auth7_socialButtonsOnSignup() {
+    open("/signup");
+    assertThat(page.getByText("Step 1 of 4", new Page.GetByTextOptions().setExact(true))).isVisible();
+    assertSocialSignInButtons();
+  }
+
+  // AUTH-8
+
+  @Story("AUTH-8 Reset-password page without a valid link")
+  @Test(description = "AUTH-8 Reset-password page opened directly")
+  public void auth8_resetPasswordWithoutLink() {
+    open("/reset-password");
+    assertThat(h1("Set a new password")).isVisible();
+    assertThat(page.getByText("This reset link is invalid or has expired. Request a new one.",
+          new Page.GetByTextOptions().setExact(true))).isVisible();
+    assertThat(role(AriaRole.LINK, "Send reset link")).hasAttribute("href", "/forgot-password");
+    assertThat(field("New password")).hasCount(0);
   }
 }
