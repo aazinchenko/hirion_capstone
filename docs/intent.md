@@ -15,6 +15,7 @@ REG   signup wizard, steps 1-4, up to "See my matches"                          
 DASH  dashboard: feed, save / applied / hide, analytics, preferences              -> change 3
 SET   settings: profile fields, photo, security, plan & billing                   -> change 3
 DEL   delete the test user at the end of every run                                -> change 3
+LINK  pages opened from emails: survey, unsubscribe, checkout return (guest)        -> sync-specs-with-site-scan
 
 ## Facts
 
@@ -87,8 +88,31 @@ CONFIRMED live 2026-09-25 (browser, signed-in test account):
   redirect to "/". Failure: "Could not delete your account."
   (dialog texts and redirect confirmed from the live site code, the dialog was not submitted)
 
+CONFIRMED live 2026-10-23 (full site scan, guest browser + nightly CI; change sync-specs-with-site-scan):
+- Dashboard teaser: "Unlock with Basic" -> /settings?section=plan&buy=basic (CI run 39918465621, DASH-2 red);
+  "See all plans" -> /settings?section=plan.
+- /login and /signup step 1: "Continue with Google", "Continue with Apple", "OR" above the email form; /login also
+  has "Show password".
+- /reset-password without a link: h1 "Set a new password", "This reset link is invalid or has expired. Request a
+  new one.", link "Send reset link" -> /forgot-password.
+- /survey (public, -> /survey?id=): h1 "Help us make Hirion better", 6 questions, "Send feedback".
+- /unsubscribe without a link: h1 "Invalid link", "This unsubscribe link is invalid or has expired."
+- /checkout/return without a session: h1 "No session found", link "Go to my account" ->
+  /settings?section=plan&checkout=success.
+- /onboarding, /employer/, /employer/<id>, /admin redirect a guest to /login.
+- Public suite 57/57 and guest RegistrationTest 14/14 (+3 skipped) still green: no other public change.
+
 ASSUMED, NOT YET VERIFIED:
-- (none)
+- (site code 2026-10-23) /settings?buy=basic replaces the URL with ?section=plan and starts the Basic checkout at
+  once for a Free user -- never opened by the tests.
+- (site code) /survey without an id: "Send feedback" shows "This survey link is missing its id — please use the
+  link from the email." and sends nothing (to confirm with a mocked network, task 1.3); with an id it requires
+  answers 1-3 ("Please answer questions 1-3 before submitting.") and POSTs /api/public/survey-response.
+- (site code) Settings > Plan for a trial without a card: "Free trial ends on {date}. No card on file, nothing will
+  be charged."; promo codes incl. new QATEST25 "25% off your first payment"; /settings?checkout=success shows
+  "Welcome to Premium!" / "Your subscription is being activated."
+- (site code) /onboarding = target roles (and CV) after Google / Apple sign-up; account deletion now signs out
+  only the local session.
 
 ## Known defects (each gets a KNOWN BUG test; the spec keeps the correct SHALL)
 D1   /imprint: 7 unfilled templates "[FILL: ...]", email mailto:[FILL: ...].              (walkthrough)
@@ -142,6 +166,13 @@ D16  /signup?plan=basic, the target of the home page link "Choose Basic", does n
      the page drops plan=basic from the URL, Premium is selected and the button says "Start my free trial".
                                                    (CONFIRMED live 2026-10-20 by a guest probe; KNOWN BUG,
                                                    REG-7, change update-plans-and-pricing)
+D17  /survey question 2: the rating options 2, 3 and 4 (radio buttons q2-4 / q2-3 / q2-2) have an empty label, so
+     a screen reader announces only "radio button".             (candidate, seen live 2026-10-23)
+D18  /checkout/return without a checkout session says "No session found", but its link "Go to my account" carries
+     checkout=success, and Settings then announces "Welcome to Premium!" (site code).
+                                                   (candidate, link seen live 2026-10-23, toast ASSUMED)
+D19  /forgot-password: the link "Back to home" points to /login, while on /login and /signup it points to /.
+                                                   (candidate, seen live 2026-10-23)
      (D15 is not used here: the 2026-10-15 candidate "saved job shown for a moment after reload" was decided
      by the human outside this file.)
 
