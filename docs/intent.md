@@ -117,15 +117,21 @@ ASSUMED, NOT YET VERIFIED:
 
 ## Known defects (each gets a KNOWN BUG test; the spec keeps the correct SHALL)
 D1   /imprint: 7 unfilled templates "[FILL: ...]", email mailto:[FILL: ...].              (walkthrough)
+     CLOSED 2026-10-24 (human decision: not relevant). Still visible live on 2026-10-24 (7 "[FILL", mailto:[FILL: ...]);
+     FOOT-3 and its KNOWN BUG test are still in the suite until a change removes them.
 D2   After switching to DE the text is German but <html lang> stays "en".                 (walkthrough)
+     CLOSED 2026-10-24 (human decision: fixed).
      FIXED (seen live 2026-10-06): regular test now (I18N-4, change close-fixed-defects-d2-d4-d5).
 D3   Mobile 375 px: header links and Sign in hidden, no burger menu.                      (walkthrough)
      NOT A DEFECT (human decision 2026-10-05): intended mobile design; QA-2 removed, no test.
 D4   Pricing toggle Monthly / Quarterly / Yearly has no aria-pressed.                     (walkthrough)
+     CLOSED 2026-10-24 (human decision: fixed).
      FIXED (seen live 2026-10-06): regular test now (PUB-4, change close-fixed-defects-d2-d4-d5).
 D5   /login: Email / Password inputs have no autocomplete.                                (walkthrough)
+     CLOSED 2026-10-24 (human decision: fixed).
      FIXED (seen live 2026-10-06): regular test now (AUTH-3, change close-fixed-defects-d2-d4-d5).
 D6   /signup: "Show password" has tabindex=-1, not reachable by keyboard.                 (walkthrough)
+     CLOSED 2026-10-24 (human decision: fixed).
      FIXED (seen live 2026-10-06): regular test now (REG-10, change close-fixed-defects-d6-d10-d14).
 D7   Settings > Phone accepts letters ("00000000000000jj").                  (screenshot, to re-check)
      NOT A DEFECT (human decision 2026-09-30): Phone is free-form text by design; no test.
@@ -135,6 +141,7 @@ D8   Job titles show "?" instead of characters: "Senior Azure Engineer | ? oder 
      so DASH-10 is a regular check, not a KNOWN BUG test.
      2026-10-20: not observable any more for a Free user (the Job Feed is a locked teaser with blurred,
      aria-hidden titles); DASH-10 removed in change update-plans-and-pricing.
+     CLOSED 2026-10-24 (human decision: not relevant).
 D9   Settings > Profile shows "You have unsaved changes" right after load, with no edits;
      switching section opens "Unsaved changes -- Leave without saving?".  (CONFIRMED live 2026-09-25)
      Workaround in tests: open sections via /settings?section=... .
@@ -142,18 +149,22 @@ D9   Settings > Profile shows "You have unsaved changes" right after load, with 
      seen on a manual account with odd Phone data; it probably depends on the stored profile, so SET-3 is
      a regular check, not a KNOWN BUG test (human decision). Open question (ASSUMED): D9 appears when a
      stored value differs from what the form shows (the site normalises Phone to "+41..." without spaces).
+     CLOSED 2026-10-24 (human decision: not relevant). SET-3 stays a regular check.
 D10  Settings > Profile > Email* has no effective validation: an error is shown, but any string
      is saved as the email.                                               (CONFIRMED live 2026-09-25)
+     CLOSED 2026-10-24 (human decision: fixed).
      FIXED (seen live 2026-10-06): regular test now (SET-4, change close-fixed-defects-d6-d10-d14).
 
 D11  /signup step 1 accepts an invalid email such as "qa@": only "not empty" and "password >= 8" are
      checked, the input is type=email but not inside a form, so the error comes only on step 4.
                                                    (CONFIRMED live 2026-09-30: "qa@" -> "Step 2 of 4", no error)
+     CLOSED 2026-10-24 (human decision: not relevant; not re-checked live).
 D12  /signup step 4: the Premium Trial / Free cards do not expose which one is selected (no
      aria-pressed / aria-checked / role=radio); the selection is only visual.
                                                    (candidate, from the site code 2026-09-29, confirm live)
      FIXED (seen live 2026-10-19): the cards (now Free / Basic / Premium) expose aria-pressed; REG-7 checks
      it (change update-plans-and-pricing).
+     CLOSED 2026-10-24 (human decision: fixed).
 
 D13  /signup step 3: the role picker is <button role="combobox"> with the visible text "Add" but no
      accessible name (a combobox does not take its name from content, no aria-label); a screen reader
@@ -163,6 +174,7 @@ D14  Settings > Profile: First name, Last name and Email show a "*" in the label
      have no required / aria-required, so browsers and screen readers do not know they are required.
                                                    (from the site code 2026-09-30, human decision: KNOWN BUG)
      FIXED (seen live 2026-10-06): regular test now (SET-2, change close-fixed-defects-d6-d10-d14).
+     CLOSED 2026-10-24 (human decision: fixed).
 D16  /signup?plan=basic, the target of the home page link "Choose Basic", does not preselect Basic on step 4:
      the page drops plan=basic from the URL, Premium is selected and the button says "Start my free trial".
                                                    (CONFIRMED live 2026-10-20 by a guest probe; KNOWN BUG,
@@ -174,6 +186,7 @@ D18  /checkout/return without a checkout session says "No session found", but it
                                                    (candidate, link seen live 2026-10-23, toast ASSUMED)
 D19  /forgot-password: the link "Back to home" points to /login, while on /login and /signup it points to /.
                                                    (candidate, seen live 2026-10-23)
+     CLOSED 2026-10-24 (human decision: not relevant). Still visible live on 2026-10-24.
      (D15 is not used here: the 2026-10-15 candidate "saved job shown for a moment after reload" was decided
      by the human outside this file.)
 

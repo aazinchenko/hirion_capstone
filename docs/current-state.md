@@ -66,7 +66,9 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
 - Test user is always Free; facts in intent.md about the dashboard/settings were recorded on a trial (Pro)
   account: Analytics is Pro-only (Free sees "Unlock Hirion Premium" since 2026-10-21, before "Unlock Hirion Pro"), AI buttons on job cards are Pro-only, the score
   badge is "87"+"match" (capitals by CSS).
-- Defects: D1 and D16 KNOWN BUG tests; D2, D4, D5, D6, D10, D14 FIXED by the site (seen live 2026-10-06, changes
+- Defects, human decision 2026-10-24: D1, D2, D4, D5, D6, D8, D9, D10, D11, D12, D14, D19 are CLOSED (fixed or not
+  relevant; D1 and D19 still visible live 2026-10-24, D1 KNOWN BUG test / FOOT-3 still in the suite). Open: D13,
+  D16 (KNOWN BUG), D17, D18. History: D1 and D16 KNOWN BUG tests; D2, D4, D5, D6, D10, D14 FIXED by the site (seen live 2026-10-06, changes
   `close-fixed-defects-d2-d4-d5` and `close-fixed-defects-d6-d10-d14`: regular tests now); D3 closed 2026-10-05 (mobile header without "Sign in" is the
   intended design, QA-2 removed); D7 closed (Phone free text by design); D8 not observable for Free since 2026-10-20 (DASH-10 removed), D9 regular check (data-dependent);
   D11 confirmed live (qa@ passes step 1); D12 FIXED (seen live 2026-10-19); D13 candidate (a11y); D14 FIXED (see above;
