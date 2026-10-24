@@ -37,10 +37,12 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
   return). Candidates D17-D19 in intent.md. Public 65/65 green; live journey 36/36 (2026-10-23 20:09, account deleted); archived by the agent at
   the human's request via `pnpm exec openspec archive` (verified: only AUTH-1 and DASH-2 changed, AUTH-7/8 and
   LINK-1..3 added verbatim).
+- 2026-10-24: change 13 `remove-foot3-imprint-d1` (human: "убери FOOT-3 и KNOWN BUG тест D1, как с D3, весь цикл
+  сам, потом push"): REMOVED FOOT-3, two KNOWN BUG D1 tests deleted; only KNOWN BUG test left: D16.
 - `pnpm spec:check`: specs 10 · active changes 0 · archived 12; `openspec validate --specs --strict` 10/10.
   Specs: 59 requirements, 97 scenarios.
-- Suites (TestNG counts): public 65 (since change 12; before 57); journey 36 (Registration 17, Dashboard 6,
-  Settings 13) + JourneyCleanup; full suite 101.
+- Suites (TestNG counts): public 63 (change 13 removed the two FOOT-3 tests; 65 after change 12, 57 before);
+  journey 36 (Registration 17, Dashboard 6, Settings 13) + JourneyCleanup; full suite 99.
 - Draft, not started: Pro-user journey plan `docs/pro-journey-plan-draft.md` (needs human decisions, section 7).
 - Known flaky: `BaseTest.closeContext` once threw "Target page, context or browser has been closed" in
   `pnpm check` (public cont3/cont4 skipped); rerun green. Human-owned file, not fixed.
@@ -67,7 +69,7 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
   account: Analytics is Pro-only (Free sees "Unlock Hirion Premium" since 2026-10-21, before "Unlock Hirion Pro"), AI buttons on job cards are Pro-only, the score
   badge is "87"+"match" (capitals by CSS).
 - Defects, human decision 2026-10-24: D1, D2, D4, D5, D6, D8, D9, D10, D11, D12, D14, D19 are CLOSED (fixed or not
-  relevant; D1 and D19 still visible live 2026-10-24, D1 KNOWN BUG test / FOOT-3 still in the suite). Open: D13,
+  relevant; D1 and D19 still visible live 2026-10-24, FOOT-3 and the D1 KNOWN BUG tests removed in change 13 `remove-foot3-imprint-d1`). Open: D13,
   D16 (KNOWN BUG), D17, D18. History: D1 and D16 KNOWN BUG tests; D2, D4, D5, D6, D10, D14 FIXED by the site (seen live 2026-10-06, changes
   `close-fixed-defects-d2-d4-d5` and `close-fixed-defects-d6-d10-d14`: regular tests now); D3 closed 2026-10-05 (mobile header without "Sign in" is the
   intended design, QA-2 removed); D7 closed (Phone free text by design); D8 not observable for Free since 2026-10-20 (DASH-10 removed), D9 regular check (data-dependent);

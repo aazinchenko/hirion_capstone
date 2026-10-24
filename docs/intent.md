@@ -118,7 +118,7 @@ ASSUMED, NOT YET VERIFIED:
 ## Known defects (each gets a KNOWN BUG test; the spec keeps the correct SHALL)
 D1   /imprint: 7 unfilled templates "[FILL: ...]", email mailto:[FILL: ...].              (walkthrough)
      CLOSED 2026-10-24 (human decision: not relevant). Still visible live on 2026-10-24 (7 "[FILL", mailto:[FILL: ...]);
-     FOOT-3 and its KNOWN BUG test are still in the suite until a change removes them.
+     FOOT-3 and its two KNOWN BUG tests removed (change remove-foot3-imprint-d1).
 D2   After switching to DE the text is German but <html lang> stays "en".                 (walkthrough)
      CLOSED 2026-10-24 (human decision: fixed).
      FIXED (seen live 2026-10-06): regular test now (I18N-4, change close-fixed-defects-d2-d4-d5).
@@ -193,7 +193,7 @@ D19  /forgot-password: the link "Back to home" points to /login, while on /login
 ## Done means
 - `pnpm check` exits 0 and ends with non-zero counters: specs: 9 · active changes: 0 · archived: 4.
 - Every change has commits in the order: spec -> RED -> GREEN -> archive.
-- `mvn test -Dsuite=testng-all.xml` is green; open known defects (D1, D16) are KNOWN BUG tests;
+- `mvn test -Dsuite=testng-all.xml` is green; open known defects (D16) are KNOWN BUG tests;
   defects fixed by the site (D2, D4-D6, D10, D12, D14) are regular tests.
 
 ## Not doing

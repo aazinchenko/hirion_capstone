@@ -6,9 +6,9 @@ The project is the capstone of the *Agentic Engineering Crash Course*. Its quest
 
 | | |
 |---|---|
-| **Tests** | 101 automated tests (public 65 + journey 36) after change `sync-specs-with-site-scan` (2026-10-23); last all-green CI run with 97 tests: [37501768600](https://github.com/aazinchenko/hirion_capstone/actions/runs/37501768600); CI workflow `.github/workflows/tests.yml` |
+| **Tests** | 99 automated tests (public 63 + journey 36) after change `remove-foot3-imprint-d1` (2026-10-24); last all-green CI run with 97 tests: [37501768600](https://github.com/aazinchenko/hirion_capstone/actions/runs/37501768600); CI workflow `.github/workflows/tests.yml` |
 | **Specs** | 10 capabilities, 59 requirements, 97 scenarios (OpenSpec) |
-| **Defects found on the live site** | 13 reported, 8 pinned by `KNOWN BUG` tests; 6 of them (D2, D4, D5, D6, D10, D14) fixed by the site, now regular tests; D12 fixed by the site; D16 still open; D1, D8, D9, D11, D19 closed as not relevant (2026-10-24) |
+| **Defects found on the live site** | 13 reported, 8 pinned by `KNOWN BUG` tests; 6 of them (D2, D4, D5, D6, D10, D14) fixed by the site, now regular tests; D12 fixed by the site; D16 still open (the only `KNOWN BUG` test left); D1, D8, D9, D11, D19 closed as not relevant (2026-10-24, FOOT-3 removed) |
 | **Timeline** | 25 Sep - 6 Oct 2026, 100 commits |
 | **Stack** | Java 21 · Maven · Playwright for Java 1.55 · TestNG 7.11 · OpenSpec 1.13 |
 
@@ -16,12 +16,12 @@ The project is the capstone of the *Agentic Engineering Crash Course*. Its quest
 
 ## What is tested
 
-**Public site** (65 tests, run in parallel, no account needed)
+**Public site** (63 tests, run in parallel, no account needed)
 
 | Area | What the tests check |
 |---|---|
 | Home page | hero, pricing toggle, FAQ accordion, calls to action |
-| Footer and legal pages | every footer link answers HTTP 200; Imprint, Privacy and Terms content |
+| Footer and legal pages | every footer link answers HTTP 200; Imprint, Privacy and Terms headings and titles, update dates |
 | Localization | EN / DE / FR / IT switch, translated headings and buttons |
 | Contact form | validation, honeypot field, confirmation toast; the network is mocked, nothing is really sent |
 | Auth pages | login and signup forms, Google / Apple buttons (never clicked), reset-password and 404 pages, autocomplete attributes, guest redirects |

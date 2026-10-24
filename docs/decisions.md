@@ -45,14 +45,18 @@ Budget vs actual: `docs/intent.md` "Budget".
 - Every archive is run by the human; the reviewer verifies the synced spec and commits it.
 
 **Which findings are defects** (`docs/intent.md` "Known defects")
-- KNOWN BUG tests: D1 (D14 was added in `d091494`, closed with D6 and D10 below); D16, `?plan=basic` does not
-  preselect Basic (confirmed live 2026-10-20, change `update-plans-and-pricing`).
+- KNOWN BUG tests: D16, `?plan=basic` does not preselect Basic (confirmed live 2026-10-20, change
+  `update-plans-and-pricing`). D14 was added in `d091494`, closed with D6 and D10 below. D1 had two KNOWN BUG
+  tests until 2026-10-24 (see "Not a defect").
 - Fixed by the site: D2, D4, D5 (seen live 2026-10-06, their KNOWN BUG tests failed with "should have
   thrown"); now regular tests I18N-4, PUB-4, AUTH-3 (change `close-fixed-defects-d2-d4-d5`). D6, D10, D14 (seen
   live 2026-10-06 in a GitHub Actions journey run); now regular tests REG-10, SET-4, SET-2 (change
   `close-fixed-defects-d6-d10-d14`).
 - Not a defect: D7, Phone is free text by design (`ecfe8f5`); D3, the mobile header without "Sign in" is
-  the intended design (human decision 2026-10-05, change `remove-qa2-mobile-nav`, QA-2 removed).
+  the intended design (human decision 2026-10-05, change `remove-qa2-mobile-nav`, QA-2 removed); D1, the
+  unfilled imprint, closed as not relevant (human decision 2026-10-24, change `remove-foot3-imprint-d1`, FOOT-3
+  and its two KNOWN BUG tests removed; the templates were still visible live). D8, D9, D11, D19 closed as not
+  relevant the same day (no requirement removed: SET-3 stays a regular check).
 - Regular checks instead of KNOWN BUG, because they did not show on a new Free user: D8 (`3511779`; removed
   2026-10-20 with DASH-10: a Free user sees only blurred titles),
   D9 (`8467dce`).

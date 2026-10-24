@@ -1,13 +1,10 @@
 package ch.hirion.pub;
 
 import com.microsoft.playwright.Locator;
-import com.microsoft.playwright.assertions.LocatorAssertions;
 import com.microsoft.playwright.options.AriaRole;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
-import io.qameta.allure.Issue;
 import io.qameta.allure.Story;
-import org.opentest4j.AssertionFailedError;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -22,9 +19,6 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 @Epic("Public site")
 @Feature("footer-and-legal")
 public class FooterLegalTest extends PublicPageTest {
-
-  private static final Pattern VALID_MAILTO =
-        Pattern.compile("^mailto:[^@\\s\\[\\]]+@[^@\\s\\[\\]]+\\.[a-z]{2,}$");
 
   private Locator footerLink(String name) {
     return page.getByRole(AriaRole.CONTENTINFO)
@@ -86,34 +80,6 @@ public class FooterLegalTest extends PublicPageTest {
     open("/imprint");
     assertThat(h1("Imprint")).isVisible();
     assertThat(page).hasTitle("Imprint, Hirion");
-  }
-
-  // FOOT-3 (known defect D1)
-
-  @Story("FOOT-3 Imprint is complete")
-  @Issue("D1")
-  @Test(expectedExceptions = AssertionFailedError.class,
-        description = "FOOT-3 Imprint has no unfilled templates -- KNOWN BUG D1: /imprint shows [FILL: ...] templates")
-  public void foot3_imprintHasNoFillTemplates() {
-    open("/imprint");
-    h1("Imprint").waitFor(); // precondition: a TimeoutError here is a real failure, not the known bug
-    assertThat(page.getByText("[FILL:"))
-          .hasCount(0, new LocatorAssertions.HasCountOptions().setTimeout(3000));
-  }
-
-  @Story("FOOT-3 Imprint is complete")
-  @Issue("D1")
-  @Test(expectedExceptions = AssertionFailedError.class,
-        description = "FOOT-3 Imprint email is a valid mailto link -- KNOWN BUG D1: mailto:[FILL: ...]")
-  public void foot3_imprintEmailIsValidMailto() {
-    open("/imprint");
-    h1("Imprint").waitFor(); // precondition: a TimeoutError here is a real failure, not the known bug
-    @SuppressWarnings("unchecked")
-    List<String> hrefs = (List<String>) page.getByRole(AriaRole.MAIN).evaluate(
-          "main => [...main.querySelectorAll('a[href^=\"mailto:\"]')].map(a => a.getAttribute('href'))");
-    if (hrefs.isEmpty() || !hrefs.stream().allMatch(h -> VALID_MAILTO.matcher(h).matches())) {
-      throw new AssertionFailedError("every mailto link in main must be valid, found: " + hrefs);
-    }
   }
 
   // FOOT-4
