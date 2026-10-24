@@ -36,8 +36,11 @@ public class PremiumAiTest extends AuthenticatedTest {
   /** The AI answer takes "a few seconds" by the site's own text; 90 s leaves room for a slow model. */
   private static final LocatorAssertions.IsVisibleOptions AI_DONE =
         new LocatorAssertions.IsVisibleOptions().setTimeout(90_000);
-  /** E.g. "29 tailored applications left this month." (seen live 2026-10-24). */
-  private static final Pattern MONTHLY_COUNTER = Pattern.compile("^\\d+ tailored applications left this month\\.$");
+  /**
+   * E.g. "29 tailored applications left this month." -- in the stand-out dialog it shares one paragraph with "Based
+   * only on what is in your CV. ...", so the pattern is not anchored at the end (seen live 2026-10-24).
+   */
+  private static final Pattern MONTHLY_COUNTER = Pattern.compile("^\\d+ tailored applications left this month\\.");
   private static final LocatorAssertions.IsVisibleOptions FEED_LOADED =
         new LocatorAssertions.IsVisibleOptions().setTimeout(60_000);
 
