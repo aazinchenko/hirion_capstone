@@ -10,13 +10,20 @@ process.stdin.on("end", () => {
   } catch {
     return; // not a tool call we understand: no opinion
   }
+  // -Dqa.ai=true makes the Premium tests press the AI buttons, which cost the site owner money (PREM, 2026-10-24).
+  const reasons = [];
   if (/-Dqa\.mailbox/.test(command)) {
+    reasons.push("Live journey run (-Dqa.mailbox) creates a real hirion.ch account");
+  }
+  if (/-Dqa\.ai/.test(command)) {
+    reasons.push("-Dqa.ai presses the AI buttons (owner's AI costs)");
+  }
+  if (reasons.length > 0) {
     console.log(JSON.stringify({
       hookSpecificOutput: {
         hookEventName: "PreToolUse",
         permissionDecision: "ask",
-        permissionDecisionReason:
-          "Live journey run (-Dqa.mailbox) creates a real hirion.ch account: it needs an explicit human \"да\".",
+        permissionDecisionReason: reasons.join("; ") + ": it needs an explicit human \"да\".",
       },
     }));
   }

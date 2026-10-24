@@ -15,7 +15,11 @@ section anchors (#pricing, #faq ...), <html>, the contact-form honeypot input[na
 ## Test accounts and data
 - Only the disposable user from support/TestUser.java. Never a real personal account.
 - JourneyCleanup deletes ONLY emails matching \+hirion-qa-\d+@. Never weaken this check.
-- Never automate Google / Apple OAuth. Never start Premium Trial or any payment.
+- Never automate Google / Apple OAuth. Never start any payment, never type card data, never open Stripe checkout.
+- Premium Trial only in the PREM scenario: the journey's own disposable user activates it once per run in
+Settings > Plan & Billing (human decision 2026-10-24, docs/premium-journey-plan.md). Signup still selects Free.
+- AI buttons (Help me stand out, Tailor my CV, Write Cover Letter) only with -Dqa.ai=true, each at most once per
+run; never in CI.
 - Never submit the real contact form: mock the network with page.route(...).
 - Never assert on the text of AI answers (Tailor my CV, Cover Letter).
 - Uploads use files from src/test/resources/fixtures/.
@@ -30,7 +34,7 @@ description = "... KNOWN BUG Dn ..."). Do not "heal" them by weakening the asser
 a human confirms them against the live site.
 ## Rules learned (details and evidence: docs/autonomy-log.md)
 - A live run with -Dqa.mailbox creates a REAL hirion.ch account: only after an explicit human "да",
-one account per run. A PreToolUse hook (scripts/guard-live-run.mjs) turns such a command into a prompt.
+one account per run. A PreToolUse hook (scripts/guard-live-run.mjs) turns such a command (and -Dqa.ai) into a prompt.
 - heal-loop for journey tests runs WITHOUT -Dqa.mailbox; other journey fixes are targeted and use the trace.
 - A KNOWN BUG test checks its preconditions with org.testng.Assert, never with the expected exception.
 - Before fixing a failure, read the underlying error (trace, swallowed exception), not only the summary.

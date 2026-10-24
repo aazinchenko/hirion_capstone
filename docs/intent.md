@@ -16,6 +16,7 @@ DASH  dashboard: feed, save / applied / hide, analytics, preferences            
 SET   settings: profile fields, photo, security, plan & billing                   -> change 3
 DEL   delete the test user at the end of every run                                -> change 3
 LINK  pages opened from emails: survey, unsubscribe, checkout return (guest)        -> sync-specs-with-site-scan
+PREM  the journey user after activating the 7-day Premium Trial in Settings         -> add-premium-trial-journey
 
 ## Facts
 
@@ -198,8 +199,11 @@ D19  /forgot-password: the link "Back to home" points to /login, while on /login
 
 ## Not doing
 - OAuth (Google / Apple), real payments, real contact-form delivery.
-- Starting a trial or a payment: signup tests MUST select Free on step 4 (or open /signup?plan=free) and
-  click only "Join for free", because Premium (trial) is the default and Basic leads to "Continue to payment".
+- Any payment, card data or Stripe checkout. Signup tests MUST select Free on step 4 (or open /signup?plan=free)
+  and click only "Join for free", because Premium (trial) is the default and Basic leads to "Continue to payment".
+  Since 2026-10-24 (human decision, owner consent) the Premium Trial is started ONLY by the PREM scenario: the same
+  disposable user, once per run, in Settings > Plan & Billing (docs/premium-journey-plan.md, variant A).
+- AI buttons in CI; locally only with -Dqa.ai=true, each at most once per run.
 - Assertions on the text of AI answers (Tailor my CV, Cover Letter).
 - Tests against a real personal account.
 
