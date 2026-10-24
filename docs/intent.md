@@ -133,6 +133,20 @@ uncommitted probe class after RegistrationTest, log ../premium-probe-2026-10-24.
   day"); "15 skills detected" from the CV fixture.
 - JourneyCleanup deletes the trial account normally ("Your account has been deleted.", no longer signs in).
 
+CONFIRMED live 2026-10-24 (first -Dqa.ai journey run, human "да, запусти один живой journey-прогон с -Dqa.ai=true";
+../journey-premium-ai-2026-10-24.log, testng 50 total, 48 pass, 2 fail, account deleted; dialog texts from the traces):
+- "Help me stand out" dialog: summary paragraph, "Copy", "What to highlight" (3 points), "Skills", "Keywords to use"
+  (7 chips), "29 tailored applications left this month.", "Based only on what is in your CV. Opening it again for this
+  job costs nothing.", "Try again". NO "Worth addressing" in this run (the section probably shows only when the AI
+  finds gaps) -> PREM-11 failed on it.
+- "Tailor my CV" dialog: "ATS-friendly", templates "Classic" ("Serif, section bands, dates on the right") and "Modern"
+  ("Sans-serif, accent rule, roomier"), label "Closely tailored", buttons "Copy", ".txt", "PDF", "Try again",
+  "29 tailored applications left this month.", "Asking for the other document on this job does not use another one.
+  ...", "Built to be read cleanly by applicant-tracking systems: ...". The text "Tailored CV" was NOT found in the
+  dialog -> PREM-12 failed before "Copy" was clicked ("Copied" still unverified).
+- "Write Cover Letter" dialog: PREM-13 passed ("Letterhead", "Cover letter", "Plain", "Copy" visible).
+- One AI generation per dialog: the counter showed 29 left of the month after the run.
+
 ASSUMED, NOT YET VERIFIED:
 - (site code 2026-10-23) /settings?buy=basic replaces the URL with ?section=plan and starts the Basic checkout at
   once for a Free user -- never opened by the tests.

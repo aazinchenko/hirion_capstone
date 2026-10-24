@@ -45,7 +45,8 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
   : spec premium-trial PREM-1..14 (D20 closed after the first live run); PremiumUpgradeTest, PremiumDashboardTest, PremiumAiTest
   after the Free tests; SET-5 priority 300. Journey without mailbox 50 tests (14 pass, 36 skip, nothing created).
   Live journey 47/50 green (3 AI skipped) 2026-10-24 13:19, account deleted; archived by the agent at the human's
-  request (verified: new spec = delta). First -Dqa.ai run still to do (PREM-11..13 texts ASSUMED).
+  request (verified: new spec = delta). First -Dqa.ai run 2026-10-24 13:28: 48/50, account deleted;
+  PREM-13 PASS, PREM-11 (no "Worth addressing") and PREM-12 (no "Tailored CV") FAIL on texts -- fix pending (human).
 - `pnpm spec:check`: specs 11 · active changes 0 · archived 14; `openspec validate --specs --strict` 11/11.
   Specs: 72 requirements, 110 scenarios.
 - Suites (TestNG counts): public 63 (change 13 removed the two FOOT-3 tests; 65 after change 12, 57 before);
