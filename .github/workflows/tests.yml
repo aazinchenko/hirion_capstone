@@ -11,6 +11,10 @@ on:
         type: choice
         options: [all, public, free, premium]
         default: all
+      ai:                                     # NEW: checkbox on "Run workflow"
+        description: "Premium: also run the AI dialogs (costs AI generations of the site owner)"
+        type: boolean
+        default: false
   schedule:
     - cron: "15 2 * * *"   # every night 02:15 UTC (04:15 Zurich summer time, 03:15 winter)
 
@@ -114,7 +118,7 @@ jobs:
           retention-days: 7
 
   premium:
-    name: Premium trial user (creates and deletes a real account, no AI)
+    name: Premium trial user (creates and deletes a real account; AI only when ticked)   # NEW name
     if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && (inputs.suite == 'all' || inputs.suite == 'premium'))
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -137,8 +141,10 @@ jobs:
       - name: Run Premium suite
         env:
           QA_MAILBOX: ${{ secrets.QA_MAILBOX }}
-        # never -Dqa.ai in CI: the AI buttons cost the site owner money (decision 2026-10-24)
-        run: mvn -B -Dmaven.repo.local=.m2/repository -Dsuite=testng-premium.xml "-Dqa.mailbox=$QA_MAILBOX" -Dqa.attachments=false test
+          # NEW: true only on a manual run with the "AI dialogs" box ticked; false at night and on other runs.
+          # Every AI run costs the site owner AI generations.
+          QA_AI: ${{ github.event_name == 'workflow_dispatch' && inputs.ai == true }}
+        run: mvn -B -Dmaven.repo.local=.m2/repository -Dsuite=testng-premium.xml "-Dqa.mailbox=$QA_MAILBOX" "-Dqa.ai=$QA_AI" -Dqa.attachments=false test
 
       - name: Check that the test account was deleted
         if: always()
