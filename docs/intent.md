@@ -105,13 +105,40 @@ CONFIRMED live 2026-10-23 (full site scan, guest browser + nightly CI; change sy
 - /onboarding, /employer/, /employer/<id>, /admin redirect a guest to /login.
 - Public suite 57/57 and guest RegistrationTest 14/14 (+3 skipped) still green: no other public change.
 
+CONFIRMED live 2026-10-24 (Premium Trial probe, human "да, запускай живую пробу без ИИ-кнопок"; temporary
+uncommitted probe class after RegistrationTest, log ../premium-probe-2026-10-24.log, 24/24, account deleted):
+- Settings > Plan & Billing of a Free user: "You're currently on the Free plan.", toggle Monthly / Yearly, cards Free
+  (CHF 0 forever, button "Current plan" disabled), Basic (CHF 10/year, "Subscribe to Basic"), Premium (CHF 120/year,
+  features incl. "AI CV Tailoring", "AI Cover Letter Generation", "Help me stand out", "Analytics dashboard", button
+  "Start 7-day free trial"), "Have a promo code?", "Billing handled securely. Cancel anytime."
+- "Start 7-day free trial" starts the trial at once, no Stripe checkout, no card: toast "Your 7-day Premium trial is
+  active" after ~0.6 s.
+- After the trial (also after reload): "You're on the Premium plan.", badge "Premium", "Free trial ends on 31/10/2026."
+  (= today + 7 days, dd/mm/yyyy), "No card on file, nothing will be charged."; Free card button "Free plan" (disabled),
+  Premium card button "Manage subscription" (not clicked); NO "Cancel subscription".
+- Job Feed: real cards 13 s after the trial (bug #49 delay of 3-5 min not reproduced this time); intro "These are the
+  latest jobs that match your profile. ..."; no teaser, no "Unlock with Basic". 3 cards, each: title, company,
+  location, age, category, "Onsite", "Full-time", buttons "View job", "Save", "Tailor my CV", "Write Cover Letter",
+  "Help me stand out", "Hide", score "95" + "MATCH".
+- The Analytics tab button still reads "Analytics PRO" for the Premium trial user (candidate D20, see defects).
+- Analytics without gate ("Unlock Hirion Premium" absent): headings "Your performance" (KPIs "Total active jobs"
+  38,215, "Avg match score" 92%, "Save rate" 0%, "Jobs in feed" 3), "Match score distribution", "New matches per day",
+  "Swiss market intelligence", "Roles in demand by canton", "Salary benchmark", "Top companies hiring", "Language
+  demand", "Positioning & opportunity", "Skills gap", "Filter impact", "Eligibility advantage".
+- Save: no toast; the card leaves the feed (3 -> 2) and appears in Saved (helper "Jobs you save appear here, ...") with
+  the button "Saved". Hide -> menu "Already applied" / "Not relevant"; "Already applied": no toast, the card appears in
+  Applied (helper "Jobs you've marked as applied, ...") with "Applied Oct 24, 2026". Archive: "No archived jobs yet".
+- Home page for the Premium user: no #pricing section, header shows "Dashboard" and the avatar link to /settings.
+- Settings > Profile: "Job alert notification time" ("Any time") and "How often do you want job emails?" ("Every
+  day"); "15 skills detected" from the CV fixture.
+- JourneyCleanup deletes the trial account normally ("Your account has been deleted.", no longer signs in).
+
 ASSUMED, NOT YET VERIFIED:
 - (site code 2026-10-23) /settings?buy=basic replaces the URL with ?section=plan and starts the Basic checkout at
   once for a Free user -- never opened by the tests.
 - (site code) /survey with an id requires answers 1-3 ("Please answer questions 1-3 before submitting.") and
   POSTs /api/public/survey-response.
-- (site code) Settings > Plan for a trial without a card: "Free trial ends on {date}. No card on file, nothing will
-  be charged."; promo codes incl. new QATEST25 "25% off your first payment"; /settings?checkout=success shows
+- (site code) Promo codes incl. new QATEST25 "25% off your first payment"; /settings?checkout=success shows
   "Welcome to Premium!" / "Your subscription is being activated."
 - (site code) /onboarding = target roles (and CV) after Google / Apple sign-up; account deletion now signs out
   only the local session.
@@ -188,6 +215,9 @@ D18  /checkout/return without a checkout session says "No session found", but it
 D19  /forgot-password: the link "Back to home" points to /login, while on /login and /signup it points to /.
                                                    (candidate, seen live 2026-10-23)
      CLOSED 2026-10-24 (human decision: not relevant). Still visible live on 2026-10-24.
+D20  Dashboard: a Premium trial user still sees the badge on the Analytics tab ("Analytics PRO"), although
+     Analytics is unlocked for them; by the site code the badge is meant only for users without the paid plan.
+                                                   (candidate, seen live 2026-10-24 in the Premium probe)
      (D15 is not used here: the 2026-10-15 candidate "saved job shown for a moment after reload" was decided
      by the human outside this file.)
 
