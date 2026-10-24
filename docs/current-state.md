@@ -42,7 +42,7 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
   agent via `pnpm exec openspec archive` (verified: only FOOT-3 removed); public 63/63.
 - 2026-10-24: third scenario Premium Trial (human decisions: variant A, owner consent, AI only with -Dqa.ai, nightly
   CI without AI). Rules `be76f20`, live probe `0983bcd` (account deleted), change 14 `add-premium-trial-journey`
-  (active): spec premium-trial PREM-1..14 + KNOWN BUG D20; PremiumUpgradeTest, PremiumDashboardTest, PremiumAiTest
+  (active): spec premium-trial PREM-1..14 (D20 closed after the first live run); PremiumUpgradeTest, PremiumDashboardTest, PremiumAiTest
   after the Free tests; SET-5 priority 300. Journey without mailbox 50 tests (14 pass, 36 skip, nothing created).
   Open: live journey run on the human's "да".
 - `pnpm spec:check`: specs 10 · active changes 0 · archived 13; `openspec validate --specs --strict` 10/10.
@@ -77,7 +77,7 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
   badge is "87"+"match" (capitals by CSS).
 - Defects, human decision 2026-10-24: D1, D2, D4, D5, D6, D8, D9, D10, D11, D12, D14, D19 are CLOSED (fixed or not
   relevant; D1 and D19 still visible live 2026-10-24, FOOT-3 and the D1 KNOWN BUG tests removed in change 13 `remove-foot3-imprint-d1`). Open: D13,
-  D16 (KNOWN BUG), D17, D18, D20 (KNOWN BUG, Premium). History: D1 and D16 KNOWN BUG tests; D2, D4, D5, D6, D10, D14 FIXED by the site (seen live 2026-10-06, changes
+  D16 (KNOWN BUG), D17, D18. D20 closed 2026-10-24 (badge only while loading). History: D1 and D16 KNOWN BUG tests; D2, D4, D5, D6, D10, D14 FIXED by the site (seen live 2026-10-06, changes
   `close-fixed-defects-d2-d4-d5` and `close-fixed-defects-d6-d10-d14`: regular tests now); D3 closed 2026-10-05 (mobile header without "Sign in" is the
   intended design, QA-2 removed); D7 closed (Phone free text by design); D8 not observable for Free since 2026-10-20 (DASH-10 removed), D9 regular check (data-dependent);
   D11 confirmed live (qa@ passes step 1); D12 FIXED (seen live 2026-10-19); D13 candidate (a11y); D14 FIXED (see above;

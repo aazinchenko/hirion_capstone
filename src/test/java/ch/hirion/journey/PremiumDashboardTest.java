@@ -7,7 +7,6 @@ import com.microsoft.playwright.assertions.LocatorAssertions;
 import com.microsoft.playwright.options.AriaRole;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
-import io.qameta.allure.Issue;
 import io.qameta.allure.Story;
 import org.opentest4j.AssertionFailedError;
 import org.testng.Assert;
@@ -105,19 +104,12 @@ public class PremiumDashboardTest extends AuthenticatedTest {
   }
 
   @Story("PREM-8 Analytics is unlocked for the Premium trial")
-  @Issue("D20")
-  @Test(priority = 106, dependsOnGroups = {"registered", "premium"}, expectedExceptions = AssertionFailedError.class,
-        description = "PREM-8 Analytics tab has no Pro badge -- KNOWN BUG D20: the trial user sees \"Analytics PRO\"")
+  @Test(priority = 106, dependsOnGroups = {"registered", "premium"},
+        description = "PREM-8 Analytics tab has no Pro badge")
   public void prem8_analyticsTabHasNoProBadge() {
     openDashboard();
-    // precondition with TestNG: a missing Analytics tab must never pass as the known bug
-    Locator anyAnalytics = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(ANALYTICS_TAB));
-    try {
-      anyAnalytics.first().waitFor(new Locator.WaitForOptions().setTimeout(30_000));
-    } catch (RuntimeException e) {
-      Assert.fail("precondition: no Analytics tab button -- " + e.getMessage());
-    }
-    assertThat(role(AriaRole.BUTTON, "Analytics")).isVisible(new LocatorAssertions.IsVisibleOptions().setTimeout(5000));
+    // The badge is shown while the subscription is still loading, so wait until the name settles (D20 closed).
+    assertThat(role(AriaRole.BUTTON, "Analytics")).isVisible(SLOW);
   }
 
   // PREM-10

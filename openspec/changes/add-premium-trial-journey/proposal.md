@@ -16,15 +16,15 @@ opened in the probe: their texts are read from the site code and stay ASSUMED un
 
 - New capability `premium-trial` (test group PREM), 14 requirements, 15 scenarios: activation without checkout
   (PREM-1), trial state in Plan & Billing (PREM-2), job cards instead of the teaser (PREM-3), card actions (PREM-4),
-  Save / Already applied / Not relevant (PREM-5..7), Analytics unlocked incl. the KNOWN BUG D20 "Analytics PRO"
-  badge (PREM-8), Save rate (PREM-9), home page without pricing (PREM-10), AI dialogs behind `-Dqa.ai=true`
+  Save / Already applied / Not relevant (PREM-5..7), Analytics unlocked and its tab without the "Pro" badge
+  (PREM-8; D20 closed by the human after the first live run), Save rate (PREM-9), home page without pricing (PREM-10), AI dialogs behind `-Dqa.ai=true`
   (PREM-11..13), deletion of a trial account by `JourneyCleanup` (PREM-14).
-- New tests in `journey/`: `PremiumUpgradeTest` (PREM-1, 2), `PremiumDashboardTest` (PREM-3..10, D20),
+- New tests in `journey/`: `PremiumUpgradeTest` (PREM-1, 2), `PremiumDashboardTest` (PREM-3..10),
   `PremiumAiTest` (PREM-11..13, skipped without `-Dqa.ai=true`); `testng-journey.xml` runs them after the Free tests
   and before `JourneyCleanup`.
 - `SettingsTest.set5_newPasswordSignsIn` gets a priority after the Premium tests, so it still runs last (the Premium
   tests reuse the saved session).
-- docs: intent.md (D20 KNOWN BUG), current-state.md, README counts, decisions.md.
+- docs: intent.md (D20 closed), current-state.md, README counts, decisions.md.
 
 ## Capabilities
 

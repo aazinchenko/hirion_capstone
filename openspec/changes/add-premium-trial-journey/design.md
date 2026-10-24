@@ -31,9 +31,9 @@ upgrades that same user to the 7-day Premium trial after the Free checks.
 - **AI (PREM-11..13).** `PremiumAiTest` throws `SkipException` in `@BeforeMethod` unless `-Dqa.ai=true`; each test
   clicks one AI button once and checks only labels of the dialog, never the AI text. The CI workflow does not pass
   `-Dqa.ai`. The hook `scripts/guard-live-run.mjs` asks the human for any command with `-Dqa.ai`.
-- **D20.** PREM-8 keeps the correct SHALL (no "Pro" badge); `prem8_analyticsTabHasNoProBadge` is a KNOWN BUG test
-  (`expectedExceptions = AssertionFailedError.class`) whose precondition (an Analytics button exists) uses
-  `org.testng.Assert`.
+- **Analytics badge (D20 closed).** The badge is rendered while `isPro` is false, also while the subscription is
+  loading, so `prem8_analyticsTabHasNoProBadge` waits up to 30 s for a button named exactly "Analytics". It was a
+  KNOWN BUG test at first; the first live run showed the plain name and the human closed D20 (2026-10-24).
 - **PREM-14.** No TestNG test clicks "Delete" (human decision for DEL-1); the evidence is the `JourneyCleanup` line
   "deleted: ... no longer signs in" of the same run.
 - **No TestUser change.** The planned flag `premiumActivated` is not needed: the `premium` group gate and the cleanup

@@ -77,8 +77,9 @@ from the Job Feed and SHALL show it in the Applied tab with the text "Applied <M
 For a user on the Premium trial the Analytics tab SHALL show the analytics without the paid-plan gate (no heading
 "Unlock Hirion Premium"): the sections "Your performance", "Swiss market intelligence" and "Positioning &
 opportunity" and the figures "Total active jobs", "Avg match score", "Save rate" and "Jobs in feed". The Analytics
-tab button SHALL NOT carry the badge "Pro", so its accessible name is "Analytics". (Known defect D20, seen live
-2026-10-24: the trial user still sees "Analytics PRO".)
+tab button SHALL NOT carry the badge "Pro" once the page has loaded, so its accessible name is "Analytics". (While
+the subscription is still loading the badge can show for a moment; the candidate defect D20 "Analytics PRO" was
+closed by the human on 2026-10-24 after the live run showed the plain name.)
 
 #### Scenario: Analytics without the gate
 - **WHEN** the test user whose trial has started opens `/dashboard` and clicks the Analytics tab button
@@ -87,7 +88,7 @@ tab button SHALL NOT carry the badge "Pro", so its accessible name is "Analytics
 
 #### Scenario: Analytics tab has no Pro badge
 - **WHEN** the test user whose trial has started opens `/dashboard`
-- **THEN** there is a button named exactly "Analytics" (known defect D20: today it is "Analytics PRO")
+- **THEN** within 30 s there is a button named exactly "Analytics"
 
 ### Requirement: PREM-9 Save rate counts saved jobs
 After the first job is saved, Analytics SHALL show "Save rate" = round(saved / (saved + jobs in feed) x 100) % with

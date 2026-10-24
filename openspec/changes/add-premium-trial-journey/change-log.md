@@ -11,6 +11,12 @@
   charged."; "cancel button count: 0"; "cards visible after s: 13"; "analytics button name: Analytics PRO"; "home
   #pricing count: 0"; JourneyCleanup "deleted: ... no longer signs in". Rules commit `be76f20`, facts commit `0983bcd`.
 
+## 2026-10-24: D20 closed
+
+- Human: "D20 закрыть: сделай проверку значка Analytics обычным тестом PREM-8, повтори живой прогон, заархивируй и
+  сделай push." `prem8_analyticsTabHasNoProBadge` is now a regular test (waits up to 30 s for the button named exactly
+  "Analytics"); spec PREM-8, proposal, design, tasks, intent.md, decisions.md, current-state.md, README updated.
+
 ## Evidence for tasks
 
 - 1.1 [x]: `PremiumUpgradeTest` (prem1, prem2), `PremiumDashboardTest` (prem3, prem4, prem8 x2 incl. KNOWN BUG D20,

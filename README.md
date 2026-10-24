@@ -8,7 +8,7 @@ The project is the capstone of the *Agentic Engineering Crash Course*. Its quest
 |---|---|
 | **Tests** | 113 automated tests (public 63 + journey 50, of which 3 AI tests run only with `-Dqa.ai=true`) after change `add-premium-trial-journey` (2026-10-24); last all-green CI run with 97 tests: [37501768600](https://github.com/aazinchenko/hirion_capstone/actions/runs/37501768600); CI workflow `.github/workflows/tests.yml` |
 | **Specs** | 10 capabilities, 58 requirements, 95 scenarios (OpenSpec) |
-| **Defects found on the live site** | 13 reported, 8 pinned by `KNOWN BUG` tests; 6 of them (D2, D4, D5, D6, D10, D14) fixed by the site, now regular tests; D12 fixed by the site; D16 and D20 open (`KNOWN BUG` tests); D1, D8, D9, D11, D19 closed as not relevant (2026-10-24, FOOT-3 removed) |
+| **Defects found on the live site** | 13 reported, 8 pinned by `KNOWN BUG` tests; 6 of them (D2, D4, D5, D6, D10, D14) fixed by the site, now regular tests; D12 fixed by the site; D16 still open (the only `KNOWN BUG` test); D20 closed 2026-10-24; D1, D8, D9, D11, D19 closed as not relevant (2026-10-24, FOOT-3 removed) |
 | **Timeline** | 25 Sep - 6 Oct 2026, 100 commits |
 | **Stack** | Java 21 · Maven · Playwright for Java 1.55 · TestNG 7.11 · OpenSpec 1.13 |
 

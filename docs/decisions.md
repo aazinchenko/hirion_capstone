@@ -46,8 +46,9 @@ Budget vs actual: `docs/intent.md` "Budget".
 
 **Which findings are defects** (`docs/intent.md` "Known defects")
 - KNOWN BUG tests: D16, `?plan=basic` does not preselect Basic (confirmed live 2026-10-20, change
-  `update-plans-and-pricing`); D20, the Premium trial user still sees "Analytics PRO" (Premium probe 2026-10-24,
-  human decision, change `add-premium-trial-journey`). D14 was added in `d091494`, closed with D6 and D10 below. D1 had two KNOWN BUG
+  `update-plans-and-pricing`). D20 ("Analytics PRO" for the Premium trial user) was a KNOWN BUG test for one run;
+  the live run showed the plain name (the badge only flashes while the subscription loads) and the human closed it
+  (2026-10-24, change `add-premium-trial-journey`, PREM-8 regular check). D14 was added in `d091494`, closed with D6 and D10 below. D1 had two KNOWN BUG
   tests until 2026-10-24 (see "Not a defect").
 - Fixed by the site: D2, D4, D5 (seen live 2026-10-06, their KNOWN BUG tests failed with "should have
   thrown"); now regular tests I18N-4, PUB-4, AUTH-3 (change `close-fixed-defects-d2-d4-d5`). D6, D10, D14 (seen

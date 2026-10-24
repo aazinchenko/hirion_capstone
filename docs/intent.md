@@ -120,7 +120,7 @@ uncommitted probe class after RegistrationTest, log ../premium-probe-2026-10-24.
   latest jobs that match your profile. ..."; no teaser, no "Unlock with Basic". 3 cards, each: title, company,
   location, age, category, "Onsite", "Full-time", buttons "View job", "Save", "Tailor my CV", "Write Cover Letter",
   "Help me stand out", "Hide", score "95" + "MATCH".
-- The Analytics tab button still reads "Analytics PRO" for the Premium trial user (KNOWN BUG D20, see defects).
+- The Analytics tab button still reads "Analytics PRO" for the Premium trial user (D20, closed: only while loading).
 - Analytics without gate ("Unlock Hirion Premium" absent): headings "Your performance" (KPIs "Total active jobs"
   38,215, "Avg match score" 92%, "Save rate" 0%, "Jobs in feed" 3), "Match score distribution", "New matches per day",
   "Swiss market intelligence", "Roles in demand by canton", "Salary benchmark", "Top companies hiring", "Language
@@ -221,14 +221,15 @@ D20  Dashboard: a Premium trial user still sees the badge on the Analytics tab (
                                                    decision 2026-10-24, PREM-8, change add-premium-trial-journey)
      2026-10-24 live journey run: NOT reproduced -- the button was named exactly "Analytics" within 5 s. By the site
      code the badge shows while isPro is false, also while the subscription is loading: the probe probably read
-     the text during loading. Open: human decision (regular check or keep D20 as "badge flashes on load").
+     the text during loading. CLOSED 2026-10-24 (human decision: "D20 закрыть"); PREM-8 checks the plain name as a
+     regular test.
      (D15 is not used here: the 2026-10-15 candidate "saved job shown for a moment after reload" was decided
      by the human outside this file.)
 
 ## Done means
 - `pnpm check` exits 0 and ends with non-zero counters: specs: 9 · active changes: 0 · archived: 4.
 - Every change has commits in the order: spec -> RED -> GREEN -> archive.
-- `mvn test -Dsuite=testng-all.xml` is green; open known defects (D16, D20) are KNOWN BUG tests;
+- `mvn test -Dsuite=testng-all.xml` is green; open known defects (D16) are KNOWN BUG tests;
   defects fixed by the site (D2, D4-D6, D10, D12, D14) are regular tests.
 
 ## Not doing
