@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+  <meta charset='utf-8'>
+  <title>TestNG reports</title>
+
+    <link type="text/css" href="testng-reports1.css" rel="stylesheet" id="ultra" />
+    <link type="text/css" href="testng-reports.css" rel="stylesheet" id="retro" disabled="false"/>
+    <script type="text/javascript" src="jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="testng-reports.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type='text/javascript'>
+      google.load('visualization', '1', {packages:['table']});
+      google.setOnLoadCallback(drawTable);
+      var suiteTableInitFunctions = new Array();
+      var suiteTableData = new Array();
+    </script>
+    <!--
+      <script type="text/javascript" src="jquery-ui/js/jquery-ui-1.8.16.custom.min.js"></script>
+     -->
+  </head>
+
+  <body>    <div class="top-banner-root">
+      <span class="top-banner-title-font">Test results</span>
+      <button id="button" class="button">Switch Retro Theme</button> <!-- button -->
+      <br/>
+      <span class="top-banner-font-1">1 suite</span>
+    </div> <!-- top-banner-root -->
+    <div class="navigator-root">
+      <div class="navigator-suite-header">
+        <span>All suites</span>
+        <a href="#" title="Collapse/expand all the suites" class="collapse-all-link">
+          <img src="collapseall.gif" class="collapse-all-icon">
+          </img> <!-- collapse-all-icon -->
+        </a> <!-- collapse-all-link -->
+      </div> <!-- navigator-suite-header -->
+      <div class="suite">
+        <div class="rounded-window">
+          <div class="suite-header light-rounded-window-top">
+            <a href="#" panel-name="suite-premium" class="navigator-link">
+              <span class="suite-name border-skipped">premium</span>
+            </a> <!-- navigator-link -->
+          </div> <!-- suite-header light-rounded-window-top -->
+          <div class="navigator-suite-content">
+            <div class="suite-section-title">
+              <span>Info</span>
+            </div> <!-- suite-section-title -->
+            <div class="suite-section-content">
+              <ul>
+                <li>
+                  <a href="#" panel-name="test-xml-premium" class="navigator-link ">
+                    <span>testng-premium.xml</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" panel-name="testlist-premium" class="navigator-link ">
+                    <span class="test-stats">1 test</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" panel-name="group-premium" class="navigator-link ">
+                    <span>2 groups</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" panel-name="times-premium" class="navigator-link ">
+                    <span>Times</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" panel-name="reporter-premium" class="navigator-link ">
+                    <span>Reporter output</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" panel-name="ignored-methods-premium" class="navigator-link ">
+                    <span>Ignored methods</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+                <li>
+                  <a href="#" panel-name="chronological-premium" class="navigator-link ">
+                    <span>Chronological view</span>
+                  </a> <!-- navigator-link  -->
+                </li>
+              </ul>
+            </div> <!-- suite-section-content -->
+            <div class="result-section">
+              <div class="suite-section-title">
+                <span>Results</span>
+              </div> <!-- suite-section-title -->
+              <div class="suite-section-content">
+                <ul>
+                  <li>
+                    <span class="method-stats">15 methods,  3 skipped,  12 passed</span>
+                  </li>
+                  <li>
+                    <span class="method-list-title skipped">Skipped methods</span>
+                    <span class="show-or-hide-methods skipped">
+                      <a href="#" panel-name="suite-premium" class="hide-methods skipped suite-premium"> (hide)</a> <!-- hide-methods skipped suite-premium -->
+                      <a href="#" panel-name="suite-premium" class="show-methods skipped suite-premium"> (show)</a> <!-- show-methods skipped suite-premium -->
+                    </span>
+                    <div class="method-list-content skipped suite-premium">
+                      <span>
+                        <img src="skipped.png" width="3%"/>
+                        <a href="#" panel-name="suite-premium" title="ch.hirion.journey.PremiumAiTest" class="method navigator-link" hash-for-method="prem11_helpMeStandOut">prem11_helpMeStandOut</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="skipped.png" width="3%"/>
+                        <a href="#" panel-name="suite-premium" title="ch.hirion.journey.PremiumAiTest" class="method navigator-link" hash-for-method="prem12_tailorMyCv">prem12_tailorMyCv</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="skipped.png" width="3%"/>
+                        <a href="#" panel-name="suite-premium" title="ch.hirion.journey.PremiumAiTest" class="method navigator-link" hash-for-method="prem13_writeCoverLetter">prem13_writeCoverLetter</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                    </div> <!-- method-list-content skipped suite-premium -->
+                  </li>
+                  <li>
+                    <span class="method-list-title passed">Passed methods</span>
+                    <span class="show-or-hide-methods passed">
+                      <a href="#" panel-name="suite-premium" class="hide-methods passed suite-premium"> (hide)</a> <!-- hide-methods passed suite-premium -->
+                      <a href="#" panel-name="suite-premium" class="show-methods passed suite-premium"> (show)</a> <!-- show-methods passed suite-premium -->
+                    </span>
+                    <div class="method-list-content passed suite-premium">
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-premium" title="ch.hirion.journey.PremiumDashboardTest" class="method navigator-link" hash-for-method="prem10_homeWithoutPricing">prem10_homeWithoutPricing</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-premium" title="ch.hirion.journey.PremiumUpgradeTest" class="method navigator-link" hash-for-method="prem1_trialStartsWithoutCheckout">prem1_trialStartsWithoutCheckout</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-premium" title="ch.hirion.journey.PremiumUpgradeTest" class="method navigator-link" hash-for-method="prem2_trialPlanState">prem2_trialPlanState</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-premium" title="ch.hirion.journey.PremiumDashboardTest" class="method navigator-link" hash-for-method="prem3_jobCardsInsteadOfTeaser">prem3_jobCardsInsteadOfTeaser</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-premium" title="ch.hirion.journey.PremiumDashboardTest" class="method navigator-link" hash-for-method="prem4_cardActions">prem4_cardActions</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-premium" title="ch.hirion.journey.PremiumDashboardTest" class="method navigator-link" hash-for-method="prem5_saveMovesJobToSaved">prem5_saveMovesJobToSaved</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-premium" title="ch.hirion.journey.PremiumDashboardTest" class="method navigator-link" hash-for-method="prem6_alreadyAppliedMovesJobToApplied">prem6_alreadyAppliedMovesJobToApplied</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-premium" title="ch.hirion.journey.PremiumDashboardTest" class="method navigator-link" hash-for-method="prem7_notRelevantRemovesJob">prem7_notRelevantRemovesJob</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-premium" title="ch.hirion.journey.PremiumDashboardTest" class="method navigator-link" hash-for-method="prem8_analyticsTabHasNoProBadge">prem8_analyticsTabHasNoProBadge</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-premium" title="ch.hirion.journey.PremiumDashboardTest" class="method navigator-link" hash-for-method="prem8_analyticsWithoutGate">prem8_analyticsWithoutGate</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-premium" title="ch.hirion.journey.PremiumDashboardTest" class="method navigator-link" hash-for-method="prem9_saveRateAfterOneSave">prem9_saveRateAfterOneSave</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img src="passed.png" width="3%"/>
+                        <a href="#" panel-name="suite-premium" title="ch.hirion.journey.RegistrationTest" class="method navigator-link" hash-for-method="reg9_freeSignupLandsOnDashboard">reg9_freeSignupLandsOnDashboard</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                    </div> <!-- method-list-content passed suite-premium -->
+                  </li>
+                </ul>
+              </div> <!-- suite-section-content -->
+            </div> <!-- result-section -->
+          </div> <!-- navigator-suite-content -->
+        </div> <!-- rounded-window -->
+      </div> <!-- suite -->
+    </div> <!-- navigator-root -->
+    <div class="wrapper">
+      <div class="main-panel-root">
+        <div panel-name="suite-premium" class="panel premium">
+          <div class="suite-premium-class-skipped">
+            <div class="main-panel-header rounded-window-top">
+              <img src="skipped.png"/>
+              <span class="class-name">ch.hirion.journey.PremiumAiTest</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="prem11_helpMeStandOut">
+                  </a> <!-- prem11_helpMeStandOut -->
+                  <span class="method-name">prem11_helpMeStandOut</span>
+                  <div class="stack-trace">org.testng.SkipException: AI dialogs run only with -Dqa.ai=true (owner&apos;s AI costs)
+	at ch.hirion.journey.PremiumAiTest.skipWithoutAiFlag(PremiumAiTest.java:50)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+... Removed 33 stack frames
+</div> <!-- stack-trace -->
+                  <em>
+(PREM-11 Stand-out review)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="prem12_tailorMyCv">
+                  </a> <!-- prem12_tailorMyCv -->
+                  <span class="method-name">prem12_tailorMyCv</span>
+                  <div class="stack-trace">org.testng.SkipException: AI dialogs run only with -Dqa.ai=true (owner&apos;s AI costs)
+	at ch.hirion.journey.PremiumAiTest.skipWithoutAiFlag(PremiumAiTest.java:50)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+... Removed 33 stack frames
+</div> <!-- stack-trace -->
+                  <em>
+(PREM-12 Tailored CV)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="prem13_writeCoverLetter">
+                  </a> <!-- prem13_writeCoverLetter -->
+                  <span class="method-name">prem13_writeCoverLetter</span>
+                  <div class="stack-trace">org.testng.SkipException: AI dialogs run only with -Dqa.ai=true (owner&apos;s AI costs)
+	at ch.hirion.journey.PremiumAiTest.skipWithoutAiFlag(PremiumAiTest.java:50)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+... Removed 33 stack frames
+</div> <!-- stack-trace -->
+                  <em>
+(PREM-13 Cover letter)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-premium-class-skipped -->
+          <div class="suite-premium-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">ch.hirion.journey.RegistrationTest</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="reg9_freeSignupLandsOnDashboard">
+                  </a> <!-- reg9_freeSignupLandsOnDashboard -->
+                  <span class="method-name">reg9_freeSignupLandsOnDashboard</span>
+                  <em>
+(REG-9 Free signup lands on the dashboard)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-premium-class-passed -->
+          <div class="suite-premium-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">ch.hirion.journey.PremiumDashboardTest</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="prem10_homeWithoutPricing">
+                  </a> <!-- prem10_homeWithoutPricing -->
+                  <span class="method-name">prem10_homeWithoutPricing</span>
+                  <em>
+(PREM-10 Home page of a Premium user)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="prem3_jobCardsInsteadOfTeaser">
+                  </a> <!-- prem3_jobCardsInsteadOfTeaser -->
+                  <span class="method-name">prem3_jobCardsInsteadOfTeaser</span>
+                  <em>
+(PREM-3 Job cards after the activation)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="prem4_cardActions">
+                  </a> <!-- prem4_cardActions -->
+                  <span class="method-name">prem4_cardActions</span>
+                  <em>
+(PREM-4 Card actions)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="prem5_saveMovesJobToSaved">
+                  </a> <!-- prem5_saveMovesJobToSaved -->
+                  <span class="method-name">prem5_saveMovesJobToSaved</span>
+                  <em>
+(PREM-5 Save a job)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="prem6_alreadyAppliedMovesJobToApplied">
+                  </a> <!-- prem6_alreadyAppliedMovesJobToApplied -->
+                  <span class="method-name">prem6_alreadyAppliedMovesJobToApplied</span>
+                  <em>
+(PREM-6 Mark a job as applied)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="prem7_notRelevantRemovesJob">
+                  </a> <!-- prem7_notRelevantRemovesJob -->
+                  <span class="method-name">prem7_notRelevantRemovesJob</span>
+                  <em>
+(PREM-7 Dismiss a job)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="prem8_analyticsTabHasNoProBadge">
+                  </a> <!-- prem8_analyticsTabHasNoProBadge -->
+                  <span class="method-name">prem8_analyticsTabHasNoProBadge</span>
+                  <em>
+(PREM-8 Analytics tab has no Pro badge)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="prem8_analyticsWithoutGate">
+                  </a> <!-- prem8_analyticsWithoutGate -->
+                  <span class="method-name">prem8_analyticsWithoutGate</span>
+                  <em>
+(PREM-8 Analytics without the gate)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="prem9_saveRateAfterOneSave">
+                  </a> <!-- prem9_saveRateAfterOneSave -->
+                  <span class="method-name">prem9_saveRateAfterOneSave</span>
+                  <em>
+(PREM-9 Save rate after one save)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-premium-class-passed -->
+          <div class="suite-premium-class-passed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="passed.png"/>
+              <span class="class-name">ch.hirion.journey.PremiumUpgradeTest</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="prem1_trialStartsWithoutCheckout">
+                  </a> <!-- prem1_trialStartsWithoutCheckout -->
+                  <span class="method-name">prem1_trialStartsWithoutCheckout</span>
+                  <em>
+(PREM-1 Trial starts without checkout)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="prem2_trialPlanState">
+                  </a> <!-- prem2_trialPlanState -->
+                  <span class="method-name">prem2_trialPlanState</span>
+                  <em>
+(PREM-2 Trial plan state)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-premium-class-passed -->
+        </div> <!-- panel premium -->
+        <div panel-name="test-xml-premium" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">/work/src/test/resources/testng-premium.xml</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <pre>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE suite SYSTEM &quot;https://testng.org/testng-1.0.dtd&quot;&gt;
+&lt;suite name=&quot;premium&quot; guice-stage=&quot;DEVELOPMENT&quot; verbose=&quot;0&quot;&gt;
+  &lt;test thread-count=&quot;5&quot; name=&quot;premium&quot; verbose=&quot;0&quot;&gt;
+    &lt;classes&gt;
+      &lt;class name=&quot;ch.hirion.journey.RegistrationTest&quot;&gt;
+        &lt;methods&gt;
+          &lt;include name=&quot;reg9_freeSignupLandsOnDashboard&quot;/&gt;
+        &lt;/methods&gt;
+      &lt;/class&gt; &lt;!-- ch.hirion.journey.RegistrationTest --&gt;
+      &lt;class name=&quot;ch.hirion.journey.PremiumUpgradeTest&quot;/&gt;
+      &lt;class name=&quot;ch.hirion.journey.PremiumDashboardTest&quot;/&gt;
+      &lt;class name=&quot;ch.hirion.journey.PremiumAiTest&quot;/&gt;
+      &lt;class name=&quot;ch.hirion.journey.JourneyCleanup&quot;/&gt;
+    &lt;/classes&gt;
+  &lt;/test&gt; &lt;!-- premium --&gt;
+&lt;/suite&gt; &lt;!-- premium --&gt;
+            </pre>
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="testlist-premium" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Tests for premium</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <ul>
+              <li>
+                <span class="test-name">premium (5 classes)</span>
+              </li>
+            </ul>
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="group-premium" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Groups for premium</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="test-group">
+              <span class="test-group-name">premium</span>
+              <br/>
+              <div class="method-in-group">
+                <span class="method-in-group-name">prem1_trialStartsWithoutCheckout</span>
+                <br/>
+              </div> <!-- method-in-group -->
+            </div> <!-- test-group -->
+            <div class="test-group">
+              <span class="test-group-name">registered</span>
+              <br/>
+              <div class="method-in-group">
+                <span class="method-in-group-name">reg9_freeSignupLandsOnDashboard</span>
+                <br/>
+              </div> <!-- method-in-group -->
+            </div> <!-- test-group -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="times-premium" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Times for premium</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="times-div">
+              <script type="text/javascript">
+suiteTableInitFunctions.push('tableData_premium');
+function tableData_premium() {
+var data = new google.visualization.DataTable();
+data.addColumn('number', 'Number');
+data.addColumn('string', 'Method');
+data.addColumn('string', 'Class');
+data.addColumn('number', 'Time (ms)');
+data.addRows(15);
+data.setCell(0, 0, 0)
+data.setCell(0, 1, 'prem3_jobCardsInsteadOfTeaser')
+data.setCell(0, 2, 'ch.hirion.journey.PremiumDashboardTest')
+data.setCell(0, 3, 53858);
+data.setCell(1, 0, 1)
+data.setCell(1, 1, 'prem6_alreadyAppliedMovesJobToApplied')
+data.setCell(1, 2, 'ch.hirion.journey.PremiumDashboardTest')
+data.setCell(1, 3, 18583);
+data.setCell(2, 0, 2)
+data.setCell(2, 1, 'prem7_notRelevantRemovesJob')
+data.setCell(2, 2, 'ch.hirion.journey.PremiumDashboardTest')
+data.setCell(2, 3, 16020);
+data.setCell(3, 0, 3)
+data.setCell(3, 1, 'prem8_analyticsWithoutGate')
+data.setCell(3, 2, 'ch.hirion.journey.PremiumDashboardTest')
+data.setCell(3, 3, 13078);
+data.setCell(4, 0, 4)
+data.setCell(4, 1, 'reg9_freeSignupLandsOnDashboard')
+data.setCell(4, 2, 'ch.hirion.journey.RegistrationTest')
+data.setCell(4, 3, 12431);
+data.setCell(5, 0, 5)
+data.setCell(5, 1, 'prem9_saveRateAfterOneSave')
+data.setCell(5, 2, 'ch.hirion.journey.PremiumDashboardTest')
+data.setCell(5, 3, 3464);
+data.setCell(6, 0, 6)
+data.setCell(6, 1, 'prem4_cardActions')
+data.setCell(6, 2, 'ch.hirion.journey.PremiumDashboardTest')
+data.setCell(6, 3, 2892);
+data.setCell(7, 0, 7)
+data.setCell(7, 1, 'prem8_analyticsTabHasNoProBadge')
+data.setCell(7, 2, 'ch.hirion.journey.PremiumDashboardTest')
+data.setCell(7, 3, 1964);
+data.setCell(8, 0, 8)
+data.setCell(8, 1, 'prem5_saveMovesJobToSaved')
+data.setCell(8, 2, 'ch.hirion.journey.PremiumDashboardTest')
+data.setCell(8, 3, 1912);
+data.setCell(9, 0, 9)
+data.setCell(9, 1, 'prem10_homeWithoutPricing')
+data.setCell(9, 2, 'ch.hirion.journey.PremiumDashboardTest')
+data.setCell(9, 3, 1834);
+data.setCell(10, 0, 10)
+data.setCell(10, 1, 'prem1_trialStartsWithoutCheckout')
+data.setCell(10, 2, 'ch.hirion.journey.PremiumUpgradeTest')
+data.setCell(10, 3, 1156);
+data.setCell(11, 0, 11)
+data.setCell(11, 1, 'prem2_trialPlanState')
+data.setCell(11, 2, 'ch.hirion.journey.PremiumUpgradeTest')
+data.setCell(11, 3, 1155);
+data.setCell(12, 0, 12)
+data.setCell(12, 1, 'prem11_helpMeStandOut')
+data.setCell(12, 2, 'ch.hirion.journey.PremiumAiTest')
+data.setCell(12, 3, 0);
+data.setCell(13, 0, 13)
+data.setCell(13, 1, 'prem12_tailorMyCv')
+data.setCell(13, 2, 'ch.hirion.journey.PremiumAiTest')
+data.setCell(13, 3, 0);
+data.setCell(14, 0, 14)
+data.setCell(14, 1, 'prem13_writeCoverLetter')
+data.setCell(14, 2, 'ch.hirion.journey.PremiumAiTest')
+data.setCell(14, 3, 0);
+window.suiteTableData['premium']= { tableData: data, tableDiv: 'times-div-premium'}
+return data;
+}
+              </script>
+              <span class="suite-total-time">Total running time: 2 minutes</span>
+              <div id="times-div-premium">
+              </div> <!-- times-div-premium -->
+            </div> <!-- times-div -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="reporter-premium" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Reporter output for premium</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="ignored-methods-premium" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">16 ignored methods</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="ignored-class-div">
+              <span class="ignored-class-name">ch.hirion.journey.RegistrationTest</span>
+              <div class="ignored-methods-div">
+                <span class="ignored-method-name">reg7_planFreePreselectsFree</span>
+                <br/>
+                <span class="ignored-method-name">reg7_freeCanBeSelected</span>
+                <br/>
+                <span class="ignored-method-name">reg5_stepTwoWithoutFileBlocked</span>
+                <br/>
+                <span class="ignored-method-name">reg7_basicCanBeSelected</span>
+                <br/>
+                <span class="ignored-method-name">reg7_planBasicPreselectsBasic</span>
+                <br/>
+                <span class="ignored-method-name">reg4_takenEmailBlocked</span>
+                <br/>
+                <span class="ignored-method-name">auth6_wrongPasswordStaysOnLogin</span>
+                <br/>
+                <span class="ignored-method-name">reg6_stepThreeRendered</span>
+                <br/>
+                <span class="ignored-method-name">reg7_stepFourPremiumTrialSelected</span>
+                <br/>
+                <span class="ignored-method-name">reg10_showPasswordInTabOrder</span>
+                <br/>
+                <span class="ignored-method-name">reg7_backKeepsWizardData</span>
+                <br/>
+                <span class="ignored-method-name">reg5_stepTwoRendered</span>
+                <br/>
+                <span class="ignored-method-name">reg3_shortPasswordBlocked</span>
+                <br/>
+                <span class="ignored-method-name">reg6_stepThreeWithoutRoleBlocked</span>
+                <br/>
+                <span class="ignored-method-name">reg7_planTrialPreselectsTrial</span>
+                <br/>
+                <span class="ignored-method-name">reg8_stepsOneToThreeSendNothing</span>
+                <br/>
+              </div> <!-- ignored-methods-div -->
+            </div> <!-- ignored-class-div -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+        <div panel-name="chronological-premium" class="panel">
+          <div class="main-panel-header rounded-window-top">
+            <span class="header-content">Methods in chronological order</span>
+          </div> <!-- main-panel-header rounded-window-top -->
+          <div class="main-panel-content rounded-window-bottom">
+            <div class="chronological-class">
+              <div class="chronological-class-name">ch.hirion.journey.JourneyCleanup</div> <!-- chronological-class-name -->
+              <div class="configuration-suite before">
+                <span class="method-name">deleteLeftoverUser</span>
+                <span class="method-start">0 ms</span>
+              </div> <!-- configuration-suite before -->
+            </div> <!-- chronological-class -->
+            <div class="chronological-class">
+              <div class="chronological-class-name">ch.hirion.journey.RegistrationTest</div> <!-- chronological-class-name -->
+              <div class="configuration-class before">
+                <span class="method-name">launchBrowser</span>
+                <span class="method-start">719 ms</span>
+              </div> <!-- configuration-class before -->
+              <div class="configuration-method before">
+                <span class="method-name">openContext</span>
+                <span class="method-start">4271 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">reg9_freeSignupLandsOnDashboard</span>
+                <span class="method-start">4519 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">closeContext([TestResult name=reg9_freeSignupLandsOnDashboard status=SUCCESS method=RegistrationTest.reg9_freeSig...)</span>
+                <span class="method-start">16994 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-class after">
+                <span class="method-name">closeBrowser</span>
+                <span class="method-start">17048 ms</span>
+              </div> <!-- configuration-class after -->
+            </div> <!-- chronological-class -->
+            <div class="chronological-class">
+              <div class="chronological-class-name">ch.hirion.journey.PremiumUpgradeTest</div> <!-- chronological-class-name -->
+              <div class="configuration-class before">
+                <span class="method-name">launchBrowser</span>
+                <span class="method-start">17119 ms</span>
+              </div> <!-- configuration-class before -->
+              <div class="configuration-method before">
+                <span class="method-name">openContext</span>
+                <span class="method-start">17552 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">prem1_trialStartsWithoutCheckout</span>
+                <span class="method-start">17698 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">closeContext([TestResult name=prem1_trialStartsWithoutCheckout status=SUCCESS method=PremiumUpgradeTest.prem1_tri...)</span>
+                <span class="method-start">18856 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-method before">
+                <span class="method-name">openContext</span>
+                <span class="method-start">18885 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">prem2_trialPlanState</span>
+                <span class="method-start">19058 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">closeContext([TestResult name=prem2_trialPlanState status=SUCCESS method=PremiumUpgradeTest.prem2_trialPlanState(...)</span>
+                <span class="method-start">20214 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-class after">
+                <span class="method-name">closeBrowser</span>
+                <span class="method-start">20228 ms</span>
+              </div> <!-- configuration-class after -->
+            </div> <!-- chronological-class -->
+            <div class="chronological-class">
+              <div class="chronological-class-name">ch.hirion.journey.PremiumDashboardTest</div> <!-- chronological-class-name -->
+              <div class="configuration-class before">
+                <span class="method-name">launchBrowser</span>
+                <span class="method-start">20289 ms</span>
+              </div> <!-- configuration-class before -->
+              <div class="configuration-method before">
+                <span class="method-name">openContext</span>
+                <span class="method-start">20761 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">prem3_jobCardsInsteadOfTeaser</span>
+                <span class="method-start">20891 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">closeContext([TestResult name=prem3_jobCardsInsteadOfTeaser status=SUCCESS method=PremiumDashboardTest.prem3_jobC...)</span>
+                <span class="method-start">74751 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-method before">
+                <span class="method-name">openContext</span>
+                <span class="method-start">74772 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">prem4_cardActions</span>
+                <span class="method-start">74903 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">closeContext([TestResult name=prem4_cardActions status=SUCCESS method=PremiumDashboardTest.prem4_cardActions()[pr...)</span>
+                <span class="method-start">77796 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-method before">
+                <span class="method-name">openContext</span>
+                <span class="method-start">77814 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">prem8_analyticsWithoutGate</span>
+                <span class="method-start">77916 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">closeContext([TestResult name=prem8_analyticsWithoutGate status=SUCCESS method=PremiumDashboardTest.prem8_analyti...)</span>
+                <span class="method-start">90996 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-method before">
+                <span class="method-name">openContext</span>
+                <span class="method-start">91019 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">prem8_analyticsTabHasNoProBadge</span>
+                <span class="method-start">91176 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">closeContext([TestResult name=prem8_analyticsTabHasNoProBadge status=SUCCESS method=PremiumDashboardTest.prem8_an...)</span>
+                <span class="method-start">93142 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-method before">
+                <span class="method-name">openContext</span>
+                <span class="method-start">93162 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">prem10_homeWithoutPricing</span>
+                <span class="method-start">93328 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">closeContext([TestResult name=prem10_homeWithoutPricing status=SUCCESS method=PremiumDashboardTest.prem10_homeWit...)</span>
+                <span class="method-start">95163 ms</span>
+              </div> <!-- configuration-method after -->
+            </div> <!-- chronological-class -->
+            <div class="chronological-class">
+              <div class="chronological-class-name">ch.hirion.journey.PremiumAiTest</div> <!-- chronological-class-name -->
+              <div class="configuration-class before">
+                <span class="method-name">launchBrowser</span>
+                <span class="method-start">95178 ms</span>
+              </div> <!-- configuration-class before -->
+              <div class="configuration-method before">
+                <span class="method-name">openContext</span>
+                <span class="method-start">95671 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="configuration-method before">
+                <span class="method-name">skipWithoutAiFlag</span>
+                <span class="method-start">95803 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">prem11_helpMeStandOut</span>
+                <span class="method-start">95814 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">closeContext([TestResult name=prem11_helpMeStandOut status=SKIP method=PremiumAiTest.prem11_helpMeStandOut()[pri:...)</span>
+                <span class="method-start">95821 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-method before">
+                <span class="method-name">openContext</span>
+                <span class="method-start">95952 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="configuration-method before">
+                <span class="method-name">skipWithoutAiFlag</span>
+                <span class="method-start">96062 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">prem12_tailorMyCv</span>
+                <span class="method-start">96066 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">closeContext([TestResult name=prem12_tailorMyCv status=SKIP method=PremiumAiTest.prem12_tailorMyCv()[pri:109, ins...)</span>
+                <span class="method-start">96070 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-method before">
+                <span class="method-name">openContext</span>
+                <span class="method-start">96188 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="configuration-method before">
+                <span class="method-name">skipWithoutAiFlag</span>
+                <span class="method-start">96309 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">prem13_writeCoverLetter</span>
+                <span class="method-start">96312 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">closeContext([TestResult name=prem13_writeCoverLetter status=SKIP method=PremiumAiTest.prem13_writeCoverLetter()[...)</span>
+                <span class="method-start">96315 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-class after">
+                <span class="method-name">closeBrowser</span>
+                <span class="method-start">96451 ms</span>
+              </div> <!-- configuration-class after -->
+            </div> <!-- chronological-class -->
+            <div class="chronological-class">
+              <div class="chronological-class-name">ch.hirion.journey.PremiumDashboardTest</div> <!-- chronological-class-name -->
+              <div class="configuration-method before">
+                <span class="method-name">openContext</span>
+                <span class="method-start">96500 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">prem5_saveMovesJobToSaved</span>
+                <span class="method-start">96639 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">closeContext([TestResult name=prem5_saveMovesJobToSaved status=SUCCESS method=PremiumDashboardTest.prem5_saveMove...)</span>
+                <span class="method-start">98552 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-method before">
+                <span class="method-name">openContext</span>
+                <span class="method-start">98571 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">prem9_saveRateAfterOneSave</span>
+                <span class="method-start">98697 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">closeContext([TestResult name=prem9_saveRateAfterOneSave status=SUCCESS method=PremiumDashboardTest.prem9_saveRat...)</span>
+                <span class="method-start">102162 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-method before">
+                <span class="method-name">openContext</span>
+                <span class="method-start">102179 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">prem6_alreadyAppliedMovesJobToApplied</span>
+                <span class="method-start">102320 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">closeContext([TestResult name=prem6_alreadyAppliedMovesJobToApplied status=SUCCESS method=PremiumDashboardTest.pr...)</span>
+                <span class="method-start">120904 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-method before">
+                <span class="method-name">openContext</span>
+                <span class="method-start">120918 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">prem7_notRelevantRemovesJob</span>
+                <span class="method-start">121027 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">closeContext([TestResult name=prem7_notRelevantRemovesJob status=SUCCESS method=PremiumDashboardTest.prem7_notRel...)</span>
+                <span class="method-start">137048 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-class after">
+                <span class="method-name">closeBrowser</span>
+                <span class="method-start">137065 ms</span>
+              </div> <!-- configuration-class after -->
+            </div> <!-- chronological-class -->
+            <div class="chronological-class">
+              <div class="chronological-class-name">ch.hirion.journey.JourneyCleanup</div> <!-- chronological-class-name -->
+              <div class="configuration-suite after">
+                <span class="method-name">deleteRunUser</span>
+                <span class="method-start">137232 ms</span>
+              </div> <!-- configuration-suite after -->
+          </div> <!-- main-panel-content rounded-window-bottom -->
+        </div> <!-- panel -->
+      </div> <!-- main-panel-root -->
+    </div> <!-- wrapper -->
+  </body>
+<script type="text/javascript" src="testng-reports2.js"></script>
+</html>

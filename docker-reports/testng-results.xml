@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="16" total="31" passed="12" failed="0" skipped="3">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2026-10-24T17:33:58 GMT" name="premium" finished-at="2026-10-24T17:36:14 GMT" duration-ms="136525">
+    <groups>
+      <group name="premium">
+        <method signature="PremiumUpgradeTest.prem1_trialStartsWithoutCheckout()[pri:101, instance:ch.hirion.journey.PremiumUpgradeTest@3971f0fe]" name="prem1_trialStartsWithoutCheckout" class="ch.hirion.journey.PremiumUpgradeTest"/>
+      </group> <!-- premium -->
+      <group name="registered">
+        <method signature="RegistrationTest.reg9_freeSignupLandsOnDashboard()[pri:10, instance:ch.hirion.journey.RegistrationTest@4beeb0e]" name="reg9_freeSignupLandsOnDashboard" class="ch.hirion.journey.RegistrationTest"/>
+      </group> <!-- registered -->
+    </groups>
+    <test started-at="2026-10-24T17:33:58 GMT" name="premium" finished-at="2026-10-24T17:36:14 GMT" duration-ms="136525">
+      <class name="ch.hirion.journey.PremiumAiTest">
+        <test-method is-config="true" signature="launchBrowser()[pri:0, instance:ch.hirion.journey.PremiumAiTest@e1e2e5e]" started-at="2026-10-24T17:35:32 GMT" name="launchBrowser" finished-at="2026-10-24T17:35:33 GMT" duration-ms="491" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- launchBrowser -->
+        <test-method is-config="true" signature="openContext()[pri:0, instance:ch.hirion.journey.PremiumAiTest@e1e2e5e]" started-at="2026-10-24T17:35:33 GMT" name="openContext" finished-at="2026-10-24T17:35:33 GMT" duration-ms="132" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openContext -->
+        <test-method is-config="true" signature="skipWithoutAiFlag()[pri:0, instance:ch.hirion.journey.PremiumAiTest@e1e2e5e]" started-at="2026-10-24T17:35:33 GMT" name="skipWithoutAiFlag" finished-at="2026-10-24T17:35:33 GMT" duration-ms="1" status="SKIP">
+          <exception class="org.testng.SkipException">
+            <message>
+              <![CDATA[AI dialogs run only with -Dqa.ai=true (owner's AI costs)]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.testng.SkipException: AI dialogs run only with -Dqa.ai=true (owner's AI costs)
+at ch.hirion.journey.PremiumAiTest.skipWithoutAiFlag(PremiumAiTest.java:50)
+at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:71)
+at org.testng.internal.invokers.ConfigInvoker.invokeConfigurationMethod(ConfigInvoker.java:400)
+at org.testng.internal.invokers.ConfigInvoker.invokeConfigurations(ConfigInvoker.java:333)
+at org.testng.internal.invokers.TestInvoker.runConfigMethods(TestInvoker.java:836)
+at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:601)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:995)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+at org.testng.TestRunner.privateRun(TestRunner.java:741)
+at org.testng.TestRunner.run(TestRunner.java:616)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
+at org.testng.SuiteRunner.run(SuiteRunner.java:312)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
+at org.testng.TestNG.runSuites(TestNG.java:1112)
+at org.testng.TestNG.run(TestNG.java:1079)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.testng.SkipException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- skipWithoutAiFlag -->
+        <test-method signature="prem11_helpMeStandOut()[pri:108, instance:ch.hirion.journey.PremiumAiTest@e1e2e5e]" started-at="2026-10-24T17:35:33 GMT" name="prem11_helpMeStandOut" description="PREM-11 Stand-out review" depends-on-groups="premium, registered" finished-at="2026-10-24T17:35:33 GMT" duration-ms="0" status="SKIP">
+          <exception class="org.testng.SkipException">
+            <message>
+              <![CDATA[AI dialogs run only with -Dqa.ai=true (owner's AI costs)]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.testng.SkipException: AI dialogs run only with -Dqa.ai=true (owner's AI costs)
+at ch.hirion.journey.PremiumAiTest.skipWithoutAiFlag(PremiumAiTest.java:50)
+at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:71)
+at org.testng.internal.invokers.ConfigInvoker.invokeConfigurationMethod(ConfigInvoker.java:400)
+at org.testng.internal.invokers.ConfigInvoker.invokeConfigurations(ConfigInvoker.java:333)
+at org.testng.internal.invokers.TestInvoker.runConfigMethods(TestInvoker.java:836)
+at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:601)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:995)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+at org.testng.TestRunner.privateRun(TestRunner.java:741)
+at org.testng.TestRunner.run(TestRunner.java:616)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
+at org.testng.SuiteRunner.run(SuiteRunner.java:312)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
+at org.testng.TestNG.runSuites(TestNG.java:1112)
+at org.testng.TestNG.run(TestNG.java:1079)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.testng.SkipException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- prem11_helpMeStandOut -->
+        <test-method is-config="true" signature="closeContext(org.testng.ITestResult)[pri:0, instance:ch.hirion.journey.PremiumAiTest@e1e2e5e]" started-at="2026-10-24T17:35:33 GMT" name="closeContext" finished-at="2026-10-24T17:35:33 GMT" duration-ms="128" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=prem11_helpMeStandOut status=SKIP method=PremiumAiTest.prem11_helpMeStandOut()[pri:108, instance:ch.hirion.journey.PremiumAiTest@e1e2e5e] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeContext -->
+        <test-method is-config="true" signature="openContext()[pri:0, instance:ch.hirion.journey.PremiumAiTest@e1e2e5e]" started-at="2026-10-24T17:35:33 GMT" name="openContext" finished-at="2026-10-24T17:35:33 GMT" duration-ms="109" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openContext -->
+        <test-method is-config="true" signature="skipWithoutAiFlag()[pri:0, instance:ch.hirion.journey.PremiumAiTest@e1e2e5e]" started-at="2026-10-24T17:35:33 GMT" name="skipWithoutAiFlag" finished-at="2026-10-24T17:35:33 GMT" duration-ms="1" status="SKIP">
+          <exception class="org.testng.SkipException">
+            <message>
+              <![CDATA[AI dialogs run only with -Dqa.ai=true (owner's AI costs)]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.testng.SkipException: AI dialogs run only with -Dqa.ai=true (owner's AI costs)
+at ch.hirion.journey.PremiumAiTest.skipWithoutAiFlag(PremiumAiTest.java:50)
+at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:71)
+at org.testng.internal.invokers.ConfigInvoker.invokeConfigurationMethod(ConfigInvoker.java:400)
+at org.testng.internal.invokers.ConfigInvoker.invokeConfigurations(ConfigInvoker.java:333)
+at org.testng.internal.invokers.TestInvoker.runConfigMethods(TestInvoker.java:836)
+at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:601)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:995)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+at org.testng.TestRunner.privateRun(TestRunner.java:741)
+at org.testng.TestRunner.run(TestRunner.java:616)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
+at org.testng.SuiteRunner.run(SuiteRunner.java:312)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
+at org.testng.TestNG.runSuites(TestNG.java:1112)
+at org.testng.TestNG.run(TestNG.java:1079)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.testng.SkipException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- skipWithoutAiFlag -->
+        <test-method signature="prem12_tailorMyCv()[pri:109, instance:ch.hirion.journey.PremiumAiTest@e1e2e5e]" started-at="2026-10-24T17:35:33 GMT" name="prem12_tailorMyCv" description="PREM-12 Tailored CV" depends-on-groups="premium, registered" finished-at="2026-10-24T17:35:33 GMT" duration-ms="0" status="SKIP">
+          <exception class="org.testng.SkipException">
+            <message>
+              <![CDATA[AI dialogs run only with -Dqa.ai=true (owner's AI costs)]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.testng.SkipException: AI dialogs run only with -Dqa.ai=true (owner's AI costs)
+at ch.hirion.journey.PremiumAiTest.skipWithoutAiFlag(PremiumAiTest.java:50)
+at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:71)
+at org.testng.internal.invokers.ConfigInvoker.invokeConfigurationMethod(ConfigInvoker.java:400)
+at org.testng.internal.invokers.ConfigInvoker.invokeConfigurations(ConfigInvoker.java:333)
+at org.testng.internal.invokers.TestInvoker.runConfigMethods(TestInvoker.java:836)
+at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:601)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:995)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+at org.testng.TestRunner.privateRun(TestRunner.java:741)
+at org.testng.TestRunner.run(TestRunner.java:616)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
+at org.testng.SuiteRunner.run(SuiteRunner.java:312)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
+at org.testng.TestNG.runSuites(TestNG.java:1112)
+at org.testng.TestNG.run(TestNG.java:1079)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.testng.SkipException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- prem12_tailorMyCv -->
+        <test-method is-config="true" signature="closeContext(org.testng.ITestResult)[pri:0, instance:ch.hirion.journey.PremiumAiTest@e1e2e5e]" started-at="2026-10-24T17:35:33 GMT" name="closeContext" finished-at="2026-10-24T17:35:33 GMT" duration-ms="116" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=prem12_tailorMyCv status=SKIP method=PremiumAiTest.prem12_tailorMyCv()[pri:109, instance:ch.hirion.journey.PremiumAiTest@e1e2e5e] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeContext -->
+        <test-method is-config="true" signature="openContext()[pri:0, instance:ch.hirion.journey.PremiumAiTest@e1e2e5e]" started-at="2026-10-24T17:35:33 GMT" name="openContext" finished-at="2026-10-24T17:35:34 GMT" duration-ms="119" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openContext -->
+        <test-method is-config="true" signature="skipWithoutAiFlag()[pri:0, instance:ch.hirion.journey.PremiumAiTest@e1e2e5e]" started-at="2026-10-24T17:35:34 GMT" name="skipWithoutAiFlag" finished-at="2026-10-24T17:35:34 GMT" duration-ms="0" status="SKIP">
+          <exception class="org.testng.SkipException">
+            <message>
+              <![CDATA[AI dialogs run only with -Dqa.ai=true (owner's AI costs)]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.testng.SkipException: AI dialogs run only with -Dqa.ai=true (owner's AI costs)
+at ch.hirion.journey.PremiumAiTest.skipWithoutAiFlag(PremiumAiTest.java:50)
+at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:71)
+at org.testng.internal.invokers.ConfigInvoker.invokeConfigurationMethod(ConfigInvoker.java:400)
+at org.testng.internal.invokers.ConfigInvoker.invokeConfigurations(ConfigInvoker.java:333)
+at org.testng.internal.invokers.TestInvoker.runConfigMethods(TestInvoker.java:836)
+at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:601)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:995)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+at org.testng.TestRunner.privateRun(TestRunner.java:741)
+at org.testng.TestRunner.run(TestRunner.java:616)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
+at org.testng.SuiteRunner.run(SuiteRunner.java:312)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
+at org.testng.TestNG.runSuites(TestNG.java:1112)
+at org.testng.TestNG.run(TestNG.java:1079)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.testng.SkipException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- skipWithoutAiFlag -->
+        <test-method signature="prem13_writeCoverLetter()[pri:110, instance:ch.hirion.journey.PremiumAiTest@e1e2e5e]" started-at="2026-10-24T17:35:34 GMT" name="prem13_writeCoverLetter" description="PREM-13 Cover letter" depends-on-groups="premium, registered" finished-at="2026-10-24T17:35:34 GMT" duration-ms="0" status="SKIP">
+          <exception class="org.testng.SkipException">
+            <message>
+              <![CDATA[AI dialogs run only with -Dqa.ai=true (owner's AI costs)]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.testng.SkipException: AI dialogs run only with -Dqa.ai=true (owner's AI costs)
+at ch.hirion.journey.PremiumAiTest.skipWithoutAiFlag(PremiumAiTest.java:50)
+at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:71)
+at org.testng.internal.invokers.ConfigInvoker.invokeConfigurationMethod(ConfigInvoker.java:400)
+at org.testng.internal.invokers.ConfigInvoker.invokeConfigurations(ConfigInvoker.java:333)
+at org.testng.internal.invokers.TestInvoker.runConfigMethods(TestInvoker.java:836)
+at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:601)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:995)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+at org.testng.TestRunner.privateRun(TestRunner.java:741)
+at org.testng.TestRunner.run(TestRunner.java:616)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
+at org.testng.SuiteRunner.run(SuiteRunner.java:312)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
+at org.testng.TestNG.runSuites(TestNG.java:1112)
+at org.testng.TestNG.run(TestNG.java:1079)
+at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:308)
+at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:71)
+at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:113)
+at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.testng.SkipException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- prem13_writeCoverLetter -->
+        <test-method is-config="true" signature="closeContext(org.testng.ITestResult)[pri:0, instance:ch.hirion.journey.PremiumAiTest@e1e2e5e]" started-at="2026-10-24T17:35:34 GMT" name="closeContext" finished-at="2026-10-24T17:35:34 GMT" duration-ms="134" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=prem13_writeCoverLetter status=SKIP method=PremiumAiTest.prem13_writeCoverLetter()[pri:110, instance:ch.hirion.journey.PremiumAiTest@e1e2e5e] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeContext -->
+        <test-method is-config="true" signature="closeBrowser()[pri:0, instance:ch.hirion.journey.PremiumAiTest@e1e2e5e]" started-at="2026-10-24T17:35:34 GMT" name="closeBrowser" finished-at="2026-10-24T17:35:34 GMT" duration-ms="47" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeBrowser -->
+      </class> <!-- ch.hirion.journey.PremiumAiTest -->
+      <class name="ch.hirion.journey.PremiumUpgradeTest">
+        <test-method is-config="true" signature="launchBrowser()[pri:0, instance:ch.hirion.journey.PremiumUpgradeTest@3971f0fe]" started-at="2026-10-24T17:34:14 GMT" name="launchBrowser" finished-at="2026-10-24T17:34:15 GMT" duration-ms="431" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- launchBrowser -->
+        <test-method is-config="true" signature="openContext()[pri:0, instance:ch.hirion.journey.PremiumUpgradeTest@3971f0fe]" started-at="2026-10-24T17:34:15 GMT" name="openContext" finished-at="2026-10-24T17:34:15 GMT" duration-ms="145" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openContext -->
+        <test-method signature="prem1_trialStartsWithoutCheckout()[pri:101, instance:ch.hirion.journey.PremiumUpgradeTest@3971f0fe]" started-at="2026-10-24T17:34:15 GMT" name="prem1_trialStartsWithoutCheckout" description="PREM-1 Trial starts without checkout" depends-on-groups="registered" finished-at="2026-10-24T17:34:16 GMT" duration-ms="1156" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- prem1_trialStartsWithoutCheckout -->
+        <test-method is-config="true" signature="closeContext(org.testng.ITestResult)[pri:0, instance:ch.hirion.journey.PremiumUpgradeTest@3971f0fe]" started-at="2026-10-24T17:34:16 GMT" name="closeContext" finished-at="2026-10-24T17:34:16 GMT" duration-ms="26" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=prem1_trialStartsWithoutCheckout status=SUCCESS method=PremiumUpgradeTest.prem1_trialStartsWithoutCheckout()[pri:101, instance:ch.hirion.journey.PremiumUpgradeTest@3971f0fe] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeContext -->
+        <test-method is-config="true" signature="openContext()[pri:0, instance:ch.hirion.journey.PremiumUpgradeTest@3971f0fe]" started-at="2026-10-24T17:34:16 GMT" name="openContext" finished-at="2026-10-24T17:34:16 GMT" duration-ms="172" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openContext -->
+        <test-method signature="prem2_trialPlanState()[pri:102, instance:ch.hirion.journey.PremiumUpgradeTest@3971f0fe]" started-at="2026-10-24T17:34:16 GMT" name="prem2_trialPlanState" description="PREM-2 Trial plan state" depends-on-groups="premium, registered" finished-at="2026-10-24T17:34:17 GMT" duration-ms="1155" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- prem2_trialPlanState -->
+        <test-method is-config="true" signature="closeContext(org.testng.ITestResult)[pri:0, instance:ch.hirion.journey.PremiumUpgradeTest@3971f0fe]" started-at="2026-10-24T17:34:17 GMT" name="closeContext" finished-at="2026-10-24T17:34:17 GMT" duration-ms="13" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=prem2_trialPlanState status=SUCCESS method=PremiumUpgradeTest.prem2_trialPlanState()[pri:102, instance:ch.hirion.journey.PremiumUpgradeTest@3971f0fe] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeContext -->
+        <test-method is-config="true" signature="closeBrowser()[pri:0, instance:ch.hirion.journey.PremiumUpgradeTest@3971f0fe]" started-at="2026-10-24T17:34:17 GMT" name="closeBrowser" finished-at="2026-10-24T17:34:18 GMT" duration-ms="60" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeBrowser -->
+      </class> <!-- ch.hirion.journey.PremiumUpgradeTest -->
+      <class name="ch.hirion.journey.JourneyCleanup">
+        <test-method is-config="true" signature="deleteLeftoverUser()[pri:0, instance:ch.hirion.journey.JourneyCleanup@5e5073ab]" started-at="2026-10-24T17:33:57 GMT" name="deleteLeftoverUser" finished-at="2026-10-24T17:33:58 GMT" duration-ms="637" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- deleteLeftoverUser -->
+        <test-method is-config="true" signature="deleteRunUser()[pri:0, instance:ch.hirion.journey.JourneyCleanup@5e5073ab]" started-at="2026-10-24T17:36:14 GMT" name="deleteRunUser" finished-at="2026-10-24T17:36:36 GMT" duration-ms="21869" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- deleteRunUser -->
+      </class> <!-- ch.hirion.journey.JourneyCleanup -->
+      <class name="ch.hirion.journey.PremiumDashboardTest">
+        <test-method is-config="true" signature="launchBrowser()[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:34:18 GMT" name="launchBrowser" finished-at="2026-10-24T17:34:18 GMT" duration-ms="471" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- launchBrowser -->
+        <test-method is-config="true" signature="openContext()[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:34:18 GMT" name="openContext" finished-at="2026-10-24T17:34:18 GMT" duration-ms="129" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openContext -->
+        <test-method signature="prem3_jobCardsInsteadOfTeaser()[pri:103, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:34:18 GMT" name="prem3_jobCardsInsteadOfTeaser" description="PREM-3 Job cards after the activation" depends-on-groups="premium, registered" finished-at="2026-10-24T17:35:12 GMT" duration-ms="53858" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- prem3_jobCardsInsteadOfTeaser -->
+        <test-method is-config="true" signature="closeContext(org.testng.ITestResult)[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:12 GMT" name="closeContext" finished-at="2026-10-24T17:35:12 GMT" duration-ms="19" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=prem3_jobCardsInsteadOfTeaser status=SUCCESS method=PremiumDashboardTest.prem3_jobCardsInsteadOfTeaser()[pri:103, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeContext -->
+        <test-method is-config="true" signature="openContext()[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:12 GMT" name="openContext" finished-at="2026-10-24T17:35:12 GMT" duration-ms="130" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openContext -->
+        <test-method signature="prem4_cardActions()[pri:104, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:12 GMT" name="prem4_cardActions" description="PREM-4 Card actions" depends-on-groups="premium, registered" finished-at="2026-10-24T17:35:15 GMT" duration-ms="2892" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- prem4_cardActions -->
+        <test-method is-config="true" signature="closeContext(org.testng.ITestResult)[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:15 GMT" name="closeContext" finished-at="2026-10-24T17:35:15 GMT" duration-ms="15" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=prem4_cardActions status=SUCCESS method=PremiumDashboardTest.prem4_cardActions()[pri:104, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeContext -->
+        <test-method is-config="true" signature="openContext()[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:15 GMT" name="openContext" finished-at="2026-10-24T17:35:15 GMT" duration-ms="101" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openContext -->
+        <test-method signature="prem8_analyticsWithoutGate()[pri:105, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:15 GMT" name="prem8_analyticsWithoutGate" description="PREM-8 Analytics without the gate" depends-on-groups="premium, registered" finished-at="2026-10-24T17:35:28 GMT" duration-ms="13078" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- prem8_analyticsWithoutGate -->
+        <test-method is-config="true" signature="closeContext(org.testng.ITestResult)[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:28 GMT" name="closeContext" finished-at="2026-10-24T17:35:28 GMT" duration-ms="17" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=prem8_analyticsWithoutGate status=SUCCESS method=PremiumDashboardTest.prem8_analyticsWithoutGate()[pri:105, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeContext -->
+        <test-method is-config="true" signature="openContext()[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:28 GMT" name="openContext" finished-at="2026-10-24T17:35:28 GMT" duration-ms="156" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openContext -->
+        <test-method signature="prem8_analyticsTabHasNoProBadge()[pri:106, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:28 GMT" name="prem8_analyticsTabHasNoProBadge" description="PREM-8 Analytics tab has no Pro badge" depends-on-groups="premium, registered" finished-at="2026-10-24T17:35:30 GMT" duration-ms="1964" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- prem8_analyticsTabHasNoProBadge -->
+        <test-method is-config="true" signature="closeContext(org.testng.ITestResult)[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:30 GMT" name="closeContext" finished-at="2026-10-24T17:35:30 GMT" duration-ms="16" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=prem8_analyticsTabHasNoProBadge status=SUCCESS method=PremiumDashboardTest.prem8_analyticsTabHasNoProBadge()[pri:106, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeContext -->
+        <test-method is-config="true" signature="openContext()[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:30 GMT" name="openContext" finished-at="2026-10-24T17:35:31 GMT" duration-ms="165" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openContext -->
+        <test-method signature="prem10_homeWithoutPricing()[pri:107, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:31 GMT" name="prem10_homeWithoutPricing" description="PREM-10 Home page of a Premium user" depends-on-groups="premium, registered" finished-at="2026-10-24T17:35:32 GMT" duration-ms="1834" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- prem10_homeWithoutPricing -->
+        <test-method is-config="true" signature="closeContext(org.testng.ITestResult)[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:32 GMT" name="closeContext" finished-at="2026-10-24T17:35:32 GMT" duration-ms="13" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=prem10_homeWithoutPricing status=SUCCESS method=PremiumDashboardTest.prem10_homeWithoutPricing()[pri:107, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeContext -->
+        <test-method is-config="true" signature="openContext()[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:34 GMT" name="openContext" finished-at="2026-10-24T17:35:34 GMT" duration-ms="138" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openContext -->
+        <test-method signature="prem5_saveMovesJobToSaved()[pri:111, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:34 GMT" name="prem5_saveMovesJobToSaved" description="PREM-5 Save a job" depends-on-groups="premium, registered" finished-at="2026-10-24T17:35:36 GMT" duration-ms="1912" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- prem5_saveMovesJobToSaved -->
+        <test-method is-config="true" signature="closeContext(org.testng.ITestResult)[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:36 GMT" name="closeContext" finished-at="2026-10-24T17:35:36 GMT" duration-ms="15" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=prem5_saveMovesJobToSaved status=SUCCESS method=PremiumDashboardTest.prem5_saveMovesJobToSaved()[pri:111, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeContext -->
+        <test-method is-config="true" signature="openContext()[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:36 GMT" name="openContext" finished-at="2026-10-24T17:35:36 GMT" duration-ms="125" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openContext -->
+        <test-method signature="prem9_saveRateAfterOneSave()[pri:112, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:36 GMT" name="prem9_saveRateAfterOneSave" description="PREM-9 Save rate after one save" finished-at="2026-10-24T17:35:39 GMT" depends-on-methods="ch.hirion.journey.PremiumDashboardTest.prem5_saveMovesJobToSaved" duration-ms="3464" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- prem9_saveRateAfterOneSave -->
+        <test-method is-config="true" signature="closeContext(org.testng.ITestResult)[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:39 GMT" name="closeContext" finished-at="2026-10-24T17:35:39 GMT" duration-ms="14" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=prem9_saveRateAfterOneSave status=SUCCESS method=PremiumDashboardTest.prem9_saveRateAfterOneSave()[pri:112, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeContext -->
+        <test-method is-config="true" signature="openContext()[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:39 GMT" name="openContext" finished-at="2026-10-24T17:35:40 GMT" duration-ms="140" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openContext -->
+        <test-method signature="prem6_alreadyAppliedMovesJobToApplied()[pri:113, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:40 GMT" name="prem6_alreadyAppliedMovesJobToApplied" description="PREM-6 Mark a job as applied" depends-on-groups="premium, registered" finished-at="2026-10-24T17:35:58 GMT" duration-ms="18583" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- prem6_alreadyAppliedMovesJobToApplied -->
+        <test-method is-config="true" signature="closeContext(org.testng.ITestResult)[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:58 GMT" name="closeContext" finished-at="2026-10-24T17:35:58 GMT" duration-ms="12" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=prem6_alreadyAppliedMovesJobToApplied status=SUCCESS method=PremiumDashboardTest.prem6_alreadyAppliedMovesJobToApplied()[pri:113, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeContext -->
+        <test-method is-config="true" signature="openContext()[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:58 GMT" name="openContext" finished-at="2026-10-24T17:35:58 GMT" duration-ms="108" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openContext -->
+        <test-method signature="prem7_notRelevantRemovesJob()[pri:114, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:35:58 GMT" name="prem7_notRelevantRemovesJob" description="PREM-7 Dismiss a job" depends-on-groups="premium, registered" finished-at="2026-10-24T17:36:14 GMT" duration-ms="16020" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- prem7_notRelevantRemovesJob -->
+        <test-method is-config="true" signature="closeContext(org.testng.ITestResult)[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:36:14 GMT" name="closeContext" finished-at="2026-10-24T17:36:14 GMT" duration-ms="16" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=prem7_notRelevantRemovesJob status=SUCCESS method=PremiumDashboardTest.prem7_notRelevantRemovesJob()[pri:114, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeContext -->
+        <test-method is-config="true" signature="closeBrowser()[pri:0, instance:ch.hirion.journey.PremiumDashboardTest@3be4fcc0]" started-at="2026-10-24T17:36:14 GMT" name="closeBrowser" finished-at="2026-10-24T17:36:14 GMT" duration-ms="108" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeBrowser -->
+      </class> <!-- ch.hirion.journey.PremiumDashboardTest -->
+      <class name="ch.hirion.journey.RegistrationTest">
+        <test-method is-config="true" signature="launchBrowser()[pri:0, instance:ch.hirion.journey.RegistrationTest@4beeb0e]" started-at="2026-10-24T17:33:58 GMT" name="launchBrowser" finished-at="2026-10-24T17:34:01 GMT" duration-ms="3533" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- launchBrowser -->
+        <test-method is-config="true" signature="openContext()[pri:0, instance:ch.hirion.journey.RegistrationTest@4beeb0e]" started-at="2026-10-24T17:34:01 GMT" name="openContext" finished-at="2026-10-24T17:34:02 GMT" duration-ms="133" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openContext -->
+        <test-method signature="reg9_freeSignupLandsOnDashboard()[pri:10, instance:ch.hirion.journey.RegistrationTest@4beeb0e]" started-at="2026-10-24T17:34:02 GMT" name="reg9_freeSignupLandsOnDashboard" description="REG-9 Free signup lands on the dashboard" finished-at="2026-10-24T17:34:14 GMT" duration-ms="12431" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- reg9_freeSignupLandsOnDashboard -->
+        <test-method is-config="true" signature="closeContext(org.testng.ITestResult)[pri:0, instance:ch.hirion.journey.RegistrationTest@4beeb0e]" started-at="2026-10-24T17:34:14 GMT" name="closeContext" finished-at="2026-10-24T17:34:14 GMT" duration-ms="46" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=reg9_freeSignupLandsOnDashboard status=SUCCESS method=RegistrationTest.reg9_freeSignupLandsOnDashboard()[pri:10, instance:ch.hirion.journey.RegistrationTest@4beeb0e] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeContext -->
+        <test-method is-config="true" signature="closeBrowser()[pri:0, instance:ch.hirion.journey.RegistrationTest@4beeb0e]" started-at="2026-10-24T17:34:14 GMT" name="closeBrowser" finished-at="2026-10-24T17:34:14 GMT" duration-ms="68" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- closeBrowser -->
+      </class> <!-- ch.hirion.journey.RegistrationTest -->
+    </test> <!-- premium -->
+  </suite> <!-- premium -->
+</testng-results>

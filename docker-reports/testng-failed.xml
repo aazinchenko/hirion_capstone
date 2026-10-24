@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [premium]" guice-stage="DEVELOPMENT" verbose="0">
+  <test thread-count="5" name="premium(failed)" verbose="0">
+    <classes>
+      <class name="ch.hirion.journey.PremiumAiTest">
+        <methods>
+          <include name="openContext"/>
+          <include name="closeContext"/>
+          <include name="closeBrowser"/>
+          <include name="prem11_helpMeStandOut"/>
+          <include name="skipWithoutAiFlag"/>
+          <include name="prem12_tailorMyCv"/>
+          <include name="launchBrowser"/>
+          <include name="prem13_writeCoverLetter"/>
+        </methods>
+      </class> <!-- ch.hirion.journey.PremiumAiTest -->
+    </classes>
+  </test> <!-- premium(failed) -->
+</suite> <!-- Failed suite [premium] -->

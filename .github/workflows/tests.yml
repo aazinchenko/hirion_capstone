@@ -5,12 +5,19 @@ on:
     branches: [master]
   pull_request:
   workflow_dispatch:
+    inputs:
+      suite:
+        description: "Which suite to run"
+        type: choice
+        options: [all, public, free, premium]
+        default: all
   schedule:
     - cron: "15 2 * * *"   # every night 02:15 UTC (04:15 Zurich summer time, 03:15 winter)
 
 jobs:
   public:
     name: Public suite (guest)
+    if: github.event_name != 'workflow_dispatch' || inputs.suite == 'all' || inputs.suite == 'public'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     container:
@@ -52,14 +59,14 @@ jobs:
           path: target/allure-results/
           retention-days: 7
 
-  journey:
-    name: User journey (creates and deletes a real account)
+  free:
+    name: Free user (creates and deletes a real account)
     # one real account per run: only the manual button and the nightly schedule, never on push/PR
-    if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && (inputs.suite == 'all' || inputs.suite == 'free'))
     runs-on: ubuntu-latest
     timeout-minutes: 30
     concurrency:
-      group: hirion-journey
+      group: hirion-free
       cancel-in-progress: false
     container:
       image: mcr.microsoft.com/playwright/java:v1.55.0-noble
@@ -74,17 +81,17 @@ jobs:
           path: .m2/repository
           key: maven-${{ hashFiles('pom.xml') }}
 
-      - name: Run journey suite
+      - name: Run Free suite
         env:
           QA_MAILBOX: ${{ secrets.QA_MAILBOX }}
         # -Dqa.attachments=false: no screenshots or traces, they show the real test account
-        run: mvn -B -Dmaven.repo.local=.m2/repository -Dsuite=testng-journey.xml "-Dqa.mailbox=$QA_MAILBOX" -Dqa.attachments=false test
+        run: mvn -B -Dmaven.repo.local=.m2/repository -Dsuite=testng-free.xml "-Dqa.mailbox=$QA_MAILBOX" -Dqa.attachments=false test
 
       - name: Check that the test account was deleted
         if: always()
         run: |
           if [ -f .auth/test-user.json ]; then
-            echo "::error::.auth/test-user.json still exists: the QA account may NOT be deleted. Find the email in the 'Run journey suite' log ([JourneyCleanup]) and delete the account by hand."
+            echo "::error::.auth/test-user.json still exists: the QA account may NOT be deleted. Find the email in the 'Run Free suite' log ([JourneyCleanup]) and delete the account by hand."
             exit 1
           fi
           echo "No leftover test user: account deleted by JourneyCleanup."
@@ -98,20 +105,71 @@ jobs:
             find target/allure-results -type f -exec sed -i "s/${QA_MAILBOX}/***/g" {} +
           fi
 
-      # Only the Allure results leave this job: no screenshots or traces (-Dqa.attachments=false) and the
-      # mailbox is masked. Surefire reports and traces stay here: they contain the real email.
       - name: Upload Allure results
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: allure-results-journey
+          name: allure-results-free
+          path: target/allure-results/
+          retention-days: 7
+
+  premium:
+    name: Premium trial user (creates and deletes a real account, no AI)
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && (inputs.suite == 'all' || inputs.suite == 'premium'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    concurrency:
+      group: hirion-premium
+      cancel-in-progress: false
+    container:
+      image: mcr.microsoft.com/playwright/java:v1.55.0-noble
+      options: --ipc=host
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v7
+
+      - name: Cache Maven packages
+        uses: actions/cache@v6
+        with:
+          path: .m2/repository
+          key: maven-${{ hashFiles('pom.xml') }}
+
+      - name: Run Premium suite
+        env:
+          QA_MAILBOX: ${{ secrets.QA_MAILBOX }}
+        # never -Dqa.ai in CI: the AI buttons cost the site owner money (decision 2026-10-24)
+        run: mvn -B -Dmaven.repo.local=.m2/repository -Dsuite=testng-premium.xml "-Dqa.mailbox=$QA_MAILBOX" -Dqa.attachments=false test
+
+      - name: Check that the test account was deleted
+        if: always()
+        run: |
+          if [ -f .auth/test-user.json ]; then
+            echo "::error::.auth/test-user.json still exists: the QA account may NOT be deleted. Find the email in the 'Run Premium suite' log ([JourneyCleanup]) and delete the account by hand."
+            exit 1
+          fi
+          echo "No leftover test user: account deleted by JourneyCleanup."
+
+      - name: Mask the mailbox in the Allure results
+        if: always()
+        env:
+          QA_MAILBOX: ${{ secrets.QA_MAILBOX }}
+        run: |
+          if [ -d target/allure-results ] && [ -n "$QA_MAILBOX" ]; then
+            find target/allure-results -type f -exec sed -i "s/${QA_MAILBOX}/***/g" {} +
+          fi
+
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: allure-results-premium
           path: target/allure-results/
           retention-days: 7
 
   report:
     name: Allure report on GitHub Pages
-    needs: [public, journey]
-    # also after failed tests (a red report is the point), but never for pull requests
+    needs: [public, free, premium]
+    # also after failed or skipped jobs (a red report is the point), but never for pull requests
     if: always() && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 10
