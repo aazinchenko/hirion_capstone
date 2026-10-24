@@ -5,6 +5,9 @@
             <class name="ch.hirion.journey.RegistrationTest"/>
             <class name="ch.hirion.journey.DashboardTest"/>
             <class name="ch.hirion.journey.SettingsTest"/>
+            <class name="ch.hirion.journey.PremiumUpgradeTest"/>
+            <class name="ch.hirion.journey.PremiumDashboardTest"/>
+            <class name="ch.hirion.journey.PremiumAiTest"/>
             <class name="ch.hirion.journey.JourneyCleanup"/>
         </classes>
     </test>

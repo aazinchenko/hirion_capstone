@@ -6,9 +6,9 @@ The project is the capstone of the *Agentic Engineering Crash Course*. Its quest
 
 | | |
 |---|---|
-| **Tests** | 99 automated tests (public 63 + journey 36) after change `remove-foot3-imprint-d1` (2026-10-24); last all-green CI run with 97 tests: [37501768600](https://github.com/aazinchenko/hirion_capstone/actions/runs/37501768600); CI workflow `.github/workflows/tests.yml` |
+| **Tests** | 113 automated tests (public 63 + journey 50, of which 3 AI tests run only with `-Dqa.ai=true`) after change `add-premium-trial-journey` (2026-10-24); last all-green CI run with 97 tests: [37501768600](https://github.com/aazinchenko/hirion_capstone/actions/runs/37501768600); CI workflow `.github/workflows/tests.yml` |
 | **Specs** | 10 capabilities, 58 requirements, 95 scenarios (OpenSpec) |
-| **Defects found on the live site** | 13 reported, 8 pinned by `KNOWN BUG` tests; 6 of them (D2, D4, D5, D6, D10, D14) fixed by the site, now regular tests; D12 fixed by the site; D16 still open (the only `KNOWN BUG` test left); D1, D8, D9, D11, D19 closed as not relevant (2026-10-24, FOOT-3 removed) |
+| **Defects found on the live site** | 13 reported, 8 pinned by `KNOWN BUG` tests; 6 of them (D2, D4, D5, D6, D10, D14) fixed by the site, now regular tests; D12 fixed by the site; D16 and D20 open (`KNOWN BUG` tests); D1, D8, D9, D11, D19 closed as not relevant (2026-10-24, FOOT-3 removed) |
 | **Timeline** | 25 Sep - 6 Oct 2026, 100 commits |
 | **Stack** | Java 21 · Maven · Playwright for Java 1.55 · TestNG 7.11 · OpenSpec 1.13 |
 
@@ -28,14 +28,15 @@ The project is the capstone of the *Agentic Engineering Crash Course*. Its quest
 | Email link pages | feedback survey (submit with a mocked network), unsubscribe and checkout-return pages without a valid link |
 | Quality | mobile layout at 375 px, SEO basics, `robots.txt` |
 
-**Signed-in user journey** (36 tests, one real disposable account per run)
+**Signed-in user journey** (50 tests, one real disposable account per run: first Free, then the same account on the 7-day Premium trial)
 
 | Area | What the tests check |
 |---|---|
 | Registration | 4-step signup wizard, plan preselection by URL, Back keeps the entered data |
 | Dashboard | Free user's locked Job Feed teaser, empty lists, Pro-only Analytics gate, preferences |
 | Settings | profile, CV upload, password change, plan and billing view |
-| Account deletion | the test account is deleted at the end and can no longer sign in |
+| Premium trial | trial started in Plan & Billing without a card, trial state, job cards and their actions (Save, Already applied, Not relevant), unlocked Analytics and Save rate, no pricing on the home page; AI dialogs (Help me stand out, Tailored CV, Cover letter) only with `-Dqa.ai=true` |
+| Account deletion | the test account (also with an active trial) is deleted at the end and can no longer sign in |
 
 ---
 

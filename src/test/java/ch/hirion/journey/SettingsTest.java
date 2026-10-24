@@ -290,11 +290,11 @@ public class SettingsTest extends AuthenticatedTest {
     Assert.assertTrue(deleteBox.y > updateBox.y, "\"Delete account\" is not below \"Update password\"");
   }
 
-  // SET-5 (last: changes the password)
+  // SET-5 (last: changes the password; priority 300 keeps it after the Premium tests, add-premium-trial-journey)
 
   @Feature("account-settings")
   @Story("SET-5 Security form changes the password")
-  @Test(priority = 13, dependsOnGroups = "registered", description = "SET-5 New password signs in")
+  @Test(priority = 300, dependsOnGroups = "registered", description = "SET-5 New password signs in")
   public void set5_newPasswordSignsIn() {
     TestUser user = registeredUser();
     String newPassword = newPassword(user);
