@@ -9,7 +9,7 @@
 
 ## Evidence for tasks
 
-- 1.1 [x]: `grep -rn "FOOT-3\|D1\|VALID_MAILTO" src/test/java` -> no output (exit 1); `mvn -q test-compile` exit 0;
+- 1.1 [x]: `grep -rn "FOOT-3\|D1\b\|VALID_MAILTO" src/test/java` -> no output (exit 1); `mvn -q test-compile` exit 0;
   `pnpm check:locators` -> "PASS: no forbidden patterns". `FooterLegalTest.java`: 34 lines deleted (two tests, the
   `VALID_MAILTO` constant, imports `LocatorAssertions`, `Issue`, `AssertionFailedError`). Commit `b8d6cac`.
 - 2.1 [x]: `docs/decisions.md` -- D16 is the only KNOWN BUG test, D1 under "Not a defect" with this change;

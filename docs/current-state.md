@@ -38,9 +38,10 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
   the human's request via `pnpm exec openspec archive` (verified: only AUTH-1 and DASH-2 changed, AUTH-7/8 and
   LINK-1..3 added verbatim).
 - 2026-10-24: change 13 `remove-foot3-imprint-d1` (human: "убери FOOT-3 и KNOWN BUG тест D1, как с D3, весь цикл
-  сам, потом push"): REMOVED FOOT-3, two KNOWN BUG D1 tests deleted; only KNOWN BUG test left: D16.
-- `pnpm spec:check`: specs 10 · active changes 0 · archived 12; `openspec validate --specs --strict` 10/10.
-  Specs: 59 requirements, 97 scenarios.
+  сам, потом push"): REMOVED FOOT-3, two KNOWN BUG D1 tests deleted; only KNOWN BUG test left: D16. Archived by the
+  agent via `pnpm exec openspec archive` (verified: only FOOT-3 removed); public 63/63.
+- `pnpm spec:check`: specs 10 · active changes 0 · archived 13; `openspec validate --specs --strict` 10/10.
+  Specs: 58 requirements, 95 scenarios.
 - Suites (TestNG counts): public 63 (change 13 removed the two FOOT-3 tests; 65 after change 12, 57 before);
   journey 36 (Registration 17, Dashboard 6, Settings 13) + JourneyCleanup; full suite 99.
 - Draft, not started: Pro-user journey plan `docs/pro-journey-plan-draft.md` (needs human decisions, section 7).

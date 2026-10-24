@@ -3,8 +3,8 @@
 ## Purpose
 
 Public footer and legal pages of hirion.ch (test group FOOT): a visitor can reach the privacy policy,
-the terms of service, the imprint and the contact page from the footer of any public page, and the
-imprint names the operator completely.
+the terms of service, the imprint and the contact page from the footer of any public page. (The imprint content
+is not a requirement since 2026-10-24: FOOT-3 removed with known defect D1.)
 
 ## Requirements
 
@@ -42,21 +42,6 @@ Each legal page SHALL render its heading level 1 and its document title:
 #### Scenario: Imprint page
 - **WHEN** a guest opens `/imprint`
 - **THEN** the page shows the heading level 1 "Imprint" and the document title is "Imprint, Hirion"
-
-### Requirement: FOOT-3 Imprint is complete
-The imprint `/imprint` SHALL name the operator, address, contact email and register data without any
-unfilled template: no visible text SHALL contain "[FILL:", the main content SHALL contain at least one
-`mailto:` link, and every `mailto:` link in the main content SHALL point to a syntactically valid email
-address. (Known defect D1.)
-
-#### Scenario: Imprint has no unfilled templates
-- **WHEN** a guest opens `/imprint`
-- **THEN** the page shows no text containing "[FILL:"
-
-#### Scenario: Imprint email is a valid mailto link
-- **WHEN** a guest opens `/imprint`
-- **THEN** the main content has at least one `mailto:` link and every such `href` matches
-  `^mailto:[^@\s\[\]]+@[^@\s\[\]]+\.[a-z]{2,}$`
 
 ### Requirement: FOOT-4 Footer anchors lead to home page sections
 The footer SHALL contain the links "How it works" to `/#how`, "Pricing" to `/#pricing`,
