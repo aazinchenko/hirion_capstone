@@ -11,7 +11,6 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.opentest4j.AssertionFailedError;
 import org.testng.SkipException;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -44,8 +43,11 @@ public class PremiumAiTest extends AuthenticatedTest {
   private static final LocatorAssertions.IsVisibleOptions FEED_LOADED =
         new LocatorAssertions.IsVisibleOptions().setTimeout(60_000);
 
-  @BeforeMethod(alwaysRun = true) // runs after BaseTest.openContext (superclass first)
-  public void skipWithoutAiFlag() {
+  /**
+   * Called first in every test, not in a @BeforeMethod: a skipped configuration method is counted by Maven as an extra
+   * skipped "test" (Tests run 16, Skipped 4 instead of 15 / 3).
+   */
+  private static void requireAiFlag() {
     if (!AI_ENABLED) {
       throw new SkipException("AI dialogs run only with -Dqa.ai=true (owner's AI costs)");
     }
@@ -62,6 +64,7 @@ public class PremiumAiTest extends AuthenticatedTest {
   @Story("PREM-11 Help me stand out shows a review of the job")
   @Test(priority = 108, dependsOnGroups = {"registered", "premium"}, description = "PREM-11 Stand-out review")
   public void prem11_helpMeStandOut() {
+    requireAiFlag();
     openFirstCardAction("Help me stand out");
     Locator dialog = page.getByRole(AriaRole.DIALOG);
     assertThat(dialog.getByText("What to highlight", exact())).isVisible(AI_DONE);
@@ -77,6 +80,7 @@ public class PremiumAiTest extends AuthenticatedTest {
   @Story("PREM-12 Tailor my CV writes a tailored CV")
   @Test(priority = 109, dependsOnGroups = {"registered", "premium"}, description = "PREM-12 Tailored CV")
   public void prem12_tailorMyCv() {
+    requireAiFlag();
     openFirstCardAction("Tailor my CV");
     Locator dialog = page.getByRole(AriaRole.DIALOG);
     assertThat(dialog.getByText("ATS-friendly", exact())).isVisible(AI_DONE);
@@ -98,6 +102,7 @@ public class PremiumAiTest extends AuthenticatedTest {
   @Story("PREM-13 Write Cover Letter writes a cover letter")
   @Test(priority = 110, dependsOnGroups = {"registered", "premium"}, description = "PREM-13 Cover letter")
   public void prem13_writeCoverLetter() {
+    requireAiFlag();
     openFirstCardAction("Write Cover Letter");
     Locator dialog = page.getByRole(AriaRole.DIALOG);
     assertThat(dialog.getByText("Letterhead", exact())).isVisible(AI_DONE);
