@@ -8,6 +8,7 @@ import com.microsoft.playwright.options.AriaRole;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
+import org.opentest4j.AssertionFailedError;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -57,12 +58,14 @@ public class PremiumUpgradeTest extends AuthenticatedTest {
     trial.click();
     try {
       assertThat(notifications().getByText(TRIAL_STARTED)).isVisible(TOAST);
-    } finally {
+    } catch (AssertionFailedError noToast) {
       if (stripeCheckoutShown()) {
         page.keyboard().press("Escape"); // nothing is typed into the checkout
         Assert.fail("Stripe checkout opened instead of the trial");
       }
+      throw noToast;
     }
+    Assert.assertFalse(stripeCheckoutShown(), "a Stripe checkout is open although the trial toast was shown");
   }
 
   // PREM-2
@@ -89,9 +92,15 @@ public class PremiumUpgradeTest extends AuthenticatedTest {
   // ---------------------------------------------------------------------------------------------
   // Helpers
 
-  /** Read in the browser: the checkout of the site is an embedded Stripe iframe (CheckoutModal). */
+  /**
+   * Read in the browser: the checkout of the site is an embedded Stripe iframe (CheckoutModal). Stripe.js also adds a
+   * hidden 1 px iframe "__privateStripeMetricsController..." (aria-hidden) to every page; it is not a checkout and is
+   * ignored (false alarm in a live run on 2026-10-24).
+   */
   private boolean stripeCheckoutShown() {
-    return (Boolean) page.evaluate("() => [...document.querySelectorAll('iframe')].some(f => /stripe/i.test(f.src))");
+    return (Boolean) page.evaluate("() => [...document.querySelectorAll('iframe')].some(f => /stripe/i.test(f.src)"
+          + " && !/^__privateStripe/.test(f.name) && f.getAttribute('aria-hidden') !== 'true'"
+          + " && f.getBoundingClientRect().height > 50)");
   }
 
   private Locator main() {
