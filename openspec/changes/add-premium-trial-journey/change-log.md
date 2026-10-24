@@ -31,7 +31,12 @@
 - 2.2 [x]: `pnpm exec openspec validate add-premium-trial-journey --strict` -> "Change 'add-premium-trial-journey' is
   valid"; `pnpm check` exit 0 (`../pnpm-check-2026-10-24b.log`): "PASS: no forbidden patterns", public
   `total="63" passed="63" failed="0" skipped="0"`, "spec:check ok — specs: 10 · active changes: 1 · archived: 13".
-- 2.1 [ ]: first live run 2026-10-24 13:06-13:10 CEST (human "да, запускай живой journey-прогон с Premium без ИИ";
+- 2.1 [x]: second live run 2026-10-24, finished 13:19:02 CEST, 03:46 min, after D20 was closed
+  (`../journey-premium-2026-10-24b.log`): `Tests run: 51, Failures: 0, Errors: 0`, BUILD SUCCESS; testng-results
+  `total="50" passed="47" failed="0" skipped="3"` -- prem1-10 PASS incl. `prem8_analyticsTabHasNoProBadge`, prem11-13
+  SKIP (no `-Dqa.ai`); JourneyCleanup "deleted: ...+hirion-qa-...@gmail.com no longer signs in" (= PREM-14
+  evidence); `.auth` holds only `manual-user.json`.
+- 2.1 (history): first live run 2026-10-24 13:06-13:10 CEST (human "да, запускай живой journey-прогон с Premium без ИИ";
   `../journey-premium-2026-10-24.log`): testng-results `total="50" passed="46" failed="1" skipped="3"`; prem1-7, 9, 10
   PASS (trial 1.5 s, cards at once, Save rate check passed, applied 23.9 s, not relevant 22.7 s), prem11-13 SKIP (no
   `-Dqa.ai`), set5_newPasswordSignsIn PASS last; JourneyCleanup "deleted: ... no longer signs in" (PREM-14).

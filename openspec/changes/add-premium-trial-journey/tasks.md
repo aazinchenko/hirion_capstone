@@ -6,5 +6,5 @@
 
 ## 2. Gate
 
-- [ ] 2.1 One live journey run without AI (only after the human's "да"). Verify: `Tests run: 50`, failures 0, the 3 AI tests skipped, JourneyCleanup "deleted: ... no longer signs in" (= PREM-14 evidence); quote in `change-log.md`.
+- [x] 2.1 One live journey run without AI (only after the human's "да"). Verify: `Tests run: 50`, failures 0, the 3 AI tests skipped, JourneyCleanup "deleted: ... no longer signs in" (= PREM-14 evidence); quote in `change-log.md`.
 - [x] 2.2 Run `pnpm exec openspec validate add-premium-trial-journey --strict` and `pnpm check`; quote the summary lines in `change-log.md`.
