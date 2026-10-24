@@ -146,6 +146,8 @@ CONFIRMED live 2026-10-24 (first -Dqa.ai journey run, human "да, запуст�
   dialog -> PREM-12 failed before "Copy" was clicked ("Copied" still unverified).
 - "Write Cover Letter" dialog: PREM-13 passed ("Letterhead", "Cover letter", "Plain", "Copy" visible).
 - One AI generation per dialog: the counter showed 29 left of the month after the run.
+- Third -Dqa.ai run 2026-10-24 13:59 (change fix-premium-ai-dialogs): 50/50 green; "Copy" in the CV dialog shows
+  "Copied"; the stand-out counter shares one paragraph with "Based only on what is in your CV. ...".
 
 ASSUMED, NOT YET VERIFIED:
 - (site code 2026-10-23) /settings?buy=basic replaces the URL with ?section=plan and starts the Basic checkout at

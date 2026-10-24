@@ -17,7 +17,12 @@
 - 2.2 [x]: `pnpm exec openspec validate fix-premium-ai-dialogs --strict` -> "Change 'fix-premium-ai-dialogs' is valid";
   `pnpm check` exit 0 (`../pnpm-check-2026-10-24c.log`): "PASS: no forbidden patterns", public `total="63"
   passed="63" failed="0" skipped="0"`, "spec:check ok — specs: 11 · active changes: 1 · archived: 14".
-- 2.1 [ ]: second `-Dqa.ai` run 2026-10-24, finished 13:44:44 CEST, 05:29 min (`../journey-premium-ai-2026-10-24b.log`,
+- 2.1 [x]: third `-Dqa.ai` run 2026-10-24, finished 13:59:53 CEST, 04:26 min (human: "да, запусти ещё один прогон с
+  -Dqa.ai=true (один аккаунт), потом заархивируй и сделай push"; `../journey-premium-ai-2026-10-24c.log`):
+  `Tests run: 50, Failures: 0, Errors: 0, Skipped: 0`, BUILD SUCCESS; testng `total="50" passed="50"`;
+  prem11_helpMeStandOut PASS (12.1 s), prem12_tailorMyCv PASS (13.0 s), prem13_writeCoverLetter PASS (7.6 s);
+  JourneyCleanup "deleted: ...+hirion-qa-...@gmail.com no longer signs in"; `.auth` holds only `manual-user.json`.
+- 2.1 (history): second `-Dqa.ai` run 2026-10-24, finished 13:44:44 CEST, 05:29 min (`../journey-premium-ai-2026-10-24b.log`,
   human-approved): testng `total="50" passed="49" failed="1"`; prem12 PASS (incl. "Copy" -> "Copied", now seen live),
   prem13 PASS; prem11 FAIL only on its last assertion "waiting for getByRole(AriaRole.DIALOG).getByText(
   Pattern.compile("^\d+ tailored applications left this month\.$"))" -- the trace snapshot shows the counter in

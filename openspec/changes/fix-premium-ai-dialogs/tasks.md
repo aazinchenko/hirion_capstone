@@ -4,5 +4,5 @@
 
 ## 2. Gate
 
-- [ ] 2.1 One live journey run with `-Dqa.ai=true` (human-approved 2026-10-24). Verify: testng-results 50 total, 0 failed, prem11-13 PASS, JourneyCleanup "deleted"; quote in `change-log.md`.
+- [x] 2.1 One live journey run with `-Dqa.ai=true` (human-approved 2026-10-24). Verify: testng-results 50 total, 0 failed, prem11-13 PASS, JourneyCleanup "deleted"; quote in `change-log.md`.
 - [x] 2.2 Run `pnpm exec openspec validate fix-premium-ai-dialogs --strict` and `pnpm check`; quote the summary lines in `change-log.md`.
