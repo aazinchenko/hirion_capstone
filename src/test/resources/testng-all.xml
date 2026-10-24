@@ -2,6 +2,7 @@
 <suite name="all">
     <suite-files>
         <suite-file path="testng-public.xml"/>
-        <suite-file path="testng-journey.xml"/>
+        <suite-file path="testng-free.xml"/>
+        <suite-file path="testng-premium.xml"/>
     </suite-files>
 </suite>
