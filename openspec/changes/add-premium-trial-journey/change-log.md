@@ -25,4 +25,13 @@
 - 2.2 [x]: `pnpm exec openspec validate add-premium-trial-journey --strict` -> "Change 'add-premium-trial-journey' is
   valid"; `pnpm check` exit 0 (`../pnpm-check-2026-10-24b.log`): "PASS: no forbidden patterns", public
   `total="63" passed="63" failed="0" skipped="0"`, "spec:check ok — specs: 10 · active changes: 1 · archived: 13".
-- 2.1 [ ]: open -- live journey run only after the human's "да".
+- 2.1 [ ]: first live run 2026-10-24 13:06-13:10 CEST (human "да, запускай живой journey-прогон с Premium без ИИ";
+  `../journey-premium-2026-10-24.log`): testng-results `total="50" passed="46" failed="1" skipped="3"`; prem1-7, 9, 10
+  PASS (trial 1.5 s, cards at once, Save rate check passed, applied 23.9 s, not relevant 22.7 s), prem11-13 SKIP (no
+  `-Dqa.ai`), set5_newPasswordSignsIn PASS last; JourneyCleanup "deleted: ... no longer signs in" (PREM-14).
+  FAIL: `prem8_analyticsTabHasNoProBadge` "should have thrown an exception of type AssertionFailedError" -- a button
+  named exactly "Analytics" was visible within 5 s, so the Premium user had NO "Pro" badge. Site code (new build
+  index-B8fyVqIR.js, dashboard-D_9ZAA47.js unchanged against dashboard-Ck5JA8pk.js): `badge: isPro ? undefined :
+  "Pro"`, the badge span is not aria-hidden, `isPro` is false while the subscription is still loading. Likely the
+  probe read "Analytics PRO" right after the page load, before the subscription arrived: D20 is a short flash during
+  loading, not a lasting badge. Waiting for the human's decision (regular check or keep D20).

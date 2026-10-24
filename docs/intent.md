@@ -219,6 +219,9 @@ D20  Dashboard: a Premium trial user still sees the badge on the Analytics tab (
      Analytics is unlocked for them; by the site code the badge is meant only for users without the paid plan.
                                                    (seen live 2026-10-24 in the Premium probe; KNOWN BUG by human
                                                    decision 2026-10-24, PREM-8, change add-premium-trial-journey)
+     2026-10-24 live journey run: NOT reproduced -- the button was named exactly "Analytics" within 5 s. By the site
+     code the badge shows while isPro is false, also while the subscription is loading: the probe probably read
+     the text during loading. Open: human decision (regular check or keep D20 as "badge flashes on load").
      (D15 is not used here: the 2026-10-15 candidate "saved job shown for a moment after reload" was decided
      by the human outside this file.)
 
