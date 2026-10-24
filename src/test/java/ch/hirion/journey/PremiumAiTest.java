@@ -36,6 +36,8 @@ public class PremiumAiTest extends AuthenticatedTest {
   /** The AI answer takes "a few seconds" by the site's own text; 90 s leaves room for a slow model. */
   private static final LocatorAssertions.IsVisibleOptions AI_DONE =
         new LocatorAssertions.IsVisibleOptions().setTimeout(90_000);
+  /** E.g. "29 tailored applications left this month." (seen live 2026-10-24). */
+  private static final Pattern MONTHLY_COUNTER = Pattern.compile("^\\d+ tailored applications left this month\\.$");
   private static final LocatorAssertions.IsVisibleOptions FEED_LOADED =
         new LocatorAssertions.IsVisibleOptions().setTimeout(60_000);
 
@@ -61,8 +63,10 @@ public class PremiumAiTest extends AuthenticatedTest {
     Locator dialog = page.getByRole(AriaRole.DIALOG);
     assertThat(dialog.getByText("What to highlight", exact())).isVisible(AI_DONE);
     assertThat(dialog.getByText("Help me stand out", exact()).first()).isVisible();
-    assertThat(dialog.getByText("Worth addressing", exact())).isVisible();
+    // "Worth addressing" shows only when the AI finds gaps (first -Dqa.ai run, 2026-10-24): not required
     assertThat(dialog.getByText("Keywords to use", exact())).isVisible();
+    assertThat(copyButton(dialog)).isVisible();
+    assertThat(dialog.getByText(MONTHLY_COUNTER)).isVisible();
   }
 
   // PREM-12
@@ -73,10 +77,15 @@ public class PremiumAiTest extends AuthenticatedTest {
     openFirstCardAction("Tailor my CV");
     Locator dialog = page.getByRole(AriaRole.DIALOG);
     assertThat(dialog.getByText("ATS-friendly", exact())).isVisible(AI_DONE);
-    assertThat(dialog.getByText("Tailored CV", exact()).first()).isVisible();
+    // the title "Tailored CV" from the site code is not in the live dialog (first -Dqa.ai run, 2026-10-24)
+    assertThat(dialog.getByText("Closely tailored", exact())).isVisible();
     assertThat(dialog.getByText("Classic", exact())).isVisible();
     assertThat(dialog.getByText("Modern", exact())).isVisible();
-    dialog.getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName("Copy").setExact(true)).click();
+    for (String download : List.of(".txt", "PDF")) {
+      assertThat(dialog.getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(download).setExact(true)))
+            .isVisible();
+    }
+    copyButton(dialog).click();
     assertThat(page.getByRole(AriaRole.REGION, new Page.GetByRoleOptions().setName(Pattern.compile("^Notifications")))
           .getByText("Copied", new Locator.GetByTextOptions().setExact(true))).isVisible();
   }
@@ -91,8 +100,7 @@ public class PremiumAiTest extends AuthenticatedTest {
     assertThat(dialog.getByText("Letterhead", exact())).isVisible(AI_DONE);
     assertThat(dialog.getByText("Cover letter", exact()).first()).isVisible();
     assertThat(dialog.getByText("Plain", exact())).isVisible();
-    assertThat(dialog.getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName("Copy").setExact(true)))
-          .isVisible();
+    assertThat(copyButton(dialog)).isVisible();
   }
 
   // ---------------------------------------------------------------------------------------------
@@ -109,6 +117,10 @@ public class PremiumAiTest extends AuthenticatedTest {
       throw new SkipException("no job card in the Premium feed for \"" + button + "\"");
     }
     first.click();
+  }
+
+  private static Locator copyButton(Locator dialog) {
+    return dialog.getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName("Copy").setExact(true));
   }
 
   private static Locator.GetByTextOptions exact() {
