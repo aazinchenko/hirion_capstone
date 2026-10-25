@@ -51,7 +51,8 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
   3rd -Dqa.ai run 13:59 50/50 green, accounts deleted; archived by the agent (verified: only PREM-11/12 changed).
 - 2026-10-25: CI found two site changes: D16 fixed (`?plan=basic` keeps Basic) and a new LINK-1 survey text.
   Change 17 `close-d16-update-survey-text` (MODIFIED LINK-1, REG-7, PUB-5): guest tests only. No KNOWN BUG test left.
-- `pnpm spec:check`: specs 11 · active changes 0 · archived 15; `openspec validate --specs --strict` 11/11.
+  Archived by the agent at the human's request (verified: only LINK-1, PUB-5, REG-7 changed); public 63/63.
+- `pnpm spec:check`: specs 11 · active changes 0 · archived 16; `openspec validate --specs --strict` 11/11.
   Specs: 72 requirements, 110 scenarios.
 - Suites (TestNG counts): public 63 (change 13 removed the two FOOT-3 tests; 65 after change 12, 57 before);
   journey 50 (Registration 17, Dashboard 6, Settings 13, PremiumUpgrade 2, PremiumDashboard 9, PremiumAi 3 -- skipped

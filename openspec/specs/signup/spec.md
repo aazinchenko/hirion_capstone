@@ -66,8 +66,9 @@ SHALL expose whether it is selected with `aria-pressed` (`"true"` on the selecte
 others). The submit button SHALL say what happens next: "Join for free" with Free selected, "Start my free
 trial" with Premium selected, "Continue to payment" with Basic selected.
 When `/signup` is opened without a `plan` parameter, Premium SHALL be the selected card. With `?plan=free`
-Free SHALL be selected, with `?plan=trial` Premium, and with `?plan=basic` Basic. (Known defect D16, seen
-live 2026-10-20: the signup page drops `plan=basic` from the URL and selects Premium.) "Back" on step 4 SHALL return to step 3
+Free SHALL be selected, with `?plan=trial` Premium, and with `?plan=basic` Basic. (Known defect D16 -- the
+signup page dropped `plan=basic` and selected Premium, seen live 2026-10-20 -- was fixed by the site by
+2026-10-25: `plan=basic` stays in the URL and Basic is selected.) "Back" on step 4 SHALL return to step 3
 without losing the wizard data: the chosen target role stays, and "Continue" SHALL lead to step 4 again
 with the chosen plan still selected. (Seen live 2026-10-19 and 2026-10-20 by guest runs that never clicked
 the submit button.)
@@ -101,7 +102,7 @@ the submit button.)
 #### Scenario: plan=basic preselects Basic
 - **WHEN** a guest opens `/signup?plan=basic`, completes steps 1-3 and reaches the page showing
   "Step 4 of 4"
-- **THEN** Basic has `aria-pressed="true"` (known defect D16: today Premium is selected)
+- **THEN** Basic has `aria-pressed="true"` and Premium has `aria-pressed="false"`
 
 #### Scenario: Back keeps the wizard data
 - **WHEN** a guest on step 4 of `/signup` who added the target role "QA / Test Engineer" on step 3
