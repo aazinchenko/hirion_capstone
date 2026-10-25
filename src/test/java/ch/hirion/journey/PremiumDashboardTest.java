@@ -142,6 +142,15 @@ public class PremiumDashboardTest extends AuthenticatedTest {
   @Test(priority = 112, dependsOnMethods = "prem5_saveMovesJobToSaved", description = "PREM-9 Save rate after one save")
   public void prem9_saveRateAfterOneSave() {
     openAnalytics();
+    // The figures render as 0 until the saved jobs and the feed have loaded (site code: rate = saved > 0 && total > 0
+    // ? round(saved / (saved + feed) * 100) : 0). With one saved job the loaded rate is > 0, so wait for that first;
+    // reading too early gave "0 jobs in feed, 0%" in a CI run on 2026-10-25.
+    try {
+      page.waitForFunction("(label) => { " + KPI_FN + " const t = kpi(label); return t !== null && /[1-9]/.test(t); }",
+            "Save rate", new Page.WaitForFunctionOptions().setTimeout(30_000));
+    } catch (RuntimeException notLoaded) {
+      Assert.fail("Save rate stayed 0 for 30 s after one saved job (Jobs in feed: " + kpiNumber("Jobs in feed") + ")");
+    }
     int feed = kpiNumber("Jobs in feed");
     int expected = (int) Math.round(100.0 / (1 + feed));
     Assert.assertEquals(kpiNumber("Save rate"), expected,
@@ -212,16 +221,23 @@ public class PremiumDashboardTest extends AuthenticatedTest {
    * read.
    */
   private int kpiNumber(String label) {
-    Object text = main().evaluate("(main, label) => {"
-          + " const el = [...main.querySelectorAll('*')].find(e => e.children.length === 0 && e.textContent.trim() === label);"
-          + " for (let b = el && el.parentElement; b && b !== main; b = b.parentElement) {"
-          + "   const rest = b.innerText.replace(label, ''); if (/\\d/.test(rest)) return rest; }"
-          + " return null; }", label);
+    Object text = page.evaluate("(label) => { " + KPI_FN + " return kpi(label); }", label);
     Assert.assertNotNull(text, "no figure next to \"" + label + "\"");
     Matcher m = Pattern.compile("([\\d,]+)").matcher(text.toString());
     Assert.assertTrue(m.find(), "no number next to \"" + label + "\": " + text);
     return Integer.parseInt(m.group(1).replace(",", ""));
   }
+
+  /**
+   * Browser-side helper for kpiNumber and PREM-9: text of the nearest block around the leaf labelled exactly
+   * {@code label} that holds a digit, e.g. "33%" for "Save rate"; null when the label is not on the page.
+   */
+  private static final String KPI_FN = "function kpi(label) {"
+        + " const main = document.querySelector('main'); if (!main) return null;"
+        + " const el = [...main.querySelectorAll('*')].find(e => e.children.length === 0 && e.textContent.trim() === label);"
+        + " for (let b = el && el.parentElement; b && b !== main; b = b.parentElement) {"
+        + "   const rest = b.innerText.replace(label, ''); if (/\\d/.test(rest)) return rest; }"
+        + " return null; }";
 
   /** One "Tailor my CV" button per job card. */
   private Locator cards() {
