@@ -12,9 +12,7 @@ import com.microsoft.playwright.assertions.PageAssertions;
 import com.microsoft.playwright.options.AriaRole;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
-import io.qameta.allure.Issue;
 import io.qameta.allure.Story;
-import org.opentest4j.AssertionFailedError;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -164,17 +162,10 @@ public class RegistrationTest extends BaseTest {
   }
 
   @Story("REG-7 Step 4 offers Free, Basic and Premium")
-  @Issue("D16")
-  @Test(priority = 7, expectedExceptions = AssertionFailedError.class,
-        description = "REG-7 plan=basic preselects Basic -- KNOWN BUG D16: plan=basic selects Premium")
+  @Test(priority = 7, description = "REG-7 plan=basic preselects Basic") // D16 fixed by the site 2026-10-25
   public void reg7_planBasicPreselectsBasic() {
-    try {
-      walkToStep(4, "/signup?plan=basic");
-    } catch (AssertionFailedError e) {
-      // precondition with TestNG: a broken wizard must never pass as the known bug
-      Assert.fail("precondition: step 4 not reached -- " + e.getMessage());
-    }
-    assertThat(planCard("Basic")).hasAttribute("aria-pressed", "true", QUICK_ATTR);
+    walkToStep(4, "/signup?plan=basic");
+    assertSelected("Basic");
   }
 
   @Story("REG-7 Step 4 offers Free, Basic and Premium")

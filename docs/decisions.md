@@ -45,8 +45,9 @@ Budget vs actual: `docs/intent.md` "Budget".
 - Every archive is run by the human; the reviewer verifies the synced spec and commits it.
 
 **Which findings are defects** (`docs/intent.md` "Known defects")
-- KNOWN BUG tests: D16, `?plan=basic` does not preselect Basic (confirmed live 2026-10-20, change
-  `update-plans-and-pricing`). D20 ("Analytics PRO" for the Premium trial user) was a KNOWN BUG test for one run;
+- KNOWN BUG tests: none open. D16, `?plan=basic` did not preselect Basic (confirmed live 2026-10-20, change
+  `update-plans-and-pricing`); fixed by the site by 2026-10-25, regular test now (change
+  `close-d16-update-survey-text`). D20 ("Analytics PRO" for the Premium trial user) was a KNOWN BUG test for one run;
   the live run showed the plain name (the badge only flashes while the subscription loads) and the human closed it
   (2026-10-24, change `add-premium-trial-journey`, PREM-8 regular check). D14 was added in `d091494`, closed with D6 and D10 below. D1 had two KNOWN BUG
   tests until 2026-10-24 (see "Not a defect").

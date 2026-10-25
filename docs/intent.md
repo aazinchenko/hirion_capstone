@@ -97,8 +97,8 @@ CONFIRMED live 2026-10-23 (full site scan, guest browser + nightly CI; change sy
 - /reset-password without a link: h1 "Set a new password", "This reset link is invalid or has expired. Request a
   new one.", link "Send reset link" -> /forgot-password.
 - /survey (public, -> /survey?id=): h1 "Help us make Hirion better", 6 questions, "Send feedback".
-- /survey without an id: "Send feedback" shows "This survey link is missing its id — please use the link from the
-  email." and sends no request to /api/public/survey-response (EmailLinkPagesTest, mocked network, 2026-10-23).
+- /survey without an id: "Send feedback" shows "This survey link is missing its id. Please use the link from the
+  email." (text changed by 2026-10-25, before: "… id — please use …") and sends no request to /api/public/survey-response (EmailLinkPagesTest, mocked network, 2026-10-23).
 - /unsubscribe without a link: h1 "Invalid link", "This unsubscribe link is invalid or has expired."
 - /checkout/return without a session: h1 "No session found", link "Go to my account" ->
   /settings?section=plan&checkout=success.
@@ -223,6 +223,8 @@ D16  /signup?plan=basic, the target of the home page link "Choose Basic", does n
      the page drops plan=basic from the URL, Premium is selected and the button says "Start my free trial".
                                                    (CONFIRMED live 2026-10-20 by a guest probe; KNOWN BUG,
                                                    REG-7, change update-plans-and-pricing)
+     FIXED (CI Free run 2026-10-25 07:38 UTC, reproduced by a guest run; plan=basic stays in the URL): regular
+     test now (REG-7, PUB-5 follows "Choose Basic"; change close-d16-update-survey-text).
 D17  /survey question 2: the rating options 2, 3 and 4 (radio buttons q2-4 / q2-3 / q2-2) have an empty label, so
      a screen reader announces only "radio button".             (candidate, seen live 2026-10-23)
 D18  /checkout/return without a checkout session says "No session found", but its link "Go to my account" carries
@@ -245,7 +247,7 @@ D20  Dashboard: a Premium trial user still sees the badge on the Analytics tab (
 ## Done means
 - `pnpm check` exits 0 and ends with non-zero counters: specs: 9 · active changes: 0 · archived: 4.
 - Every change has commits in the order: spec -> RED -> GREEN -> archive.
-- `mvn test -Dsuite=testng-all.xml` is green; open known defects (D16) are KNOWN BUG tests;
+- `mvn test -Dsuite=testng-all.xml` is green; no KNOWN BUG test is open (D16 fixed 2026-10-25);
   defects fixed by the site (D2, D4-D6, D10, D12, D14) are regular tests.
 
 ## Not doing

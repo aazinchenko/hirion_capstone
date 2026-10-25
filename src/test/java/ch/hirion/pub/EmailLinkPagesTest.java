@@ -75,7 +75,7 @@ public class EmailLinkPagesTest extends PublicPageTest {
     });
     open("/survey");
     role(AriaRole.BUTTON, "Send feedback").click();
-    assertText("This survey link is missing its id — please use the link from the email.");
+    assertText("This survey link is missing its id. Please use the link from the email."); // text changed 2026-10-25
     try {
       page.waitForRequest(EmailLinkPagesTest::isSurveyRequest,
             new Page.WaitForRequestOptions().setTimeout(2000), () -> { });

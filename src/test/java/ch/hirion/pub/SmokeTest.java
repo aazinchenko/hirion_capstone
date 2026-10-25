@@ -151,8 +151,9 @@ public class SmokeTest extends BaseTest {
   @Story("PUB-5 Plan cards link to signup")
   @Test(description = "PUB-5 Basic plan CTA")
   public void pub5_basicPlanCta() {
-    // href only: following the link lands on /signup without plan=basic (known defect D16, REG-7)
-    assertThat(inSection(pricing, AriaRole.LINK, "Choose Basic")).hasAttribute("href", "/signup?plan=basic");
+    // followed since D16 was fixed (2026-10-25): signup keeps plan=basic in the URL
+    inSection(pricing, AriaRole.LINK, "Choose Basic").click();
+    assertThat(page).hasURL(Pattern.compile("/signup\\?(.*&)?plan=basic(&.*)?$"));
   }
 
   @Story("PUB-5 Plan cards link to signup")

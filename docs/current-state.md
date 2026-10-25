@@ -49,6 +49,8 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
   PREM-13 PASS, PREM-11 (no "Worth addressing") and PREM-12 (no "Tailored CV") FAIL on texts. Change 15
   `fix-premium-ai-dialogs` (MODIFIED PREM-11, PREM-12 to the live texts): 2nd -Dqa.ai run 49/50 (counter pattern),
   3rd -Dqa.ai run 13:59 50/50 green, accounts deleted; archived by the agent (verified: only PREM-11/12 changed).
+- 2026-10-25: CI found two site changes: D16 fixed (`?plan=basic` keeps Basic) and a new LINK-1 survey text.
+  Change 17 `close-d16-update-survey-text` (MODIFIED LINK-1, REG-7, PUB-5): guest tests only. No KNOWN BUG test left.
 - `pnpm spec:check`: specs 11 · active changes 0 · archived 15; `openspec validate --specs --strict` 11/11.
   Specs: 72 requirements, 110 scenarios.
 - Suites (TestNG counts): public 63 (change 13 removed the two FOOT-3 tests; 65 after change 12, 57 before);
@@ -81,7 +83,7 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
   badge is "87"+"match" (capitals by CSS).
 - Defects, human decision 2026-10-24: D1, D2, D4, D5, D6, D8, D9, D10, D11, D12, D14, D19 are CLOSED (fixed or not
   relevant; D1 and D19 still visible live 2026-10-24, FOOT-3 and the D1 KNOWN BUG tests removed in change 13 `remove-foot3-imprint-d1`). Open: D13,
-  D16 (KNOWN BUG), D17, D18. D20 closed 2026-10-24 (badge only while loading). History: D1 and D16 KNOWN BUG tests; D2, D4, D5, D6, D10, D14 FIXED by the site (seen live 2026-10-06, changes
+  D17, D18 (D16 FIXED 2026-10-25). D20 closed 2026-10-24 (badge only while loading). History: D1 and D16 KNOWN BUG tests; D2, D4, D5, D6, D10, D14 FIXED by the site (seen live 2026-10-06, changes
   `close-fixed-defects-d2-d4-d5` and `close-fixed-defects-d6-d10-d14`: regular tests now); D3 closed 2026-10-05 (mobile header without "Sign in" is the
   intended design, QA-2 removed); D7 closed (Phone free text by design); D8 not observable for Free since 2026-10-20 (DASH-10 removed), D9 regular check (data-dependent);
   D11 confirmed live (qa@ passes step 1); D12 FIXED (seen live 2026-10-19); D13 candidate (a11y); D14 FIXED (see above;
