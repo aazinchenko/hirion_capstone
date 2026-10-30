@@ -46,6 +46,8 @@ public class PremiumDashboardTest extends AuthenticatedTest {
   private static final Pattern APPLIED_ON = Pattern.compile("^Applied ([A-Z][a-z]{2} \\d{1,2}, \\d{4})$");
   private static final DateTimeFormatter APPLIED_DAY = DateTimeFormatter.ofPattern("MMM d, yyyy", Locale.ENGLISH);
   private static final ZoneId ZURICH = ZoneId.of("Europe/Zurich");
+  /** PREM-6: open the Applied tab up to this many times, 15 s each (its list is cached 30 s, D21). */
+  private static final int APPLIED_ATTEMPTS = 3;
   /** PREM-3: reopen /dashboard up to this many times, 30 s each (reported delay up to 5 min, bug #49). */
   private static final int CARD_ATTEMPTS = 12;
   private static final LocatorAssertions.IsVisibleOptions CARD_WAIT =
@@ -165,9 +167,22 @@ public class PremiumDashboardTest extends AuthenticatedTest {
     int n = openFeedWithCards();
     hideFirstCard("Already applied");
     assertThat(cards()).hasCount(n - 1, SETTLED);
-    tab("Applied").click();
+    // The card leaves the feed at once, the applied record is saved later, and the Applied tab caches its own list
+    // for 30 s without a refresh after the action (site code, candidate D21): an early click shows the empty tab.
+    // Reopening /dashboard drops that cache, so retry with a reload (CI 2026-10-30 failed on the first click).
     Locator appliedOn = main().getByText(APPLIED_ON);
-    assertThat(appliedOn).hasCount(1, SETTLED);
+    boolean shown = false;
+    for (int attempt = 1; attempt <= APPLIED_ATTEMPTS && !shown; attempt++) {
+      if (attempt > 1) openDashboard();
+      tab("Applied").click();
+      try {
+        assertThat(appliedOn).hasCount(1, SETTLED);
+        shown = true;
+      } catch (AssertionFailedError notYet) {
+        // the tab read the list before the server stored the applied job: reload and look again
+      }
+    }
+    Assert.assertTrue(shown, "no \"Applied <date>\" line in the Applied tab after " + APPLIED_ATTEMPTS + " tries");
     Matcher m = APPLIED_ON.matcher(appliedOn.innerText().trim());
     Assert.assertTrue(m.matches(), "unexpected text: " + appliedOn.innerText());
     LocalDate today = LocalDate.now(ZURICH); // the day before is accepted when the run crossed midnight

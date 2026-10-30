@@ -241,6 +241,11 @@ D20  Dashboard: a Premium trial user still sees the badge on the Analytics tab (
      code the badge shows while isPro is false, also while the subscription is loading: the probe probably read
      the text during loading. CLOSED 2026-10-24 (human decision: "D20 закрыть"); PREM-8 checks the plain name as a
      regular test.
+D21  Dashboard: right after "Already applied" the Applied tab can stay empty for up to 30 s. The card leaves the
+     feed at once (optimistic), the applied record is saved by a second request, and the Applied tab reads its own
+     cached list ["applied-jobs-dated"] (staleTime 30 s) that the action does not refresh (only ["applied-jobs"]).
+                                                   (candidate, site code 2026-10-30, ASSUMED; CI premium run
+                                                   2026-10-30 10:05 UTC: PREM-6 found no "Applied <date>" in 15 s)
      (D15 is not used here: the 2026-10-15 candidate "saved job shown for a moment after reload" was decided
      by the human outside this file.)
 

@@ -84,7 +84,7 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
   badge is "87"+"match" (capitals by CSS).
 - Defects, human decision 2026-10-24: D1, D2, D4, D5, D6, D8, D9, D10, D11, D12, D14, D19 are CLOSED (fixed or not
   relevant; D1 and D19 still visible live 2026-10-24, FOOT-3 and the D1 KNOWN BUG tests removed in change 13 `remove-foot3-imprint-d1`). Open: D13,
-  D17, D18 (D16 FIXED 2026-10-25). D20 closed 2026-10-24 (badge only while loading). History: D1 and D16 KNOWN BUG tests; D2, D4, D5, D6, D10, D14 FIXED by the site (seen live 2026-10-06, changes
+  D17, D18, D21 (candidate 2026-10-30, Applied tab cache) (D16 FIXED 2026-10-25). D20 closed 2026-10-24 (badge only while loading). History: D1 and D16 KNOWN BUG tests; D2, D4, D5, D6, D10, D14 FIXED by the site (seen live 2026-10-06, changes
   `close-fixed-defects-d2-d4-d5` and `close-fixed-defects-d6-d10-d14`: regular tests now); D3 closed 2026-10-05 (mobile header without "Sign in" is the
   intended design, QA-2 removed); D7 closed (Phone free text by design); D8 not observable for Free since 2026-10-20 (DASH-10 removed), D9 regular check (data-dependent);
   D11 confirmed live (qa@ passes step 1); D12 FIXED (seen live 2026-10-19); D13 candidate (a11y); D14 FIXED (see above;
