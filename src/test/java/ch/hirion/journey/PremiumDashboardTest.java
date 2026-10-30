@@ -3,6 +3,7 @@ package ch.hirion.journey;
 import ch.hirion.support.AuthenticatedTest;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Response;
 import com.microsoft.playwright.assertions.LocatorAssertions;
 import com.microsoft.playwright.options.AriaRole;
 import io.qameta.allure.Epic;
@@ -18,6 +19,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -46,6 +48,9 @@ public class PremiumDashboardTest extends AuthenticatedTest {
   private static final Pattern APPLIED_ON = Pattern.compile("^Applied ([A-Z][a-z]{2} \\d{1,2}, \\d{4})$");
   private static final DateTimeFormatter APPLIED_DAY = DateTimeFormatter.ofPattern("MMM d, yyyy", Locale.ENGLISH);
   private static final ZoneId ZURICH = ZoneId.of("Europe/Zurich");
+  /** PREM-5: a server function call that changes data; the id after /_serverFn/ changes with every deploy. */
+  private static final Predicate<Response> SERVER_FN_POST =
+        r -> "POST".equals(r.request().method()) && r.url().contains("/_serverFn/");
   /** PREM-6: open the Applied tab up to this many times, 15 s each (its list is cached 30 s, D21). */
   private static final int APPLIED_ATTEMPTS = 3;
   /** PREM-3: reopen /dashboard up to this many times, 30 s each (reported delay up to 5 min, bug #49). */
@@ -131,11 +136,19 @@ public class PremiumDashboardTest extends AuthenticatedTest {
   @Test(priority = 111, dependsOnGroups = {"registered", "premium"}, description = "PREM-5 Save a job")
   public void prem5_saveMovesJobToSaved() {
     int n = openFeedWithCards();
-    main().getByRole(AriaRole.BUTTON, exactName("Save")).first().click();
+    // The site shows the saved job at once and stores it by a POST /_serverFn/<id> afterwards (site code). Wait for
+    // that answer: in CI 2026-10-30 the next test reloaded too early and the server had 0 saved jobs (PREM-9).
+    Response saved = page.waitForResponse(SERVER_FN_POST,
+          () -> main().getByRole(AriaRole.BUTTON, exactName("Save")).first().click());
+    Assert.assertTrue(saved.ok(), "saving the job answered " + saved.status() + " " + saved.statusText());
     assertThat(cards()).hasCount(n - 1, SETTLED);
     tab("Saved").click();
     assertThat(main().getByRole(AriaRole.BUTTON, exactName("View job"))).hasCount(1, SETTLED);
     assertThat(main().getByText("No saved jobs yet")).hasCount(0);
+    // After a reload the list comes from the server, not from the page's cache.
+    openDashboard();
+    tab("Saved").click();
+    assertThat(main().getByRole(AriaRole.BUTTON, exactName("View job"))).hasCount(1, SETTLED);
   }
 
   // PREM-9
