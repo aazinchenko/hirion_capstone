@@ -107,6 +107,7 @@ public abstract class BaseTest {
     page.setDefaultNavigationTimeout(30_000);
     Response response = page.navigate(path,
           new Page.NavigateOptions().setWaitUntil(WaitUntilState.DOMCONTENTLOADED));
+    failOnServerError("GET " + path, response);
     waitForHydration();
     return response;
   }
@@ -115,8 +116,19 @@ public abstract class BaseTest {
   protected Response reload() {
     Response response = page.reload(
           new Page.ReloadOptions().setWaitUntil(WaitUntilState.DOMCONTENTLOADED));
+    failOnServerError("reload " + page.url(), response);
     waitForHydration();
     return response;
+  }
+
+  /**
+   * A 5xx page has none of the expected elements, so the test would only time out on its first locator (CI
+   * 2026-10-30, CONT-2 on /contact). Fail at once with the status instead. 4xx is left to the tests (AUTH-5: 404).
+   */
+  private static void failOnServerError(String what, Response response) {
+    if (response != null && response.status() >= 500) {
+      throw new AssertionError(what + " answered " + response.status() + " " + response.statusText());
+    }
   }
 
   /**

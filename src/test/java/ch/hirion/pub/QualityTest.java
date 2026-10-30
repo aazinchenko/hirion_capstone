@@ -31,6 +31,10 @@ public class QualityTest extends PublicPageTest {
       if ("error".equals(msg.type())) errors.add(current[0] + " console: " + msg.text());
     });
     page.onPageError(err -> errors.add(current[0] + " pageerror: " + err));
+    // The console says only "Failed to load resource: ... 502" without the URL (CI 2026-10-28), so name it here.
+    page.onResponse(r -> {
+      if (r.status() >= 400) errors.add(current[0] + " response: " + r.status() + " " + r.url());
+    });
     for (String path : new String[] {"/", "/contact", "/login", "/privacy", "/terms", "/imprint"}) {
       current[0] = path;
       open(path);
