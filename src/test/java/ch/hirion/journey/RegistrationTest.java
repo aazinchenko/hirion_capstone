@@ -190,14 +190,22 @@ public class RegistrationTest extends BaseTest {
   @Test(priority = 8, description = "REG-8 Steps 1-3 send no account data")
   public void reg8_stepsOneToThreeSendNothing() {
     List<String> sent = Collections.synchronizedList(new ArrayList<>());
+    List<String> leaked = Collections.synchronizedList(new ArrayList<>());
     boolean[] armed = {false};
+    String email = guestEmail();
     page.onRequest(request -> {
-      if (armed[0] && isAccountRequest(request)) {
+      if (!armed[0]) return;
+      if (isAnalyticsBeacon(request)) {
+        String body = request.postData(); // checked, never printed
+        if (body != null && (body.contains(email) || body.contains(GUEST_PASSWORD))) {
+          leaked.add(request.method() + " " + request.url());
+        }
+      } else if (isAccountRequest(request)) {
         sent.add(request.method() + " " + request.url()); // URL only, never the body
       }
     });
     open("/signup");
-    fillStepOne("Qa", "Journey", guestEmail(), GUEST_PASSWORD);
+    fillStepOne("Qa", "Journey", email, GUEST_PASSWORD);
     continueButton().click(); // the email-availability check is allowed here
     assertThat(stepLabel(2)).isVisible(STEP);
     armed[0] = true; // from step 2 on nothing may reach the backend before the last step's submit
@@ -207,7 +215,8 @@ public class RegistrationTest extends BaseTest {
     addRole();
     continueButton().click();
     assertThat(stepLabel(4)).isVisible(STEP);
-    Assert.assertEquals(sent, List.of(), "account requests sent before the plan step was submitted");
+    Assert.assertTrue(sent.isEmpty(), "account requests sent before the plan step was submitted: " + sent);
+    Assert.assertTrue(leaked.isEmpty(), "analytics beacon carried the email or password: " + leaked);
   }
 
   // REG-9 -- the ONLY test that creates an account
@@ -367,6 +376,15 @@ public class RegistrationTest extends BaseTest {
     if (host == null) return false;
     boolean ours = host.equals("hirion.ch") || host.endsWith(".hirion.ch") || host.endsWith(".supabase.co");
     return url.contains("/_serverFn/") || (ours && !"GET".equals(request.method()));
+  }
+
+  /**
+   * The site's same-origin analytics beacon (POST /__l5e/trackevents) fires on every step change since
+   * 2026-11; it carries no account data (ASSUMED until checked on the live site), so reg8 only checks its body.
+   */
+  private static boolean isAnalyticsBeacon(Request request) {
+    String host = URI.create(request.url()).getHost();
+    return "hirion.ch".equals(host) && URI.create(request.url()).getPath().startsWith("/__l5e/");
   }
 
   private static String guestEmail() {
