@@ -116,10 +116,12 @@ public class DashboardTest extends AuthenticatedTest {
     openDashboard();
     tab("Saved").click();
     assertThat(exactText("No saved jobs yet")).isVisible();
+    // Applied and Archive load their own lists and show skeleton cards until the request returns; the empty
+    // state appears only after that (site code, dashboard-D8StQNd5.js, 2026-11-10). CI once needed > 5 s.
     tab("Applied").click();
-    assertThat(exactText("No applications tracked yet")).isVisible();
+    assertThat(exactText("No applications tracked yet")).isVisible(SLOW);
     tab("Archive").click();
-    assertThat(exactText("No archived jobs yet")).isVisible();
+    assertThat(exactText("No archived jobs yet")).isVisible(SLOW);
   }
 
   // DASH-7 (Free user: the paid-plan gate; "Upgrade to Premium" is checked, never clicked)
