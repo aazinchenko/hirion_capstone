@@ -9,7 +9,7 @@ on:
       suite:
         description: "Which suite to run"
         type: choice
-        options: [all, public, free, premium]
+        options: [all, public, free, premium]   # premium is paused: its job is skipped (see the premium job)
         default: all
       ai:                                     # NEW: checkbox on "Run workflow"
         description: "Premium: also run the AI dialogs (costs AI generations of the site owner)"
@@ -119,7 +119,11 @@ jobs:
 
   premium:
     name: Premium trial user (creates and deletes a real account; AI only when ticked)   # NEW name
-    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && (inputs.suite == 'all' || inputs.suite == 'premium'))
+    # PAUSED 2026-11-10 (human decision): on hirion.ch "Start 7-day free trial" in Settings > Plan & Billing now opens
+    # the Stripe checkout (CI run 2026-11-10 18:55 UTC, settings-K0ouh2tF.js), and AGENTS.md forbids the checkout.
+    # To resume, restore this condition:
+    # if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && (inputs.suite == 'all' || inputs.suite == 'premium'))
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 30
     concurrency:
