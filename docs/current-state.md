@@ -1,4 +1,40 @@
-# Current state -- Capstone Hirion.ch (handoff 2026-10-06)
+# Current state -- Capstone Hirion.ch (handoff 2026-11-10, pause of ~2 weeks)
+
+## Handoff 2026-11-10 -- read this first
+All work is committed and pushed (origin/master = e38c661). One change is ACTIVE: `use-existing-premium-account`.
+
+What happened on 2026-11-10 (commits in order):
+- `37e2cc9` DASH-3: Applied / Archive empty states wait 15 s (they load their own list behind skeleton cards; CI
+  free run failed after 5 s; site text unchanged).
+- `7a1c2fd` Premium CI paused: "Start 7-day free trial" in Settings > Plan & Billing now opens the Stripe checkout
+  (CI premium 18:55 UTC, prem1 guard pressed Escape, nothing typed). Human decision: the Premium trial needs card
+  data by design; a no-card trial anywhere would be a defect (candidate: the signup code still holds one, ASSUMED).
+- `68e591f` spec + `f900107` tests/CI/docs: the PREM suite uses ONE owner-granted Premium account (owner consent,
+  email + password from env QA_PREMIUM_EMAIL / QA_PREMIUM_PASSWORD = GitHub secrets, never printed). PREM-1/2/14
+  removed, PREM-15 sign-in (untraced context, refuses +hirion-qa-N emails), PREM-16 plan state; PREM-5 save + unsave
+  (by job title, counts before/after); PREM-9 relative save rate; PREM-6/7 only with -Dqa.feedActions=true (CI
+  checkbox "feed_actions", never nightly). PremiumUpgradeTest removed; testng-premium.xml = SignIn + Dashboard + AI
+  (15 tests, no account created or deleted); testng-journey.xml = Free only (36). AGENTS.md exception + hook asks
+  for testng-premium/all.xml and -Dqa.feedActions. Premium CI job active again (nightly + manual).
+- First CI premium run 20:47 UTC: sign-in, plan, save, UNSAVE (confirmed live), save rate PASS; PREM-6 failed on
+  "exactly one Applied line" (the account already had applied jobs) -> `ea3291e` relative counts (all / today).
+- `f9e6771` candidate defect D22: GET /contact sometimes answers 502 in CI public (10-28, 10-30, 2x 11-10); not
+  reproduced locally; no retry in tests, re-run the failed job.
+- Second CI premium run 21:21 UTC: the Premium feed was EMPTY (used up by PREM-6/7 of the first run); PREM-3 failed,
+  9 card tests skipped -> `e38c661` (human decision) PREM-3 skips on "No new matches right now" (text from site
+  code, not yet seen live), still fails on teaser or neither; delta spec scenario "Empty Premium feed".
+
+Next steps when we continue:
+1. Look at the nightly CI runs of the last weeks (Allure https://aazinchenko.github.io/hirion_capstone/): premium
+   should be green with skips when the feed is empty; public may hit D22 (re-run).
+2. When the Premium feed has jobs again: ONE manual CI run, suite `premium`, box "feed_actions" ticked (removes 2
+   jobs for good) -> verifies the PREM-6 fix `ea3291e`. Also confirm the "No new matches right now" text once.
+3. Then: tick task 3.1 with the quoted run in change-log.md, `pnpm check` (3.2), archive
+   `use-existing-premium-account` (`pnpm exec openspec archive use-existing-premium-account -y`), verify the main
+   spec (expected 71 requirements / 111 scenarios), rewrite the premium-trial Purpose, update README counts, push.
+4. Open defects: D13, D17, D18, D21, D22 + unnumbered candidate (no-card trial in signup code). Optional: bug
+   card for D22 for the site owner.
+
 
 Read this first in a new session. Plan: `../конспекты/hirion-capstone-plan-v3-java-openspec.pdf` (30 steps).
 Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat sheet
