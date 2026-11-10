@@ -203,29 +203,44 @@ public class PremiumDashboardTest extends PremiumAccountTest {
   public void prem6_alreadyAppliedMovesJobToApplied() {
     requireFeedActions();
     int n = openFeedWithCards();
+    // The permanent account already has applied jobs (CI 2026-11-10 20:47 failed on "exactly one line"), so count the
+    // "Applied <date>" lines, and those of today, before and after. The day before is accepted for a run at midnight.
+    LocalDate today = LocalDate.now(ZURICH);
+    Locator appliedOn = main().getByText(APPLIED_ON);
+    Locator appliedToday = main().getByText(Pattern.compile("^Applied (" + Pattern.quote(today.format(APPLIED_DAY))
+          + "|" + Pattern.quote(today.minusDays(1).format(APPLIED_DAY)) + ")$"));
+    openAppliedTab();
+    int allBefore = appliedOn.count();
+    int todayBefore = appliedToday.count();
+    tab("Job Feed").click();
+    assertThat(cards()).hasCount(n, SETTLED);
     hideFirstCard("Already applied");
     assertThat(cards()).hasCount(n - 1, SETTLED);
     // The card leaves the feed at once, the applied record is saved later, and the Applied tab caches its own list
-    // for 30 s without a refresh after the action (site code, candidate D21): an early click shows the empty tab.
-    // Reopening /dashboard drops that cache, so retry with a reload (CI 2026-10-30 failed on the first click).
-    Locator appliedOn = main().getByText(APPLIED_ON);
+    // for 30 s without a refresh after the action (site code, candidate D21). Reopening /dashboard drops that cache,
+    // so every try starts with a reload (CI 2026-10-30 failed on the first click).
     boolean shown = false;
     for (int attempt = 1; attempt <= APPLIED_ATTEMPTS && !shown; attempt++) {
-      if (attempt > 1) openDashboard();
-      tab("Applied").click();
+      openDashboard();
+      openAppliedTab();
       try {
-        assertThat(appliedOn).hasCount(1, SETTLED);
+        assertThat(appliedOn).hasCount(allBefore + 1, SETTLED);
+        assertThat(appliedToday).hasCount(todayBefore + 1, SETTLED);
         shown = true;
       } catch (AssertionFailedError notYet) {
         // the tab read the list before the server stored the applied job: reload and look again
       }
     }
-    Assert.assertTrue(shown, "no \"Applied <date>\" line in the Applied tab after " + APPLIED_ATTEMPTS + " tries");
-    Matcher m = APPLIED_ON.matcher(appliedOn.innerText().trim());
-    Assert.assertTrue(m.matches(), "unexpected text: " + appliedOn.innerText());
-    LocalDate today = LocalDate.now(ZURICH); // the day before is accepted when the run crossed midnight
-    Assert.assertTrue(List.of(today.format(APPLIED_DAY), today.minusDays(1).format(APPLIED_DAY)).contains(m.group(1)),
-          "applied date " + m.group(1) + " is not today (" + today.format(APPLIED_DAY) + ")");
+    Assert.assertTrue(shown, "the Applied tab did not get one more \"Applied " + today.format(APPLIED_DAY)
+          + "\" line (before: " + allBefore + " lines, " + todayBefore + " of today; now " + appliedOn.count()
+          + " / " + appliedToday.count() + ") after " + APPLIED_ATTEMPTS + " tries");
+  }
+
+  /** Opens the Applied tab and waits until its own list has loaded (skeleton cards until then, DASH-3). */
+  private void openAppliedTab() {
+    tab("Applied").click();
+    Locator empty = main().getByText("No applications tracked yet", new Locator.GetByTextOptions().setExact(true));
+    assertThat(main().getByText(APPLIED_ON).first().or(empty)).isVisible(SLOW);
   }
 
   // PREM-7

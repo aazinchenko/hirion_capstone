@@ -58,4 +58,13 @@ pnpm check -> PASS: no forbidden patterns; public tests="63" errors="0" skipped=
 ```
 
 ## 3.1 live premium run
-Open: needs GitHub secrets / local env vars by the human and the human's "да".
+First CI premium run 2026-11-10 (manual, human; finished 20:47:54 UTC, feed actions ticked):
+```
+Tests run: 15, Failures: 1, Errors: 0, Skipped: 1, Time elapsed: 451.8 s
+PremiumDashboardTest.prem6_alreadyAppliedMovesJobToApplied:223 no "Applied <date>" line in the Applied tab after 3 tries
+```
+So PREM-15 sign-in, PREM-16 plan, PREM-5 save AND unsave (Saved count back), PREM-9 passed on the live account.
+PREM-6: the card left the feed (n - 1 passed); the test still expected exactly ONE "Applied <date>" line, written
+for a fresh account -- the permanent account already has applied jobs. Fix: count all lines and lines of today
+before / after, reload before every try (D21 cache). Compile + CheckLocatorRules PASS. Re-run pending.
+Note: this run marked one job "Already applied" and (if PREM-7 ran) one "Not relevant" on the account; irreversible.
