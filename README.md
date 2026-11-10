@@ -6,7 +6,7 @@ The project is the capstone of the *Agentic Engineering Crash Course*. Its quest
 
 | | |
 |---|---|
-| **Tests** | 113 automated tests (public 63 + journey 50, of which 3 AI tests run only with `-Dqa.ai=true`) after change `add-premium-trial-journey` (2026-10-24); last all-green CI run with 97 tests: [37501768600](https://github.com/aazinchenko/hirion_capstone/actions/runs/37501768600); CI workflow `.github/workflows/tests.yml` |
+| **Tests** | 114 automated tests (public 63 + Free 36 + Premium 15; in Premium 3 AI tests run only with `-Dqa.ai=true`, 2 feed actions only with `-Dqa.feedActions=true`) after change `use-existing-premium-account` (2026-11-10); last all-green CI run with 97 tests: [37501768600](https://github.com/aazinchenko/hirion_capstone/actions/runs/37501768600); CI workflow `.github/workflows/tests.yml` |
 | **Specs** | 11 capabilities, 72 requirements, 110 scenarios (OpenSpec) |
 | **Defects found on the live site** | 13 reported, 8 pinned by `KNOWN BUG` tests; 6 of them (D2, D4, D5, D6, D10, D14) fixed by the site, now regular tests; D12 fixed by the site; D16 fixed by the site 2026-10-25 (no `KNOWN BUG` test left); D20 closed 2026-10-24; D1, D8, D9, D11, D19 closed as not relevant (2026-10-24, FOOT-3 removed) |
 | **Timeline** | 25 Sep - 6 Oct 2026, 100 commits |
@@ -28,15 +28,15 @@ The project is the capstone of the *Agentic Engineering Crash Course*. Its quest
 | Email link pages | feedback survey (submit with a mocked network), unsubscribe and checkout-return pages without a valid link |
 | Quality | mobile layout at 375 px, SEO basics, `robots.txt` |
 
-**Signed-in user journey** (50 tests, one real disposable account per run: first Free, then the same account on the 7-day Premium trial)
+**Signed-in user journey** (Free suite 36 tests with one real disposable account per run; Premium suite 15 tests on one permanent owner-granted Premium account)
 
 | Area | What the tests check |
 |---|---|
 | Registration | 4-step signup wizard, plan preselection by URL, Back keeps the entered data |
 | Dashboard | Free user's locked Job Feed teaser, empty lists, Pro-only Analytics gate, preferences |
 | Settings | profile, CV upload, password change, plan and billing view |
-| Premium trial | trial started in Plan & Billing without a card, trial state, job cards and their actions (Save, Already applied, Not relevant), unlocked Analytics and Save rate, no pricing on the home page; AI dialogs (Help me stand out, Tailored CV, Cover letter) only with `-Dqa.ai=true` |
-| Account deletion | the test account (also with an active trial) is deleted at the end and can no longer sign in |
+| Premium account | sign-in and Premium plan state, job cards and their actions (Save and unsave; Already applied / Not relevant only with `-Dqa.feedActions=true`), unlocked Analytics and Save rate, no pricing on the home page; AI dialogs (Help me stand out, Tailored CV, Cover letter) only with `-Dqa.ai=true` |
+| Account deletion | the disposable Free test account is deleted at the end and can no longer sign in (the Premium account is never deleted) |
 
 ---
 

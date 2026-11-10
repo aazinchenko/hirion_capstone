@@ -1,3 +1,6 @@
+> SUPERSEDED 2026-11-10: the trial needs card data now; the PREM suite uses one owner-granted Premium account
+> (change use-existing-premium-account). Kept as history.
+
 # План: третий сценарий — пользователь с активным Premium Trial (7 дней)
 
 Статус: решения приняты 2026-10-24 (раздел 8). Шаг 2 (правила) сделан. Шаг 3 (живая проба) сделан 2026-10-24:

@@ -1,6 +1,6 @@
 package ch.hirion.journey;
 
-import ch.hirion.support.AuthenticatedTest;
+import ch.hirion.support.PremiumAccountTest;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
@@ -20,7 +20,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 /**
  * Group PREM: the AI dialogs of a Premium job card (PREM-11..13),
- * openspec/changes/add-premium-trial-journey/specs/premium-trial.
+ * openspec/specs/premium-trial (Premium account since change use-existing-premium-account).
  *
  * <p>Every AI call costs the site owner money: the tests run only with -Dqa.ai=true (never in CI; the hook
  * scripts/guard-live-run.mjs asks the human first), each button is clicked once per run, and only the labels of the
@@ -28,7 +28,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
  */
 @Epic("User journey")
 @Feature("premium-trial")
-public class PremiumAiTest extends AuthenticatedTest {
+public class PremiumAiTest extends PremiumAccountTest {
 
   private static final boolean AI_ENABLED = Boolean.getBoolean("qa.ai");
   private static final Pattern DASHBOARD_URL = Pattern.compile("/dashboard([?#].*)?$");
@@ -62,7 +62,7 @@ public class PremiumAiTest extends AuthenticatedTest {
   // PREM-11
 
   @Story("PREM-11 Help me stand out shows a review of the job")
-  @Test(priority = 108, dependsOnGroups = {"registered", "premium"}, description = "PREM-11 Stand-out review")
+  @Test(priority = 108, dependsOnGroups = "premium", description = "PREM-11 Stand-out review")
   public void prem11_helpMeStandOut() {
     requireAiFlag();
     openFirstCardAction("Help me stand out");
@@ -78,7 +78,7 @@ public class PremiumAiTest extends AuthenticatedTest {
   // PREM-12
 
   @Story("PREM-12 Tailor my CV writes a tailored CV")
-  @Test(priority = 109, dependsOnGroups = {"registered", "premium"}, description = "PREM-12 Tailored CV")
+  @Test(priority = 109, dependsOnGroups = "premium", description = "PREM-12 Tailored CV")
   public void prem12_tailorMyCv() {
     requireAiFlag();
     openFirstCardAction("Tailor my CV");
@@ -100,7 +100,7 @@ public class PremiumAiTest extends AuthenticatedTest {
   // PREM-13
 
   @Story("PREM-13 Write Cover Letter writes a cover letter")
-  @Test(priority = 110, dependsOnGroups = {"registered", "premium"}, description = "PREM-13 Cover letter")
+  @Test(priority = 110, dependsOnGroups = "premium", description = "PREM-13 Cover letter")
   public void prem13_writeCoverLetter() {
     requireAiFlag();
     openFirstCardAction("Write Cover Letter");

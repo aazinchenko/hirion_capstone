@@ -16,7 +16,7 @@ DASH  dashboard: feed, save / applied / hide, analytics, preferences            
 SET   settings: profile fields, photo, security, plan & billing                   -> change 3
 DEL   delete the test user at the end of every run                                -> change 3
 LINK  pages opened from emails: survey, unsubscribe, checkout return (guest)        -> sync-specs-with-site-scan
-PREM  the journey user after activating the 7-day Premium Trial in Settings         -> add-premium-trial-journey
+PREM  the owner-granted Premium account (since 2026-11-10; trial before)          -> use-existing-premium-account
 
 ## Facts
 
@@ -149,6 +149,16 @@ CONFIRMED live 2026-10-24 (first -Dqa.ai journey run, human "да, запуст�
 - Third -Dqa.ai run 2026-10-24 13:59 (change fix-premium-ai-dialogs): 50/50 green; "Copy" in the CV dialog shows
   "Copied"; the stand-out counter shares one paragraph with "Based only on what is in your CV. ...".
 
+2026-11-10 (CI premium run 18:55 UTC + site code settings-K0ouh2tF.js):
+- "Start 7-day free trial" in Plan & Billing now opens the Stripe checkout for a Free user (openCheckout pro_*); the
+  no-card trial is gone from Settings. Human decision: the Premium trial needs card data by design. PREM-1/2/14
+  removed; the PREM suite signs in to ONE owner-granted Premium account (env QA_PREMIUM_EMAIL / QA_PREMIUM_PASSWORD,
+  owner consent, never deleted); PREM-6/7 only with -Dqa.feedActions=true.
+- Candidate defect (ASSUMED, site code only, no probe planned): the signup bundle still holds the no-card trial
+  ("Your 7-day Premium trial is active" after step 4 with plan=trial). If it works live, that is a trial without card.
+- (site code) Job cards are <article> with the title as <h3>; the Saved tab cards use the same toggleSave, so "Saved"
+  removes the job from Saved (ASSUMED until the first live run of the new PREM-5).
+
 ASSUMED, NOT YET VERIFIED:
 - (site code 2026-10-23) /settings?buy=basic replaces the URL with ?section=plan and starts the Basic checkout at
   once for a Free user -- never opened by the tests.
@@ -259,8 +269,8 @@ D21  Dashboard: right after "Already applied" the Applied tab can stay empty for
 - OAuth (Google / Apple), real payments, real contact-form delivery.
 - Any payment, card data or Stripe checkout. Signup tests MUST select Free on step 4 (or open /signup?plan=free)
   and click only "Join for free", because Premium (trial) is the default and Basic leads to "Continue to payment".
-  Since 2026-10-24 (human decision, owner consent) the Premium Trial is started ONLY by the PREM scenario: the same
-  disposable user, once per run, in Settings > Plan & Billing (docs/premium-journey-plan.md, variant A).
+  No Premium trial is started (since 2026-11-10 it needs card data). Premium features are checked on ONE
+  owner-granted Premium account only (AGENTS.md); it is never deleted and nothing about its plan is clicked.
 - AI buttons in CI; locally only with -Dqa.ai=true, each at most once per run.
 - Assertions on the text of AI answers (Tailor my CV, Cover Letter).
 - Tests against a real personal account.

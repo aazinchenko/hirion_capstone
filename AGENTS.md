@@ -14,10 +14,14 @@ section anchors (#pricing, #faq ...), <html>, the contact-form honeypot input[na
 - Every change MUST pass `java scripts/CheckLocatorRules.java src/test/java`.
 ## Test accounts and data
 - Only the disposable user from support/TestUser.java. Never a real personal account.
+  Single exception: the PREM suite signs in to ONE owner-granted Premium account (human decision 2026-11-10).
+  Its email and password come only from the env vars QA_PREMIUM_EMAIL / QA_PREMIUM_PASSWORD (GitHub secrets in CI),
+  are never printed, never typed or read by the agent. Never on this account: Delete account, Manage/Cancel
+  subscription, any plan or payment button, Update password, Save preferences, profile or CV changes. A job saved by
+  PREM-5 is unsaved again; "Already applied" / "Not relevant" (PREM-6/7) only with -Dqa.feedActions=true, never nightly.
 - JourneyCleanup deletes ONLY emails matching \+hirion-qa-\d+@. Never weaken this check.
 - Never automate Google / Apple OAuth. Never start any payment, never type card data, never open Stripe checkout.
-- Premium Trial only in the PREM scenario: the journey's own disposable user activates it once per run in
-Settings > Plan & Billing (human decision 2026-10-24, docs/premium-journey-plan.md). Signup still selects Free.
+- Never start a Premium trial: since 2026-11-10 it needs card data (Stripe checkout). Signup still selects Free.
 - AI buttons (Help me stand out, Tailor my CV, Write Cover Letter) only with -Dqa.ai=true, each at most once per
 run; never in CI.
 - Never submit the real contact form: mock the network with page.route(...).
@@ -34,7 +38,8 @@ description = "... KNOWN BUG Dn ..."). Do not "heal" them by weakening the asser
 a human confirms them against the live site.
 ## Rules learned (details and evidence: docs/autonomy-log.md)
 - A live run with -Dqa.mailbox creates a REAL hirion.ch account: only after an explicit human "да",
-one account per run. A PreToolUse hook (scripts/guard-live-run.mjs) turns such a command (and -Dqa.ai) into a prompt.
+one account per run. A PreToolUse hook (scripts/guard-live-run.mjs) turns such a command (and -Dqa.ai,
+-Dqa.feedActions, testng-premium.xml, testng-all.xml) into a prompt. A premium run changes the real Premium account.
 - heal-loop for journey tests runs WITHOUT -Dqa.mailbox; other journey fixes are targeted and use the trace.
 - A KNOWN BUG test checks its preconditions with org.testng.Assert, never with the expected exception.
 - Before fixing a failure, read the underlying error (trace, swallowed exception), not only the summary.

@@ -57,6 +57,14 @@ Reports: `../capstone-summary-2026-09-25.pdf`, `-09-28.pdf`, `-09-29.pdf`; cheat
 - Suites (TestNG counts): public 63 (change 13 removed the two FOOT-3 tests; 65 after change 12, 57 before);
   journey 50 (Registration 17, Dashboard 6, Settings 13, PremiumUpgrade 2, PremiumDashboard 9, PremiumAi 3 -- skipped
   without -Dqa.ai) + JourneyCleanup; full suite 113.
+- 2026-11-10: CI premium run: "Start 7-day free trial" in Settings now opens the Stripe checkout (prem1 guard,
+  nothing typed, account deleted). Premium CI paused (7a1c2fd). Human decisions: the trial needs card data; the PREM
+  suite uses ONE owner-granted Premium account (email + password from env, owner consent); PREM-6/7 only manually.
+  Change `use-existing-premium-account`: spec 68e591f; tests: PremiumUpgradeTest removed, new PremiumSignInTest
+  (PREM-15/16), PremiumDashboardTest save + unsave + relative save rate, PREM-6/7 behind -Dqa.feedActions;
+  testng-premium.xml without registration/cleanup, testng-journey.xml = Free only; CI premium job active again
+  (secrets QA_PREMIUM_EMAIL / QA_PREMIUM_PASSWORD, checkbox feed_actions). Suites: public 63, free/journey 36,
+  premium 15, all 114. Open: secrets by the human, first live premium run on "да", archive.
 - Draft, not started: Pro-user journey plan `docs/pro-journey-plan-draft.md` (needs human decisions, section 7).
 - Known flaky: `BaseTest.closeContext` once threw "Target page, context or browser has been closed" in
   `pnpm check` (public cont3/cont4 skipped); rerun green. Human-owned file, not fixed.

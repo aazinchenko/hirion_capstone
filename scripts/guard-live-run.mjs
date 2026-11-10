@@ -18,6 +18,13 @@ process.stdin.on("end", () => {
   if (/-Dqa\.ai/.test(command)) {
     reasons.push("-Dqa.ai presses the AI buttons (owner's AI costs)");
   }
+  // Since 2026-11-10 the premium suite signs in to ONE real owner-granted Premium account and changes its data.
+  if (/testng-(premium|all)\.xml/.test(command)) {
+    reasons.push("Premium suite signs in to the real Premium account and saves / unsaves a job");
+  }
+  if (/-Dqa\.feedActions/.test(command)) {
+    reasons.push("-Dqa.feedActions marks a job as applied / not relevant on the Premium account (cannot be undone)");
+  }
   if (reasons.length > 0) {
     console.log(JSON.stringify({
       hookSpecificOutput: {

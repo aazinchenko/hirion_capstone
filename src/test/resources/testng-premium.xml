@@ -1,17 +1,12 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="premium">
+    <!-- The owner-granted Premium account (change use-existing-premium-account): needs the env vars
+         QA_PREMIUM_EMAIL / QA_PREMIUM_PASSWORD. No account is created or deleted: no RegistrationTest, no JourneyCleanup. -->
     <test name="premium" preserve-order="true">
         <classes>
-            <!-- only REG-9: it creates the account; the other signup checks run in testng-free.xml -->
-            <class name="ch.hirion.journey.RegistrationTest">
-                <methods>
-                    <include name="reg9_freeSignupLandsOnDashboard"/>
-                </methods>
-            </class>
-            <class name="ch.hirion.journey.PremiumUpgradeTest"/>
+            <class name="ch.hirion.journey.PremiumSignInTest"/>
             <class name="ch.hirion.journey.PremiumDashboardTest"/>
             <class name="ch.hirion.journey.PremiumAiTest"/>
-            <class name="ch.hirion.journey.JourneyCleanup"/>
         </classes>
     </test>
 </suite>
