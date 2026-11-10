@@ -258,6 +258,15 @@ D21  Dashboard: right after "Already applied" the Applied tab can stay empty for
                                                    2026-10-30 10:05 UTC: PREM-6 found no "Applied <date>" in 15 s)
      (D15 is not used here: the 2026-10-15 candidate "saved job shown for a moment after reload" was decided
      by the human outside this file.)
+D22  Public site: GET /contact sometimes answers 502 Bad Gateway. Only /contact so far, only in CI (GitHub runner,
+     public suite with 4 classes in parallel, several tests open /contact at nearly the same time).
+                                                   (candidate, human decision 2026-11-10 to record it; evidence:
+                                                   CI public 2026-10-28 QA-3 "502 on /contact"; 2026-10-30 CONT-2
+                                                   "Send message" not found; 2026-11-10 20:26 UTC CONT-4 "Name" not
+                                                   found in 10 s; 2026-11-10 20:57 UTC QA-3 "GET /contact answered
+                                                   502" (BaseTest 5xx check). Not reproduced locally: 40 requests on
+                                                   2026-11-10 ~21:00 all 200. Load as cause is ASSUMED.)
+     No retry is added to the tests: it would hide the server error. Re-run the failed CI job.
 
 ## Done means
 - `pnpm check` exits 0 and ends with non-zero counters: specs: 9 · active changes: 0 · archived: 4.
