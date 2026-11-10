@@ -73,10 +73,17 @@ public class PremiumDashboardTest extends PremiumAccountTest {
   @Test(priority = 103, dependsOnGroups = "premium", description = "PREM-3 Job cards after the activation")
   public void prem3_jobCardsInsteadOfTeaser() {
     openDashboard();
-    assertThat(cards().first()).isVisible(FEED_LOADED); // no activation delay: the account is Premium already
+    // No activation delay: the account is Premium already. The permanent account can run out of jobs (PREM-6/7 remove
+    // them for good; CI 2026-11-10 21:21 UTC had none), then the feed says "No new matches right now" (site code).
+    Locator empty = main().getByText("No new matches right now", new Locator.GetByTextOptions().setExact(true));
+    assertThat(cards().or(empty).first()).isVisible(FEED_LOADED);
     assertThat(main().getByRole(AriaRole.HEADING, new Locator.GetByRoleOptions()
           .setName(Pattern.compile("^We found")))).hasCount(0);
     assertThat(main().getByRole(AriaRole.LINK, exactName("Unlock with Basic"))).hasCount(0);
+    if (cards().count() == 0) {
+      throw new SkipException("the Premium feed is empty (\"No new matches right now\"): no job card to check;"
+            + " new matches arrive daily");
+    }
   }
 
   // PREM-4

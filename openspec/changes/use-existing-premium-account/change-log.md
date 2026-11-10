@@ -68,3 +68,14 @@ PREM-6: the card left the feed (n - 1 passed); the test still expected exactly O
 for a fresh account -- the permanent account already has applied jobs. Fix: count all lines and lines of today
 before / after, reload before every try (D21 cache). Compile + CheckLocatorRules PASS. Re-run pending.
 Note: this run marked one job "Already applied" and (if PREM-7 ran) one "Not relevant" on the account; irreversible.
+
+Second CI premium run 2026-11-10 (manual, human; finished 21:21:59 UTC, feed actions ticked):
+```
+Tests run: 15, Failures: 1, Errors: 0, Skipped: 9, Time elapsed: 220.8 s
+PremiumDashboardTest.prem3_jobCardsInsteadOfTeaser:76 Locator expected to be visible ... "Tailor my CV" ... 60000ms
+```
+PREM-15, PREM-16, PREM-8 (x2), PREM-10 passed; the 9 card tests skipped ("no job card"). The permanent account's feed
+was used up by the first run's PREM-6/7 (inferred; no screenshots in CI). PREM-6 fix ea3291e NOT yet exercised.
+Human decision: "Skip on empty feed". MODIFIED PREM-3 in the delta spec (new scenario "Empty Premium feed": shows
+"No new matches right now" from site code, no teaser, test skipped); test: wait for cards OR that text, teaser
+checks, SkipException when no card. Compile + CheckLocatorRules PASS; `openspec validate --strict` valid.

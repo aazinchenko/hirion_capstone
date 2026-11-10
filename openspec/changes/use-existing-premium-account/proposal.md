@@ -47,8 +47,8 @@ Human decisions (2026-11-10):
 
 ## Impact
 
-- `premium-trial`: 14 -> 13 requirements (-3 +2), scenarios 15 -> 15 (-3 +2 +1 unsave); totals expected 71
-  requirements / 110 scenarios (verify with `pnpm exec openspec`).
+- `premium-trial`: 14 -> 13 requirements (-3 +2), scenarios 15 -> 16 (-3 +2 +1 unsave +1 empty feed); totals
+  expected 71 requirements / 111 scenarios (verify with `pnpm exec openspec`).
 - Tests: `PremiumUpgradeTest` deleted; new `PremiumSignInTest`; `PremiumDashboardTest`, `PremiumAiTest` use the
   Premium session; Free suite unchanged.
 - No account is created or deleted by the premium suite. It changes data of a real account (Save, undone at the

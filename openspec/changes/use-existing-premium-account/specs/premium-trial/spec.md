@@ -25,12 +25,20 @@ account is no longer Premium, they are skipped.
 ### Requirement: PREM-3 The Premium Job Feed shows job cards instead of the teaser
 For the Premium test account the Job Feed SHALL show job cards: at least one card with the button "Tailor my CV",
 and SHALL NOT show the Free teaser (no heading starting with "We found", no link "Unlock with Basic"). The check waits
-up to 60 s for the first card.
+up to 60 s for the first card. The permanent account can run out of jobs (PREM-6/7 remove them for good, new
+matches arrive daily): then the feed SHALL show the text "No new matches right now" instead of cards and still no
+teaser, and the card checks are reported as skipped, not failed. (CI premium run 2026-11-10 21:21 UTC: no card in
+60 s after the first run with feed actions; empty-state text from site code, human decision 2026-11-10.)
 
 #### Scenario: Job cards after the activation
-- **WHEN** the Premium test account opens `/dashboard`
+- **WHEN** the Premium test account opens `/dashboard` and its feed has jobs
 - **THEN** within 60 s the page shows at least one button "Tailor my CV", no heading starting with "We found" and no
   link "Unlock with Basic"
+
+#### Scenario: Empty Premium feed
+- **WHEN** the Premium test account opens `/dashboard` and its feed has no job left
+- **THEN** within 60 s the page shows "No new matches right now", no heading starting with "We found" and no link
+  "Unlock with Basic", and the test is reported as skipped
 
 ### Requirement: PREM-4 Every job card offers all Premium actions
 Each job card in the Premium Job Feed SHALL show the buttons "View job", "Save", "Tailor my CV", "Write Cover
